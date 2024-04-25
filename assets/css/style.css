@@ -1,5 +1,5 @@
 body {
-    background-color: yellow;
+    background-color: rgb(255, 255, 159);
 }
 .title-container {
     margin: 100px auto;
@@ -24,27 +24,49 @@ body {
     font-family: "Jersey 10", sans-serif;
 }
 
-#card-image {
+.pile {
+    height: 200px;
+}
+.card-image {
     top: 50%;
     transform: translateY(50%);
-    width: 226px;
-    height: 314px;
-    border: 1px solid #000;
+    width: 113px;
+    height: 157px;
     margin: 0 auto;
     margin-bottom: 20px;
 }
 
-.button-container {
-    position: relative;
-    height: 314px;
+.button-row, .button-text-row {
+    height: 150px;
 }
 
-#draw-card {
-    left: 47.5%;
-    transform: translateX();
+.text-container, .button-container {
+    width: 100%;
+    position: relative;
+}
+
+#yes, #no  {
     top: 50%;
     transform: translateY(50%);
     margin: 0 auto;
     position: absolute;
 }
 
+#decision-text {
+    line-height: 150px;
+    top: 50%;
+    transform: translateY(50%);
+    text-align: center;
+}
+
+#yes {
+    left: 45%;
+}
+
+#no {
+    right: 45%;
+}
+
+.card-choice {
+    margin-top: -10px;
+}
