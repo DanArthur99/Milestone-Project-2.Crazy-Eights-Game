@@ -16,37 +16,12 @@
     <div class="container-fluid g-0">
         <div class="row">
             <div class="col-12 pile">
-                <div class="card-image" id="card-pile"></div>
+                <div class="card-image-pile" id="card-pile"></div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-2"></div>
-            <div class="col-1">
-                <div class="card-image" id="card-image-0"></div>
+            <div class="row player-hand">
+                
             </div>
-            <div class="col-1">
-                <div class="card-image" id="card-image-1"></div>
-            </div>
-            <div class="col-1">
-                <div class="card-image" id="card-image-2"></div>
-            </div>
-            <div class="col-1">
-                <div class="card-image" id="card-image-3"></div>
-            </div>
-            <div class="col-1">
-                <div class="card-image" id="card-image-4"></div>
-            </div>
-            <div class="col-1">
-                <div class="card-image" id="card-image-5"></div>
-            </div>
-            <div class="col-1">
-                <div class="card-image" id="card-image-6"></div>
-            </div>
-            <div class="col-1">
-                <div class="card-image" id="card-image-7"></div>
-            </div>
-            <div class="col-2"></div>
-        </div>
         <div class="row button-text-row">
             <div class="col-12 text-container">
                 <p id="decision-text">Play Card?</p>
@@ -60,6 +35,9 @@
                 <button type="button" id="no">
                 No
                 </button>
+            </div>
+            <div class="col-12">
+                <button type="button" id="draw-card" onclick="drawCard()">Draw Card</button>
             </div>
         </div>
     </div>
