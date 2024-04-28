@@ -41,6 +41,10 @@ body {
     display: inline-block;
 }
 
+.not-clickable {
+    opacity: 0.5;
+}
+
 #draw-card {
     display: block;
 }
