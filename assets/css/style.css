@@ -83,3 +83,20 @@ body {
 .card-choice {
     margin-top: -10px;
 }
+
+.face-down-image {
+    display: inline-block;
+}
+.right {
+    align-self: right;
+}
+.cp1, .cp2 {
+    margin-top: 20px;
+    
+}.cp2 {
+    text-align: right;
+    padding-right: 120px;
+}
+.cp1 {
+    padding-left: 60px;
+}
