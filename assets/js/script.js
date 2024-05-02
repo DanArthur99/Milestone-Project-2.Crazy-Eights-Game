@@ -95,7 +95,7 @@ const startGame = async () => {
         });
     });
     $("#yes").on("click", function () {
-        $(document).off("click", ".clickable");
+        $(".card-image").addClass("not-clickable");
         addToPile();
         cardChoice = null;
         $(document).on("click", ".clickable", function () {
