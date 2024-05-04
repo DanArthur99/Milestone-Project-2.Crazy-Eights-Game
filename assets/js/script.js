@@ -20,15 +20,16 @@ let newShuffledDeckKey;
 
 let arrayNumber = 0;
 
+let clickableCount = 0;
 
-// turn completion checkers
-let realPlayerComplete = false;
-let cp1Complete = false;
-let cp2Complete = false;
+
 
 /**
  * jQuery code that calls the onClick functions via Event Listners
  */
+
+
+
 $(document).ready(function () {
 
     startGame();
@@ -45,52 +46,40 @@ $(document).ready(function () {
 
 const startGame = async () => {
 
-    $("#decision-text").hide();
-    $(".button-container").hide();
-
     await shuffleDeck(); // shuffles deck once document is ready 
 
     for (let i = 0; i < 8; i++) {
         $(".cp1").append(`
-    <div class="col-1 face-down-image right">
-    <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
-    </div>
-    `);
+        <div class="col-1 face-down-image right">
+            <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
+        </div>
+        `);
         $(".cp2").append(`
-    <div class="col-1 face-down-image" >
-    <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
-    </div>
-    `);
-    }
+        <div class="col-1 face-down-image" >
+            <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
+        </div>
+        `);
+    };
 
     cardChoice = null;
-    cp2Complete = false;
-    currentPlayer = "realPlayer"
-    console.log("Current Player Hand");
-    console.log(playerHand);
-    console.log("cp1 Hand");
-    console.log(cp1Hand);
-    console.log("cp2 Hand");
-    console.log(cp2Hand);
     $(".player-hand").empty();
-    displayHand(playerHand);
     $(document).on("click", ".clickable", function () {
         cardChoiceBuffer($(this).attr("id"));
         $(this).addClass("card-choice");
-        $("#decision-text").show();
-        $(".button-container").show();
+        $("#decision-text").css("display", "block");
+        $(".button-container").css("display", "block");
         $(document).off("click", ".clickable");
     });
 
     $("#no").on("click", function () {
         $(".card-image").removeClass("card-choice");
-        $("#decision-text").hide();
-        $(".button-container").hide();
+        $("#decision-text").css("display", "none");
+        $(".button-container").css("display", "none");
         $(document).on("click", ".clickable", function () {
             cardChoiceBuffer($(this).attr("id"));
             $(this).addClass("card-choice");
-            $("#decision-text").show();
-            $(".button-container").show();
+            $("#decision-text").css("display", "block");
+            $(".button-container").css("display", "block");
             $(document).off("click", ".clickable");
         });
     });
@@ -101,18 +90,19 @@ const startGame = async () => {
         $(document).on("click", ".clickable", function () {
             cardChoiceBuffer($(this).attr("id"));
             $(this).addClass("card-choice");
-            $("#decision-text").show();
-            $(".button-container").show();
+            $("#decision-text").css("display", "block");
+            $(".button-container").css("display", "block");
             $(document).off("click", ".clickable");
         });
     });
     $("#draw-card").on("click", function () {
-        drawPlayerCard();
+        $(".draw-card-section").css("display", "none");
+        drawCardPlayerClick();
         $(document).on("click", ".clickable", function () {
             cardChoiceBuffer($(this).attr("id"));
             $(this).addClass("card-choice");
-            $("#decision-text").show();
-            $(".button-container").show();
+            $("#decision-text").css("display", "block");
+            $(".button-container").css("display", "block");
             $(document).off("click", ".clickable");
         })
     });
@@ -150,24 +140,21 @@ const dealInitialHand = () => {
     for (let i = 0; i < 8; i++) {
         randomizer = Math.floor(Math.random() * deckSize);
         cp2Hand.push(shuffledPile[randomizer]);
-        shuffledPile.splice(randomizer, 1)
+        shuffledPile.splice(randomizer, 1);
         deckSize -= 1;
     };
     randomizer = Math.floor(Math.random() * deckSize);
-    topCard = shuffledPile[Math.floor(Math.random() * deckSize)];
+    topCard = shuffledPile[randomizer];
+    shuffledPile.splice(randomizer, 1);
     $(".card-image-pile").html(`
     <img src="${topCard.image}" width="113" height="157">
     `);
     randomizer = undefined;
-    console.log("Current Pile")
-    console.log(shuffledPile);
-    console.log("Current Player Hand");
-    console.log(playerHand);
-    console.log("Current Top Card");
-    console.log(topCard);
 
     displayHand(playerHand);
 };
+
+
 const displayHand = (hand) => {
     $(".player-hand").empty();
     for (let card of hand) {
@@ -177,6 +164,7 @@ const displayHand = (hand) => {
         <img src="${card.image}" width="113" height="157">
         </div>
         `);
+            clickableCount += 1
         } else {
             $(".player-hand").append(`
         <div class="col-1 card-image not-clickable" id="${card.value}-of-${card.suit}">
@@ -184,10 +172,48 @@ const displayHand = (hand) => {
         </div>
         `);
         };
-
     };
+    displayChecker();
 };
 
+const displayChecker = () => {
+    if (clickableCount > 0) {
+        $(".draw-card-section").css("display", "none");
+        clickableCount = 0;
+    } else {
+        $(".draw-card-section").css("display", "block");
+    };
+
+};
+
+const drawCardPlayerClick = () => {
+    $(document).off("click", ".clickable");
+    if (shuffledPile.length < 1) {
+        for (let i = 0; i < discardPile.length; i++) {
+            randomizer = Math.floor(Math.random() * discardPile.length);
+            shuffledPile.push(discardPile[randomizer]);
+            discardPile.splice(randomizer, 1);
+        };
+    };
+    randomizer = Math.floor(Math.random() * shuffledPile.length)
+    playerHand.push(shuffledPile[randomizer]);
+    shuffledPile.splice(randomizer, 1);
+    displayHandDrawCard(playerHand);
+    setTimeout(() => {
+        cp1Turn();
+    }, 1000);
+};
+
+const displayHandDrawCard = (hand) => {
+    $(".player-hand").empty();
+    for (let card of hand) {
+        $(".player-hand").append(`
+        <div class="col-1 card-image not-clickable" id="${card.value}-of-${card.suit}">
+        <img src="${card.image}" width="113" height="157">
+        </div>
+        `);
+    };
+};
 
 
 const drawPlayerCard = () => {
@@ -209,7 +235,6 @@ const drawPlayerCard = () => {
 };
 
 
-
 const drawCp1Card = () => {
     randomizer = Math.floor(Math.random() * shuffledPile.length)
     cp1Hand.push(shuffledPile[randomizer]);
@@ -222,6 +247,8 @@ const drawCp2Card = () => {
     shuffledPile.splice(randomizer, 1);
 };
 
+
+
 const cardChoiceBuffer = (string) => {
     let words = [];
     for (let word of string.split("-")) {
@@ -231,31 +258,34 @@ const cardChoiceBuffer = (string) => {
         return (card.value === words[0] && card.suit === words[2])
     });
     cardChoice = buffer[0];
-    console.log(cardChoice);
 };
 
 const addToPile = async () => {
     $(".card-choice").remove();
-    $("#decision-text").hide();
-    $(".button-container").hide();
+    $("#decision-text").css("display", "none");
+    $(".button-container").css("display", "none");
     if (topCard) {
         discardPile.push(topCard);
         topCard = cardChoice;
     } else {
         topCard = cardChoice;
     };
+
     if (playerHand.includes(topCard) == true) {
         let index0 = playerHand.indexOf(topCard);
         playerHand.splice(index0, 1);
-    }
-    realPlayerComplete = true;
+        console.log("Current Top Card");
+        console.log(topCard);
+    };
+
     if (topCard == undefined) {
         console.log("Couldnt load card");
     } else {
         $(".card-image-pile").html(`
     <img src="${topCard.image}" width="113" height="157">
     `);
-    }
+    };
+
     setTimeout(() => {
         cp1Turn();
     }, 1000)
@@ -276,13 +306,13 @@ const cp1Turn = () => {
         if (cp1Hand.includes(topCard) == true) {
             let index1 = cp1Hand.indexOf(topCard);
             cp1Hand.splice(index1, 1);
+            console.log("Current Top Card");
+            console.log(topCard);
         }
         cpPlayablePile.length = 0;
         $(".card-image-pile").html(`
             <img src="${topCard.image}" width="113" height="157">
                 `);
-
-
     };
     setTimeout(() => {
         cp2Turn();
@@ -311,7 +341,7 @@ const cp2Turn = () => {
         $(".card-image-pile").html(`
             <img src="${topCard.image}" width="113" height="157">
             `);
-        displayHand(playerHand);    
+        displayHand(playerHand);
     };
     displayHand(playerHand);
 

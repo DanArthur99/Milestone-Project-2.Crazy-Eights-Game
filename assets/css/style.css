@@ -45,8 +45,8 @@ body {
     opacity: 0.5;
 }
 
-#draw-card {
-    display: block;
+.draw-card-section, #decision-text, .button-container {
+    display: none;
 }
 
 .button-row, .button-text-row {
