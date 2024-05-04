@@ -12,6 +12,8 @@ let playersArray = ["realPlayer", "cp1", "cp2"];
 
 let deckSize = 52;
 
+let draw2Cards = 0;
+
 let cardChoice;
 let topCard;
 
@@ -113,7 +115,7 @@ const displayComputerPlayer1Hand = () => {
             `);
         };
     }
-   
+
 }
 
 const displayComputerPlayer2Hand = () => {
@@ -187,20 +189,39 @@ const dealInitialHand = () => {
 
 const displayHand = (hand) => {
     $(".player-hand").empty();
-    for (let card of hand) {
-        if (card.value == "8" || ((card.suit === topCard.suit) || (card.value === topCard.value))) {
-            $(".player-hand").append(`
-        <div class="col-1 card-image clickable" id="${card.value}-of-${card.suit}">
-        <img src="${card.image}" width="113" height="157">
-        </div>
-        `);
-            clickableCount += 1
-        } else {
-            $(".player-hand").append(`
-        <div class="col-1 card-image not-clickable" id="${card.value}-of-${card.suit}">
-        <img src="${card.image}" width="113" height="157">
-        </div>
-        `);
+    if (draw2Cards > 0) {
+        for (let card of hand) {
+            if (card.value == "2") {
+                $(".player-hand").append(`
+            <div class="col-1 card-image clickable" id="${card.value}-of-${card.suit}">
+            <img src="${card.image}" width="113" height="157">
+            </div>
+            `);
+                clickableCount += 1
+            } else {
+                $(".player-hand").append(`
+            <div class="col-1 card-image not-clickable" id="${card.value}-of-${card.suit}">
+            <img src="${card.image}" width="113" height="157">
+            </div>
+            `);
+            };
+        };
+    } else {
+        for (let card of hand) {
+            if (card.value == "8" || ((card.suit === topCard.suit) || (card.value === topCard.value))) {
+                $(".player-hand").append(`
+            <div class="col-1 card-image clickable" id="${card.value}-of-${card.suit}">
+            <img src="${card.image}" width="113" height="157">
+            </div>
+            `);
+                clickableCount += 1
+            } else {
+                $(".player-hand").append(`
+            <div class="col-1 card-image not-clickable" id="${card.value}-of-${card.suit}">
+            <img src="${card.image}" width="113" height="157">
+            </div>
+            `);
+            };
         };
     };
     displayChecker();
@@ -225,9 +246,18 @@ const drawCardPlayerClick = () => {
             discardPile.splice(randomizer, 1);
         };
     };
-    randomizer = Math.floor(Math.random() * shuffledPile.length)
-    playerHand.push(shuffledPile[randomizer]);
-    shuffledPile.splice(randomizer, 1);
+    if (draw2Cards > 0) {
+        for (let i = 0; i < draw2Cards; i++) {
+            randomizer = Math.floor(Math.random() * shuffledPile.length)
+            playerHand.push(shuffledPile[randomizer]);
+            shuffledPile.splice(randomizer, 1);
+        }
+        draw2Cards = 0;
+    } else {
+        randomizer = Math.floor(Math.random() * shuffledPile.length)
+        playerHand.push(shuffledPile[randomizer]);
+        shuffledPile.splice(randomizer, 1);
+    };
     displayHandDrawCard(playerHand);
     setTimeout(() => {
         cp1Turn();
@@ -244,26 +274,6 @@ const displayHandDrawCard = (hand) => {
         `);
     };
 };
-
-
-const drawPlayerCard = () => {
-    $(document).off("click", ".clickable");
-    if (shuffledPile.length < 1) {
-        for (let i = 0; i < discardPile.length; i++) {
-            randomizer = Math.floor(Math.random() * discardPile.length);
-            shuffledPile.push(discardPile[randomizer]);
-            discardPile.splice(randomizer, 1);
-        };
-    };
-    randomizer = Math.floor(Math.random() * shuffledPile.length)
-    playerHand.push(shuffledPile[randomizer]);
-    shuffledPile.splice(randomizer, 1);
-    displayHand(playerHand);
-    setTimeout(() => {
-        cp1Turn();
-    }, 1000);
-};
-
 
 const drawCp1Card = () => {
     randomizer = Math.floor(Math.random() * shuffledPile.length)
@@ -304,6 +314,10 @@ const addToPile = async () => {
     if (playerHand.includes(topCard) == true) {
         let index0 = playerHand.indexOf(topCard);
         playerHand.splice(index0, 1);
+        if (topCard.value == "2") {
+            draw2Cards += 2;
+            console.log(draw2Cards);
+        }
         console.log("Current Top Card");
         console.log(topCard);
     };
@@ -323,19 +337,38 @@ const addToPile = async () => {
 
 
 const cp1Turn = () => {
-    for (let card of cp1Hand) {
-        if (card.value == "8" || ((card.suit === topCard.suit) || (card.value === topCard.value))) {
-            cpPlayablePile.push(card);
+    if (draw2Cards > 0) {
+        for (let card of cp1Hand) {
+            if (card.value == "2") {
+                cpPlayablePile.push(card);
+            };
         };
-    };
+    } else {
+        for (let card of cp1Hand) {
+            if (card.value == "8" || ((card.suit === topCard.suit) || (card.value === topCard.value))) {
+                cpPlayablePile.push(card);
+            };
+        };
+    }
     if (cpPlayablePile.length == 0) {
-        drawCp1Card();
+        if (draw2Cards > 0) {
+            for (let i=0; i < draw2Cards; i++) {
+                drawCp1Card();
+            }
+            draw2Cards = 0;
+        } else {
+            drawCp1Card();
+        }
     } else {
         discardPile.push(topCard);
         topCard = cpPlayablePile[Math.floor(Math.random() * cpPlayablePile.length)];
         if (cp1Hand.includes(topCard) == true) {
             let index1 = cp1Hand.indexOf(topCard);
             cp1Hand.splice(index1, 1);
+            if (topCard.value == "2") {
+                draw2Cards += 2;
+                console.log(draw2Cards);
+            }
             console.log("Current Top Card");
             console.log(topCard);
         }
@@ -352,19 +385,39 @@ const cp1Turn = () => {
 
 
 const cp2Turn = () => {
-    for (let card of cp2Hand) {
-        if (card.value == "8" || ((card.suit === topCard.suit) || (card.value === topCard.value))) {
-            cpPlayablePile.push(card);
+    if (draw2Cards > 0) {
+        for (let card of cp2Hand) {
+            if (card.value == "2") {
+                cpPlayablePile.push(card);
+            };
         };
-    };
+    } else {
+        for (let card of cp2Hand) {
+            if (card.value == "8" || ((card.suit === topCard.suit) || (card.value === topCard.value))) {
+                cpPlayablePile.push(card);
+            };
+        };
+    }
     if (cpPlayablePile.length == 0) {
-        drawCp2Card();
+        if (draw2Cards > 0) {
+            for (let i=0; i < draw2Cards; i++) {
+                drawCp2Card();
+            }
+            draw2Cards = 0;
+        } else {
+            drawCp2Card();
+        }
+        
     } else {
         discardPile.push(topCard);
         topCard = cpPlayablePile[Math.floor(Math.random() * cpPlayablePile.length)];
         if (cp2Hand.includes(topCard) == true) {
             let index2 = cp2Hand.indexOf(topCard);
             cp2Hand.splice(index2, 1);
+            if (topCard.value == "2") {
+                draw2Cards += 2;
+                console.log(draw2Cards);
+            }
             console.log("Current Top Card");
             console.log(topCard);
         };
@@ -375,5 +428,4 @@ const cp2Turn = () => {
     };
     displayComputerPlayer2Hand();
     displayHand(playerHand);
-
 };
