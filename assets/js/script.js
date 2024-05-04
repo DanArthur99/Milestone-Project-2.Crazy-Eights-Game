@@ -48,19 +48,6 @@ const startGame = async () => {
 
     await shuffleDeck(); // shuffles deck once document is ready 
 
-    for (let i = 0; i < 8; i++) {
-        $(".cp1").append(`
-        <div class="col-1 face-down-image right">
-            <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
-        </div>
-        `);
-        $(".cp2").append(`
-        <div class="col-1 face-down-image" >
-            <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
-        </div>
-        `);
-    };
-
     cardChoice = null;
     $(".player-hand").empty();
     $(document).on("click", ".clickable", function () {
@@ -108,6 +95,47 @@ const startGame = async () => {
     });
 };
 
+const displayComputerPlayer1Hand = () => {
+    $(".cp1").empty();
+    if (cp1Hand.length < 8) {
+        for (let i = 0; i < cp1Hand.length; i++) {
+            $(".cp1").append(`
+            <div class="col-1 face-down-image right">
+                <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
+            </div>`);
+        }
+    } else {
+        for (let i = 0; i < 8; i++) {
+            $(".cp1").append(`
+            <div class="col-1 face-down-image right">
+                <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
+            </div>
+            `);
+        };
+    }
+   
+}
+
+const displayComputerPlayer2Hand = () => {
+    $(".cp2").empty();
+    if (cp2Hand.length < 8) {
+        for (let i = 0; i < cp2Hand.length; i++) {
+            $(".cp2").append(`
+            <div class="col-1 face-down-image right">
+                <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
+            </div>`);
+        }
+    } else {
+        for (let i = 0; i < 8; i++) {
+            $(".cp2").append(`
+            <div class="col-1 face-down-image right">
+                <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
+            </div>
+            `);
+        };
+    }
+}
+
 const shuffleDeck = async () => {
     fetch("https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
         .then(response => response.json())
@@ -152,6 +180,8 @@ const dealInitialHand = () => {
     randomizer = undefined;
 
     displayHand(playerHand);
+    displayComputerPlayer1Hand();
+    displayComputerPlayer2Hand();
 };
 
 
@@ -314,6 +344,7 @@ const cp1Turn = () => {
             <img src="${topCard.image}" width="113" height="157">
                 `);
     };
+    displayComputerPlayer1Hand();
     setTimeout(() => {
         cp2Turn();
     }, 1000)
@@ -341,8 +372,8 @@ const cp2Turn = () => {
         $(".card-image-pile").html(`
             <img src="${topCard.image}" width="113" height="157">
             `);
-        displayHand(playerHand);
     };
+    displayComputerPlayer2Hand();
     displayHand(playerHand);
 
 };
