@@ -114,7 +114,8 @@ const displayComputerPlayer1Hand = () => {
             </div>
             `);
         };
-    }
+    };
+    $(".cp1-text").text(`Computer Player 1. Card Total: ${cp1Hand.length}`)
 
 }
 
@@ -135,7 +136,8 @@ const displayComputerPlayer2Hand = () => {
             </div>
             `);
         };
-    }
+    };
+    $(".cp2-text").text(`Computer Player 2. Card Total: ${cp2Hand.length}`)
 }
 
 const shuffleDeck = async () => {
@@ -205,6 +207,7 @@ const displayHand = (hand) => {
             </div>
             `);
             };
+            $("#draw-card").text(`Draw ${draw2Cards} Cards`);
         };
     } else {
         for (let card of hand) {
@@ -222,6 +225,7 @@ const displayHand = (hand) => {
             </div>
             `);
             };
+            $("#draw-card").text(`Draw Card`);
         };
     };
     displayChecker();
