@@ -45,7 +45,7 @@ body {
     opacity: 0.5;
 }
 
-.draw-card-section, #decision-text, .button-container {
+.draw-card-section, #decision-text, .button-container, .play-again-section {
     display: none;
 }
 

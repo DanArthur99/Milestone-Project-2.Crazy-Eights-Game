@@ -16,13 +16,15 @@
     <div class="container-fluid g-0">
         <div class="row">
             <div class="col-6 cp1-section">
-                <p class="player-text cp1-text">Computer Player 1. Card Total: 8</p>
+                <p class="player-text cp1-text">Computer Player 1 - Card Total: 8</p>
+                <p class="player-text cp1-score"></p>
                 <div class="cp1">
 
                 </div>
             </div>
             <div class="col-6 cp2-section">
                 <p class="player-text cp2-text">Computer Player 2. Card Total: 8</p>
+                <p class="player-text cp2-score"></p>
                 <div class="cp2">
 
                 </div>
@@ -32,6 +34,9 @@
             <div class="col-12 pile">
                 <div class="card-image-pile" id="card-pile"></div>
             </div>
+        </div>
+        <div class="player-score">
+            <p>Your Current Score: 0</p>
         </div>
         <div class="row player-hand">
 
@@ -53,6 +58,10 @@
             <div class="col-12 draw-card-section">
                 <button type="button" id="draw-card">Draw Card</button>
             </div>
+        </div>
+        <div class="col-12 play-again-section">
+            <p id="end-of-game-text"></p>
+            <button type="button" id="play-again">Start New Game</button>
         </div>
     </div>
     <!-- ============ Bootstrap CDN js link-->

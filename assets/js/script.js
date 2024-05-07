@@ -10,7 +10,7 @@ let cpPlayablePile = [];
 
 let playersArray = ["realPlayer", "cp1", "cp2"];
 
-let deckSize = 52;
+let deckSize;
 
 let draw2Cards = 0;
 
@@ -24,6 +24,10 @@ let arrayNumber = 0;
 
 let clickableCount = 0;
 
+let playerScore = 0;
+let cp1Score = 0;
+let cp2Score = 0;
+
 
 
 /**
@@ -34,24 +38,6 @@ let clickableCount = 0;
 
 $(document).ready(function () {
 
-    startGame();
-
-});
-
-
-/**
- * The following functions fetch the deck data from the Deck of Cards API, then "draws" all of these cards into a ShuffledPile array. The players hand is then drawn by randomly selecting
- * an index of that array, pushing that item to the playerHand array, then deleting that object from the ShuffledPile array. The image of the card is then displayed to the DOM by obtaining the image
- * data inside the card object, and manipulating the HTML to include an <img> with this data as it's source (src).
- */
-
-
-const startGame = async () => {
-
-    await shuffleDeck(); // shuffles deck once document is ready 
-
-    cardChoice = null;
-    $(".player-hand").empty();
     $(document).on("click", ".clickable", function () {
         cardChoiceBuffer($(this).attr("id"));
         $(this).addClass("card-choice");
@@ -73,6 +59,7 @@ const startGame = async () => {
         });
     });
     $("#yes").on("click", function () {
+        $(".card-image").removeClass("clickable");
         $(".card-image").addClass("not-clickable");
         addToPile();
         cardChoice = null;
@@ -95,6 +82,43 @@ const startGame = async () => {
             $(document).off("click", ".clickable");
         })
     });
+    $("#play-again").on("click", function() {
+        startGame();
+    });
+
+    startGame();
+
+});
+
+
+/**
+ * The following functions fetch the deck data from the Deck of Cards API, then "draws" all of these cards into a ShuffledPile array. The players hand is then drawn by randomly selecting
+ * an index of that array, pushing that item to the playerHand array, then deleting that object from the ShuffledPile array. The image of the card is then displayed to the DOM by obtaining the image
+ * data inside the card object, and manipulating the HTML to include an <img> with this data as it's source (src).
+ */
+
+
+const startGame = async () => {
+
+    topCard = null;
+    cardChoice = null;
+    playerHand.splice(0, playerHand.length);
+    cp1Hand.splice(0, cp1Hand.length);
+    cp2Hand.splice(0, cp2Hand.length);
+    shuffledPile.splice(0, shuffledPile.length);
+    discardPile.splice(0, discardPile.length);
+    cpPlayablePile.splice(0, cpPlayablePile.length);
+    deckSize = 52;
+    draw2Cards = 0;
+    $(".player-hand").empty();
+    $("#draw-card").text(`Draw Card`);
+    $(".play-again-section").css("display", "none");
+    $(".player-score").text(`Your current score: ${playerScore}`);
+    $(".cp1-score").text(`Current Score: ${cp1Score}`);
+    $(".cp2-score").text(`Current Score: ${cp2Score}`);
+
+    await shuffleDeck(); // shuffles deck once document is ready 
+
 };
 
 const displayComputerPlayer1Hand = () => {
@@ -280,12 +304,26 @@ const displayHandDrawCard = (hand) => {
 };
 
 const drawCp1Card = () => {
+    if (shuffledPile.length < 1) {
+        for (let i = 0; i < discardPile.length; i++) {
+            randomizer = Math.floor(Math.random() * discardPile.length);
+            shuffledPile.push(discardPile[randomizer]);
+            discardPile.splice(randomizer, 1);
+        };
+    };
     randomizer = Math.floor(Math.random() * shuffledPile.length)
     cp1Hand.push(shuffledPile[randomizer]);
     shuffledPile.splice(randomizer, 1);
 };
 
 const drawCp2Card = () => {
+    if (shuffledPile.length < 1) {
+        for (let i = 0; i < discardPile.length; i++) {
+            randomizer = Math.floor(Math.random() * discardPile.length);
+            shuffledPile.push(discardPile[randomizer]);
+            discardPile.splice(randomizer, 1);
+        };
+    };
     randomizer = Math.floor(Math.random() * shuffledPile.length)
     cp2Hand.push(shuffledPile[randomizer]);
     shuffledPile.splice(randomizer, 1);
@@ -333,10 +371,15 @@ const addToPile = async () => {
     <img src="${topCard.image}" width="113" height="157">
     `);
     };
-
-    setTimeout(() => {
-        cp1Turn();
-    }, 1000)
+    if (playerHand.length == 0) {
+        playerScore += 1;
+        $("#end-of-game-text").text("You Win! Play Again?");
+        $(".play-again-section").css("display", "block");
+    } else {
+        setTimeout(() => {
+            cp1Turn();
+        }, 1000)
+    };
 };
 
 
@@ -382,9 +425,16 @@ const cp1Turn = () => {
                 `);
     };
     displayComputerPlayer1Hand();
-    setTimeout(() => {
-        cp2Turn();
-    }, 1000)
+    if (cp1Hand.length == 0) {
+        cp1Score += 1;
+        $("#end-of-game-text").text("Computer Player 1 Wins! Play Again?");
+        $(".play-again-section").css("display", "block");
+    } else {
+        setTimeout(() => {
+            cp2Turn();
+        }, 1000)
+    }
+    
 };
 
 
@@ -431,5 +481,11 @@ const cp2Turn = () => {
             `);
     };
     displayComputerPlayer2Hand();
-    displayHand(playerHand);
+    if (cp2Hand.length == 0) {
+        cp2Score += 1;
+        $("#end-of-game-text").text("Computer Player 2 Wins! Play Again?");
+        $(".play-again-section").css("display", "block");
+    } else {
+        displayHand(playerHand);
+    }
 };
