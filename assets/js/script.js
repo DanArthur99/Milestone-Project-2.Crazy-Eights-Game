@@ -2,13 +2,11 @@ let shuffledPile = [];
 let playerHand = [];
 let cp1Hand = [];
 let cp2Hand = [];
-
 let discardPile = [];
-let currentPlayer;
-
 let cpPlayablePile = [];
 
-let playersArray = ["realPlayer", "cp1", "cp2"];
+let suits = ["HEARTS", "DIAMONDS", "SPADES", "CLUBS"];
+
 
 let deckSize;
 
@@ -16,11 +14,10 @@ let draw2Cards = 0;
 
 let cardChoice;
 let topCard;
+let suitChoice;
 
 let randomizer;
 let newShuffledDeckKey;
-
-let arrayNumber = 0;
 
 let clickableCount = 0;
 
@@ -39,22 +36,33 @@ let cp2Score = 0;
 $(document).ready(function () {
 
     $(document).on("click", ".clickable", function () {
-        cardChoiceBuffer($(this).attr("id"));
+        cardChoiceBuffer($(this).attr("data-card"));
         $(this).addClass("card-choice");
-        $("#decision-text").css("display", "block");
-        $(".button-container").css("display", "block");
+        if (cardChoice.value == "8") {
+            $(".text-container").css("display", "block");
+            $(".suit-container").css("display", "block");
+        } else {
+            $(".text-container").css("display", "block");
+            $(".button-container").css("display", "block");
+        }
         $(document).off("click", ".clickable");
     });
 
-    $("#no").on("click", function () {
+    $(".no").on("click", function () {
         $(".card-image").removeClass("card-choice");
-        $("#decision-text").css("display", "none");
+        $(".text-container").css("display", "none");
         $(".button-container").css("display", "none");
+        $(".suit-container").css("display", "none");
         $(document).on("click", ".clickable", function () {
-            cardChoiceBuffer($(this).attr("id"));
+            cardChoiceBuffer($(this).attr("data-card"));
             $(this).addClass("card-choice");
-            $("#decision-text").css("display", "block");
-            $(".button-container").css("display", "block");
+            if (cardChoice.value == "8") {
+                $(".text-container").css("display", "block");
+                $(".suit-container").css("display", "block");
+            } else {
+                $(".text-container").css("display", "block");
+                $(".button-container").css("display", "block");
+            }
             $(document).off("click", ".clickable");
         });
     });
@@ -64,25 +72,54 @@ $(document).ready(function () {
         addToPile();
         cardChoice = null;
         $(document).on("click", ".clickable", function () {
-            cardChoiceBuffer($(this).attr("id"));
+            cardChoiceBuffer($(this).attr("data-card"));
             $(this).addClass("card-choice");
-            $("#decision-text").css("display", "block");
-            $(".button-container").css("display", "block");
+            if (cardChoice.value == "8") {
+                $(".text-container").css("display", "block");
+                $(".suit-container").css("display", "block");
+            } else {
+                $(".text-container").css("display", "block");
+                $(".button-container").css("display", "block");
+            }
             $(document).off("click", ".clickable");
         });
     });
+
+    $(".suit-button").on("click", function () {
+        suitChoice = $(this).attr("id");
+        addToPile();
+        cardChoice = null;
+        $(document).on("click", ".clickable", function () {
+            cardChoiceBuffer($(this).attr("data-card"));
+            $(this).addClass("card-choice");
+            if (cardChoice.value == "8") {
+                $(".text-container").css("display", "block");
+                $(".suit-container").css("display", "block");
+            } else {
+                $(".text-container").css("display", "block");
+                $(".button-container").css("display", "block");
+            }
+            $(document).off("click", ".clickable");
+        });
+    });
+
     $("#draw-card").on("click", function () {
         $(".draw-card-section").css("display", "none");
         drawCardPlayerClick();
         $(document).on("click", ".clickable", function () {
-            cardChoiceBuffer($(this).attr("id"));
+            cardChoiceBuffer($(this).attr("data-card"));
             $(this).addClass("card-choice");
-            $("#decision-text").css("display", "block");
-            $(".button-container").css("display", "block");
+            if (cardChoice.value == "8") {
+                $(".text-container").css("display", "block");
+                $(".suit-container").css("display", "block");
+            } else {
+                $(".text-container").css("display", "block");
+                $(".button-container").css("display", "block");
+            }
             $(document).off("click", ".clickable");
         })
     });
-    $("#play-again").on("click", function() {
+    $("#play-again").on("click", function () {
         startGame();
     });
 
@@ -110,6 +147,7 @@ const startGame = async () => {
     cpPlayablePile.splice(0, cpPlayablePile.length);
     deckSize = 52;
     draw2Cards = 0;
+    $(".suit-choice").empty();
     $(".player-hand").empty();
     $("#draw-card").text(`Draw Card`);
     $(".play-again-section").css("display", "none");
@@ -120,49 +158,6 @@ const startGame = async () => {
     await shuffleDeck(); // shuffles deck once document is ready 
 
 };
-
-const displayComputerPlayer1Hand = () => {
-    $(".cp1").empty();
-    if (cp1Hand.length < 8) {
-        for (let i = 0; i < cp1Hand.length; i++) {
-            $(".cp1").append(`
-            <div class="col-1 face-down-image right">
-                <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
-            </div>`);
-        }
-    } else {
-        for (let i = 0; i < 8; i++) {
-            $(".cp1").append(`
-            <div class="col-1 face-down-image right">
-                <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
-            </div>
-            `);
-        };
-    };
-    $(".cp1-text").text(`Computer Player 1. Card Total: ${cp1Hand.length}`)
-
-}
-
-const displayComputerPlayer2Hand = () => {
-    $(".cp2").empty();
-    if (cp2Hand.length < 8) {
-        for (let i = 0; i < cp2Hand.length; i++) {
-            $(".cp2").append(`
-            <div class="col-1 face-down-image right">
-                <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
-            </div>`);
-        }
-    } else {
-        for (let i = 0; i < 8; i++) {
-            $(".cp2").append(`
-            <div class="col-1 face-down-image right">
-                <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
-            </div>
-            `);
-        };
-    };
-    $(".cp2-text").text(`Computer Player 2. Card Total: ${cp2Hand.length}`)
-}
 
 const shuffleDeck = async () => {
     fetch("https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
@@ -219,32 +214,50 @@ const displayHand = (hand) => {
         for (let card of hand) {
             if (card.value == "2") {
                 $(".player-hand").append(`
-            <div class="col-1 card-image clickable" id="${card.value}-of-${card.suit}">
+            <div class="col-1 card-image clickable" data-card="${card.value}-of-${card.suit}">
             <img src="${card.image}" width="113" height="157">
             </div>
             `);
                 clickableCount += 1
             } else {
                 $(".player-hand").append(`
-            <div class="col-1 card-image not-clickable" id="${card.value}-of-${card.suit}">
+            <div class="col-1 card-image not-clickable" data-card="${card.value}-of-${card.suit}">
             <img src="${card.image}" width="113" height="157">
             </div>
             `);
             };
             $("#draw-card").text(`Draw ${draw2Cards} Cards`);
         };
-    } else {
+    } else if (suitChoice) {
         for (let card of hand) {
-            if (card.value == "8" || ((card.suit === topCard.suit) || (card.value === topCard.value))) {
+            if (card.value == "8" || card.suit == suitChoice) {
                 $(".player-hand").append(`
-            <div class="col-1 card-image clickable" id="${card.value}-of-${card.suit}">
+            <div class="col-1 card-image clickable" data-card="${card.value}-of-${card.suit}">
             <img src="${card.image}" width="113" height="157">
             </div>
             `);
                 clickableCount += 1
             } else {
                 $(".player-hand").append(`
-            <div class="col-1 card-image not-clickable" id="${card.value}-of-${card.suit}">
+            <div class="col-1 card-image not-clickable" data-card="${card.value}-of-${card.suit}">
+            <img src="${card.image}" width="113" height="157">
+            </div>
+            `);
+            };
+            $("#draw-card").text(`Draw Card`);
+        }
+    } else {
+        for (let card of hand) {
+            if (card.value == "8" || ((card.suit === topCard.suit) || (card.value === topCard.value))) {
+                $(".player-hand").append(`
+            <div class="col-1 card-image clickable" data-card="${card.value}-of-${card.suit}">
+            <img src="${card.image}" width="113" height="157">
+            </div>
+            `);
+                clickableCount += 1
+            } else {
+                $(".player-hand").append(`
+            <div class="col-1 card-image not-clickable" data-card="${card.value}-of-${card.suit}">
             <img src="${card.image}" width="113" height="157">
             </div>
             `);
@@ -258,12 +271,57 @@ const displayHand = (hand) => {
 const displayChecker = () => {
     if (clickableCount > 0) {
         $(".draw-card-section").css("display", "none");
+        suitChoice = undefined;
         clickableCount = 0;
     } else {
         $(".draw-card-section").css("display", "block");
     };
 
 };
+
+
+const displayComputerPlayer1Hand = () => {
+    $(".cp1").empty();
+    if (cp1Hand.length < 8) {
+        for (let i = 0; i < cp1Hand.length; i++) {
+            $(".cp1").append(`
+            <div class="col-1 face-down-image right">
+                <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
+            </div>`);
+        }
+    } else {
+        for (let i = 0; i < 8; i++) {
+            $(".cp1").append(`
+            <div class="col-1 face-down-image right">
+                <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
+            </div>
+            `);
+        };
+    };
+    $(".cp1-text").text(`Computer Player 1. Card Total: ${cp1Hand.length}`)
+
+}
+
+const displayComputerPlayer2Hand = () => {
+    $(".cp2").empty();
+    if (cp2Hand.length < 8) {
+        for (let i = 0; i < cp2Hand.length; i++) {
+            $(".cp2").append(`
+            <div class="col-1 face-down-image right">
+                <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
+            </div>`);
+        }
+    } else {
+        for (let i = 0; i < 8; i++) {
+            $(".cp2").append(`
+            <div class="col-1 face-down-image right">
+                <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
+            </div>
+            `);
+        };
+    };
+    $(".cp2-text").text(`Computer Player 2. Card Total: ${cp2Hand.length}`)
+}
 
 const drawCardPlayerClick = () => {
     $(document).off("click", ".clickable");
@@ -343,8 +401,10 @@ const cardChoiceBuffer = (string) => {
 };
 
 const addToPile = async () => {
+    $(".suit-choice").empty();
     $(".card-choice").remove();
-    $("#decision-text").css("display", "none");
+    $(".text-container").css("display", "none");
+    $(".suit-container").css("display", "none");
     $(".button-container").css("display", "none");
     if (topCard) {
         discardPile.push(topCard);
@@ -390,6 +450,12 @@ const cp1Turn = () => {
                 cpPlayablePile.push(card);
             };
         };
+    } else if (suitChoice) {
+        for (let card of cp1Hand) {
+            if (card.value == "8" || card.suit == suitChoice) {
+                cpPlayablePile.push(card);
+            }
+        }
     } else {
         for (let card of cp1Hand) {
             if (card.value == "8" || ((card.suit === topCard.suit) || (card.value === topCard.value))) {
@@ -399,7 +465,7 @@ const cp1Turn = () => {
     }
     if (cpPlayablePile.length == 0) {
         if (draw2Cards > 0) {
-            for (let i=0; i < draw2Cards; i++) {
+            for (let i = 0; i < draw2Cards; i++) {
                 drawCp1Card();
             }
             draw2Cards = 0;
@@ -407,6 +473,8 @@ const cp1Turn = () => {
             drawCp1Card();
         }
     } else {
+        $(".suit-choice").empty();
+        suitChoice = undefined;
         discardPile.push(topCard);
         topCard = cpPlayablePile[Math.floor(Math.random() * cpPlayablePile.length)];
         if (cp1Hand.includes(topCard) == true) {
@@ -415,6 +483,9 @@ const cp1Turn = () => {
             if (topCard.value == "2") {
                 draw2Cards += 2;
                 console.log(draw2Cards);
+            } else if (topCard.value == "8") {
+                suitChoice = suits[Math.floor(Math.random() * suits.length)];
+                $(".suit-choice").text(`Computer Player 1 has chosen ${suitChoice}`);
             }
             console.log("Current Top Card");
             console.log(topCard);
@@ -434,7 +505,7 @@ const cp1Turn = () => {
             cp2Turn();
         }, 1000)
     }
-    
+
 };
 
 
@@ -445,6 +516,12 @@ const cp2Turn = () => {
                 cpPlayablePile.push(card);
             };
         };
+    } else if (suitChoice) {
+        for (let card of cp2Hand) {
+            if (card.value == "8" || card.suit == suitChoice) {
+                cpPlayablePile.push(card);
+            }
+        }
     } else {
         for (let card of cp2Hand) {
             if (card.value == "8" || ((card.suit === topCard.suit) || (card.value === topCard.value))) {
@@ -454,15 +531,17 @@ const cp2Turn = () => {
     }
     if (cpPlayablePile.length == 0) {
         if (draw2Cards > 0) {
-            for (let i=0; i < draw2Cards; i++) {
+            for (let i = 0; i < draw2Cards; i++) {
                 drawCp2Card();
             }
             draw2Cards = 0;
         } else {
             drawCp2Card();
         }
-        
+
     } else {
+        $(".suit-choice").empty();
+        suitChoice = undefined;
         discardPile.push(topCard);
         topCard = cpPlayablePile[Math.floor(Math.random() * cpPlayablePile.length)];
         if (cp2Hand.includes(topCard) == true) {
@@ -471,6 +550,9 @@ const cp2Turn = () => {
             if (topCard.value == "2") {
                 draw2Cards += 2;
                 console.log(draw2Cards);
+            } else if (topCard.value == "8") {
+                suitChoice = suits[Math.floor(Math.random() * suits.length)]
+                $(".suit-choice").text(`Computer Player 2 has chosen ${suitChoice}`);
             }
             console.log("Current Top Card");
             console.log(topCard);

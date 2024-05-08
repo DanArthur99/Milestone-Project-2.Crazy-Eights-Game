@@ -38,23 +38,46 @@
         <div class="player-score">
             <p>Your Current Score: 0</p>
         </div>
+        <div class="suit-choice">
+            <p></p>
+        </div>
         <div class="row player-hand">
 
         </div>
         <div class="row button-text-row">
             <div class="col-12 text-container">
                 <p id="decision-text">Play Card?</p>
+                <div class="col-12 button-container">
+                    <button type="button" id="yes">
+                        Yes
+                    </button>
+                    <button type="button" id="no-not-eight" class="no">
+                        No
+                    </button>
+                </div>
             </div>
         </div>
         <div class="row button-row">
-            <div class="col-12 button-container">
-                <button type="button" id="yes">
-                    Yes
+            <div class="col-12 suit-container">
+                <button type="button" class="suit-button" id="HEARTS">
+                    Yes: Hearts
                 </button>
-                <button type="button" id="no">
+                <button type="button" class="suit-button" id="DIAMONDS">
+                    Yes: Diamonds
+                </button>
+                <button type="button" class="suit-button" id="SPADES">
+                    Yes: Spades
+                </button>
+                <button type="button" class="suit-button" id="CLUBS">
+                    Yes: Clubs
+                </button>
+                <button type="button" class="no">
                     No
                 </button>
             </div>
+
+
+
             <div class="col-12 draw-card-section">
                 <button type="button" id="draw-card">Draw Card</button>
             </div>

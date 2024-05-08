@@ -45,7 +45,11 @@ body {
     opacity: 0.5;
 }
 
-.draw-card-section, #decision-text, .button-container, .play-again-section {
+.draw-card-section, 
+.button-container, 
+.play-again-section, 
+.suit-container, 
+.text-container {
     display: none;
 }
 
@@ -58,7 +62,14 @@ body {
     position: relative;
 }
 
-#yes, #no  {
+.suit-container {
+    z-index: 2;
+}
+.suit-buttons {
+    text-align: center;
+}
+
+#yes, #no-not-eight  {
     top: 50%;
     transform: translateY(50%);
     margin: 0 auto;
@@ -71,13 +82,12 @@ body {
     transform: translateY(50%);
     text-align: center;
 }
-
 #yes {
-    left: 45%;
-}
+    left: 40%;
+} 
 
-#no {
-    right: 45%;
+#no-not-eight {
+    right: 40%;
 }
 
 .card-choice {
@@ -103,4 +113,8 @@ body {
 
 .player-text {
     text-align: center;
+}
+
+.suit-choice {
+    text-align: right;
 }
