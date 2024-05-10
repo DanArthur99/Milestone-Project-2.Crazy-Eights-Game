@@ -1,6 +1,13 @@
+
+
 body {
     background-color: rgb(255, 255, 159);
+    font-family: "Acme", sans-serif;
+    font-size: 1.5rem;
 }
+
+/*-------- Title Page Styling ----------------*/
+
 .title-container {
     margin: 100px auto;
     background-color: orange;
@@ -19,10 +26,15 @@ body {
 }
 
 #main-title {
+    padding-left: 20px;
+    padding-right: 20px;
     font-size: 100px;
     margin-bottom: 70px;
     font-family: "Jersey 10", sans-serif;
 }
+
+
+/*----------- Game Page Styling ---------------------*/
 
 .pile {
     height: 200px;
@@ -36,7 +48,6 @@ body {
     margin-bottom: 20px;
     
 }
-
 .card-image {
     display: inline-block;
 }
@@ -51,10 +62,11 @@ body {
 .suit-container, 
 .text-container {
     display: none;
+    text-align: center;
 }
 
 .button-row, .button-text-row {
-    height: 150px;
+    height: 50px;
 }
 
 .text-container, .button-container {
@@ -62,12 +74,23 @@ body {
     position: relative;
 }
 
-.suit-container {
+.draw-card-section, .suit-container {
     z-index: 2;
+    margin-top: 80px;
+    text-align: center;
 }
 .suit-buttons {
     text-align: center;
 }
+
+#decision-text {
+    line-height: 100px;
+    top: 50%;
+    transform: translateY(50%);
+    text-align: center;
+}
+
+
 
 #yes, #no-not-eight  {
     top: 50%;
@@ -76,12 +99,6 @@ body {
     position: absolute;
 }
 
-#decision-text {
-    line-height: 150px;
-    top: 50%;
-    transform: translateY(50%);
-    text-align: center;
-}
 #yes {
     left: 40%;
 } 
@@ -97,9 +114,7 @@ body {
 .face-down-image {
     display: inline-block;
 }
-.right {
-    align-self: right;
-}
+
 .cp1, .cp2 {
     margin-top: 20px;
     
@@ -117,4 +132,5 @@ body {
 
 .suit-choice {
     text-align: right;
+    padding-right: 100px;
 }
