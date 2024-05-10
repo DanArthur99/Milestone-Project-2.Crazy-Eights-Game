@@ -282,45 +282,58 @@ const displayChecker = () => {
 
 const displayComputerPlayer1Hand = () => {
     $(".cp1").empty();
+    if (cp1Hand.length > 0) {
+        $(".cp1").append(`
+        <div class="col-1 face-down-image right">
+            <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
+        </div>`);
+    }
     if (cp1Hand.length < 8) {
         for (let i = 0; i < cp1Hand.length; i++) {
             $(".cp1").append(`
-            <div class="col-1 face-down-image right">
+            <div class="col-1 d-none d-md-inline-block face-down-image right">
                 <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
             </div>`);
         }
     } else {
         for (let i = 0; i < 8; i++) {
             $(".cp1").append(`
-            <div class="col-1 face-down-image right">
+            <div class="col-1 d-none d-md-inline-block face-down-image right">
                 <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
             </div>
             `);
         };
     };
-    $(".cp1-text").text(`Computer Player 1. Card Total: ${cp1Hand.length}`)
+    $(".cp1-text").text(`Computer Player 1 - Card Total: ${cp1Hand.length}`)
 
 }
 
 const displayComputerPlayer2Hand = () => {
     $(".cp2").empty();
-    if (cp2Hand.length < 8) {
-        for (let i = 0; i < cp2Hand.length; i++) {
-            $(".cp2").append(`
-            <div class="col-1 face-down-image right">
-                <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
-            </div>`);
-        }
-    } else {
-        for (let i = 0; i < 8; i++) {
-            $(".cp2").append(`
-            <div class="col-1 face-down-image right">
-                <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
-            </div>
-            `);
+    if (cp2Hand.length > 0) {
+        $(".cp2").append(`
+        <div class="col-1 face-down-image right">
+            <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
+        </div>`);
+        if (cp2Hand.length < 8) {
+            for (let i = 0; i < cp2Hand.length; i++) {
+                $(".cp2").append(`
+                <div class="col-1 d-none d-md-inline-block face-down-image right">
+                    <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
+                </div>`);
+            }
+        } else {
+            for (let i = 0; i < 8; i++) {
+                $(".cp2").append(`
+                <div class="col-1 d-none d-md-inline-block face-down-image right">
+                    <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
+                </div>
+                `);
+            };
         };
-    };
-    $(".cp2-text").text(`Computer Player 2. Card Total: ${cp2Hand.length}`)
+    }
+    
+    $(".cp2-text").text(`Computer Player 2 - Card Total: ${cp2Hand.length}`)
 }
 
 const drawCardPlayerClick = () => {
