@@ -18,26 +18,28 @@
 <body>
     <div class="container-fluid g-0">
         <div class="row">
+            <!-- ============ Computer Player 1 section. Empty divs and paragraphs that will be manipulated with the JavaScript ========= -->
             <div class="col-6 cp1-section">
                 <p class="player-text cp1-text"></p>
                 <p class="player-text cp1-score"></p>
-                <div class="cp1">
-
-                </div>
+                <div class="cp1"></div>
             </div>
+            <!-- ============ Computer Player 2 section. Empty divs and paragraphs that will be manipulated with the JavaScript ========= -->
             <div class="col-6 cp2-section">
                 <p class="player-text cp2-text"></p>
                 <p class="player-text cp2-score"></p>
-                <div class="cp2">
-
-                </div>
+                <div class="cp2"></div>
             </div>
         </div>
+
+        <!-- =================== Card Pile section. Displays the current Top Card in game ============== -->
         <div class="row">
             <div class="col-12 pile">
                 <div class="card-image-pile" id="card-pile"></div>
             </div>
         </div>
+
+        <!-- ============ Displays the player's current score tally =========== -->
         <div class="row">
             <div class="col-md-6 player-score">
                 <p>Your Current Score: 0</p>
@@ -46,10 +48,10 @@
                 <p></p>
             </div>
         </div>
-        
-        <div class="row player-hand">
+        <!-- ======= Displays the Player's current hand. Manipulated with the JavaScript ============ -->
+        <div class="row player-hand"></div>
 
-        </div>
+        <!-- ============== Displays the "Play Card?" text ========= -->
         <div class="row button-text-row">
             <div class="col-12 text-container">
                 <p id="decision-text">Play Card?</p>
