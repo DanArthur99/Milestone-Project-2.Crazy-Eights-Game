@@ -7,7 +7,6 @@ let cpPlayablePile = [];
 
 let suits = ["HEARTS", "DIAMONDS", "SPADES", "CLUBS"];
 
-
 let deckSize;
 
 let draw2Cards = 0;
@@ -25,6 +24,8 @@ let playerScore = 0;
 let cp1Score = 0;
 let cp2Score = 0;
 
+let userName;
+
 
 
 /**
@@ -32,15 +33,18 @@ let cp2Score = 0;
  */
 $(document).ready(function () {
 
-    const clickEventSetter = () => {
-        $(".text-container").css("display", "block");
-        if (cardChoice.value == "8") {
-            $(".suit-container").css("display", "block");
-        } else {
-            $(".button-container").css("display", "block");
-        }
-        $(document).off("click", ".clickable");
-    };
+    $("#start-game").on("click", function() {
+        $("#enter-username").css("display", "block");
+        $(".title-container").css("display", "none");
+    });
+    
+    $("#username-form").one("submit", function(event) {
+        event.preventDefault();
+        userName = $("#user-name").val();
+        sessionStorage.setItem("username", userName);
+        $(this).submit();
+    });
+
     $(document).on("click", ".clickable", function () {
         cardChoiceBuffer($(this).attr("data-card"));
         $(this).addClass("card-choice");
@@ -99,6 +103,15 @@ $(document).ready(function () {
 
 });
 
+const clickEventSetter = () => {
+    $(".text-container").css("display", "block");
+    if (cardChoice.value == "8") {
+        $(".suit-container").css("display", "block");
+    } else {
+        $(".button-container").css("display", "block");
+    }
+    $(document).off("click", ".clickable");
+};
 
 /**
  * The following functions fetch the deck data from the Deck of Cards API, then "draws" all of these cards into a ShuffledPile array. The players hand is then drawn by randomly selecting
@@ -108,7 +121,6 @@ $(document).ready(function () {
 
 
 const startGame = async () => {
-
     topCard = null;
     cardChoice = null;
     playerHand.splice(0, playerHand.length);
@@ -123,7 +135,7 @@ const startGame = async () => {
     $(".player-hand").empty();
     $("#draw-card").text(`Draw Card`);
     $(".play-again-section").css("display", "none");
-    $(".player-score").text(`Your current score: ${playerScore}`);
+    $(".player-score").text(`${sessionStorage.getItem("username")} - Your current score: ${playerScore}`);
     $(".cp1-score").text(`Current Score: ${cp1Score}`);
     $(".cp2-score").text(`Current Score: ${cp2Score}`);
 
@@ -281,7 +293,7 @@ const addToPile = async () => {
     } 
     topCard = cardChoice;
 
-    removeCardFromHand(playerHand, "User");
+    removeCardFromHand(playerHand, `${sessionStorage.getItem("username")}`);
 
     if (topCard == undefined) {
         console.log("Couldnt load card");

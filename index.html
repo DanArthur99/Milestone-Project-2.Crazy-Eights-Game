@@ -16,31 +16,29 @@
 </head>
 
 <body>
-    <header>
-        <div class="title-container">
-            <div class="start-page-header">
-                <h1 class="centralize" id="main-title">Welcome to Crazy Eights</h1>
-                <form action="game.html" class="text-center">
-                    <button type="submit" id="start-game" class="btn btn-primary">Start New Game</button>
-                </form>
-            </div>
+    <header class="title-container">
+        <div class="start-page-header">
+            <h1 class="centralize" id="main-title">Welcome to Crazy Eights</h1>
+            <button type="button" id="start-game" class="btn btn-primary">Start New Game</button>
         </div>
     </header>
 
-
+    <section id="enter-username">
+        <form action="game.html" class="text-center" id="username-form">
+            <label for="user-name">User Name:</label>
+            <input type="text" id="user-name" name="uname" required>
+            <button type="submit">Start Game</button>
+        </form>
+    </section>
 
 
     <footer>
         <p></p>
     </footer>
-    </div>
-    </div>
-
-    </div>
     <!-- ============ Bootstrap CDN js link-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>]
+        crossorigin="anonymous"></script>
     <!-- ======== jQuery CDN link ============ -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>

@@ -32,7 +32,10 @@ body {
     margin-bottom: 70px;
     font-family: "Jersey 10", sans-serif;
 }
-
+#enter-username {
+    height: 100%;
+    margin-top: 50vh;
+}
 
 /*----------- Game Page Styling ---------------------*/
 
@@ -59,11 +62,14 @@ body {
 .draw-card-section, 
 .button-container, 
 .play-again-section, 
-.suit-container, 
+.suit-container,
+#enter-username, 
 .text-container {
     display: none;
     text-align: center;
 }
+
+
 
 .button-row, .button-text-row, .darw-card-row {
     height: 50px;
