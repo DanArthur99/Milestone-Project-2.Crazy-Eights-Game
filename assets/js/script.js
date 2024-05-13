@@ -11,6 +11,8 @@ let deckSize;
 
 let draw2Cards = 0;
 
+let clockwise;
+
 let cardChoice;
 let topCard;
 let suitChoice;
@@ -33,12 +35,12 @@ let userName;
  */
 $(document).ready(function () {
 
-    $("#start-game").on("click", function() {
+    $("#start-game").on("click", function () {
         $("#enter-username").css("display", "block");
         $(".title-container").css("display", "none");
     });
-    
-    $("#username-form").one("submit", function(event) {
+
+    $("#username-form").one("submit", function (event) {
         event.preventDefault();
         userName = $("#user-name").val();
         sessionStorage.setItem("username", userName);
@@ -121,6 +123,7 @@ const clickEventSetter = () => {
 
 
 const startGame = async () => {
+    clockwise = true;
     topCard = null;
     cardChoice = null;
     playerHand.splice(0, playerHand.length);
@@ -190,6 +193,7 @@ const dealHand = (hand) => {
  * Displays the user's hand to the user. Checks to see what the current game state is and what cards are currently playable.
  */
 const displayHand = (hand) => {
+    console.log("Player Turn");
     $(".player-hand").empty();
     if (draw2Cards > 0) {
         draw2CardsCheckerPlayer(hand);
@@ -256,9 +260,15 @@ const drawCardPlayerClick = () => {
     $(document).off("click", ".clickable");
     drawCard(playerHand);
     displayHandDrawCard(playerHand);
-    setTimeout(() => {
-        cp1Turn();
-    }, 1000);
+    if (clockwise == false) {
+        setTimeout(() => {
+            cp2Turn();
+        }, 1000);
+    } else {
+        setTimeout(() => {
+            cp1Turn();
+        }, 1000);
+    };
 };
 
 
@@ -290,7 +300,7 @@ const addToPile = async () => {
     $(".text-container, .suit-container, .button-container").css("display", "none");
     if (topCard) {
         discardPile.push(topCard);
-    } 
+    }
     topCard = cardChoice;
 
     removeCardFromHand(playerHand, `${sessionStorage.getItem("username")}`);
@@ -306,6 +316,10 @@ const addToPile = async () => {
         playerScore += 1;
         $("#end-of-game-text").text("You Win! Play Again?");
         $(".play-again-section").css("display", "block");
+    } else if (clockwise == false) {
+        setTimeout(() => {
+            cp2Turn();
+        }, 1000)
     } else {
         setTimeout(() => {
             cp1Turn();
@@ -317,6 +331,7 @@ const addToPile = async () => {
  * This functions calls Computer Player 1's Turn
  */
 const cp1Turn = () => {
+    console.log("CP1 Turn");
     if (draw2Cards > 0) {
         draw2CardsChecker(cp1Hand);
     } else if (suitChoice) {
@@ -334,6 +349,8 @@ const cp1Turn = () => {
         cp1Score += 1;
         $("#end-of-game-text").text("Computer Player 1 Wins! Play Again?");
         $(".play-again-section").css("display", "block");
+    } else if (clockwise == false) {
+        displayHand(playerHand);
     } else {
         setTimeout(() => {
             cp2Turn();
@@ -345,6 +362,7 @@ const cp1Turn = () => {
  * This functions calls Computer Player 2's Turn
  */
 const cp2Turn = () => {
+    console.log("CP2 Turn");
     if (draw2Cards > 0) {
         draw2CardsChecker(cp2Hand);
     } else if (suitChoice) {
@@ -358,12 +376,15 @@ const cp2Turn = () => {
     } else {
         pushCardToPile(cp2Hand, "Computer Player 2");
     };
-
     displayComputerPlayer2Hand();
     if (cp2Hand.length == 0) {
         cp2Score += 1;
         $("#end-of-game-text").text("Computer Player 2 Wins! Play Again?");
         $(".play-again-section").css("display", "block");
+    } else if (clockwise == false) {
+        setTimeout(() => {
+            cp1Turn();
+        }, 1000)
     } else {
         displayHand(playerHand);
     }
@@ -500,6 +521,8 @@ const removeCardFromHand = (hand, player) => {
         hand.splice(index1, 1);
         if (topCard.value == "2") {
             draw2Cards += 2;
+        } else if (topCard.value == "ACE") {
+            clockwise = !clockwise;
         } else if (topCard.value == "8") {
             if (hand != playerHand) {
                 suitChoice = suits[Math.floor(Math.random() * suits.length)]
