@@ -376,7 +376,7 @@ const cp1Turn = () => {
         cp1Score += 1;
         $("#end-of-game-text").text("Computer Player 1 Wins! Play Again?");
         $(".play-again-section").css("display", "block");
-    } else if (clockwise == true || clockwise == false && skip) {
+    } else if (clockwise == true & skip == false|| clockwise == false && skip) {
         setTimeout(() => {
             cp2Turn();
         }, 1000)
@@ -411,7 +411,7 @@ const cp2Turn = () => {
         cp2Score += 1;
         $("#end-of-game-text").text("Computer Player 2 Wins! Play Again?");
         $(".play-again-section").css("display", "block");
-    } else if (clockwise == true || clockwise == false && skip) {
+    } else if (clockwise == true && skip == false || clockwise == false && skip) {
         displayHand(playerHand);
     } else {
         setTimeout(() => {
