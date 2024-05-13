@@ -5,11 +5,12 @@ let cp2Hand = [];
 let discardPile = [];
 let cpPlayablePile = [];
 
-let suits = ["HEARTS", "DIAMONDS", "SPADES", "CLUBS"];
+const suits = ["HEARTS", "DIAMONDS", "SPADES", "CLUBS"];
 
 let deckSize;
 
 let draw2Cards = 0;
+let draw6Cards = 0;
 
 let clockwise;
 let skip;
@@ -116,11 +117,7 @@ const clickEventSetter = () => {
     $(document).off("click", ".clickable");
 };
 
-/**
- * The following functions fetch the deck data from the Deck of Cards API, then "draws" all of these cards into a ShuffledPile array. The players hand is then drawn by randomly selecting
- * an index of that array, pushing that item to the playerHand array, then deleting that object from the ShuffledPile array. The image of the card is then displayed to the DOM by obtaining the image
- * data inside the card object, and manipulating the HTML to include an <img> with this data as it's source (src).
- */
+
 
 
 const startGame = async () => {
@@ -148,6 +145,12 @@ const startGame = async () => {
 
 };
 
+
+/**
+ * The following functions fetch the deck data from the Deck of Cards API, then "draws" all of these cards into a ShuffledPile array. The players hand is then drawn by randomly selecting
+ * an index of that array, pushing that item to the playerHand array, then deleting that object from the ShuffledPile array. The image of the card is then displayed to the DOM by obtaining the image
+ * data inside the card object, and manipulating the HTML to include an <img> with this data as it's source (src).
+ */
 const shuffleDeck = async () => {
     fetch("https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
         .then(response => response.json())
@@ -164,6 +167,7 @@ const shuffleDeck = async () => {
         });
 };
 
+// Deals the initial hand for all players
 const dealInitialHand = () => {
     dealHand(playerHand);
     dealHand(cp1Hand);
@@ -181,31 +185,26 @@ const dealInitialHand = () => {
     displayComputerPlayer2Hand();
 };
 
+// Deal Hand Function
 const dealHand = (hand) => {
     for (let i = 0; i < 8; i++) {
         randomizer = Math.floor(Math.random() * deckSize);
         hand.push(shuffledPile[randomizer]);
-        shuffledPile.splice(randomizer, 1)
+        shuffledPile.splice(randomizer, 1);
         deckSize -= 1;
-    };
-}
+    }
+};
 
 
 /**
  * Displays the user's hand to the user. Checks to see what the current game state is and what cards are currently playable.
  */
 const displayHand = (hand) => {
-    if (skip) {
-        skip = false;
-        if (clockwise == false) {
-            cp2Turn();
-        } else {
-            cp1Turn();
-        }
-    }
-    console.log("Player Turn");
+    skip = false;
     $(".player-hand").empty();
-    if (draw2Cards > 0) {
+    if (draw6Cards > 0) {
+        draw6CardsCheckerPlayer(hand);
+    } else if (draw2Cards > 0) {
         draw2CardsCheckerPlayer(hand);
     } else if (suitChoice) {
         suitChoiceCheckerPlayer(hand);
@@ -215,7 +214,11 @@ const displayHand = (hand) => {
     displayChecker();
 };
 
+/**
+ * Checks the number if clickable (playable) cards in the player's hand. If this equals 0, the "Draw Card" button will appear.
+ */
 const displayChecker = () => {
+    console.log("Player Turn");
     if (clickableCount > 0) {
         $(".draw-card-section").css("display", "none");
         suitChoice = undefined;
@@ -226,6 +229,10 @@ const displayChecker = () => {
 
 };
 
+
+/**
+ * The following functions display the Computer Player's hand on screen
+ */
 const displayComputerPlayer1Hand = () => {
     let cp1DOM = $(".cp1");
     cp1DOM.empty();
@@ -266,6 +273,11 @@ const CPDisplay = (hand, DOMElement) => {
     };
 };
 
+
+/**
+ * Called when the player clicks the "Draw Card" button. First it draws a card to the player's hand. Then it displays the players hand on screen.
+ * It then checks to see if the current player movement is clockwise or anti-clockwise, and calls the next player's turn after the check.
+ */
 const drawCardPlayerClick = () => {
     $(document).off("click", ".clickable");
     drawCard(playerHand);
@@ -281,7 +293,9 @@ const drawCardPlayerClick = () => {
     };
 };
 
-
+/**
+ * The function ensures that no cards are clickable while it is not the player's turn 
+ */
 const displayHandDrawCard = (hand) => {
     $(".player-hand").empty();
     for (let card of hand) {
@@ -326,13 +340,13 @@ const addToPile = async () => {
         playerScore += 1;
         $("#end-of-game-text").text("You Win! Play Again?");
         $(".play-again-section").css("display", "block");
-    } else if (clockwise == false) {
+    } else if (clockwise == true && skip == false || clockwise == false && skip) {
         setTimeout(() => {
-            cp2Turn();
+            cp1Turn();
         }, 1000)
     } else {
         setTimeout(() => {
-            cp1Turn();
+            cp2Turn();
         }, 1000)
     };
 };
@@ -341,89 +355,95 @@ const addToPile = async () => {
  * This functions calls Computer Player 1's Turn
  */
 const cp1Turn = () => {
-    if (skip) {
-        skip = false;
-        if (clockwise == false) {
-            displayHand(playerHand)
-        } else {
-            cp2Turn();
-        }
+    skip = false;
+    console.log("CP1 Turn");
+    if (draw6Cards > 0) {
+        draw6CardsChecker(cp1Hand);
+    } else if (draw2Cards > 0) {
+        draw2CardsChecker(cp1Hand);
+    } else if (suitChoice) {
+        suitChoiceChecker(cp1Hand);
     } else {
-        console.log("CP1 Turn");
-        if (draw2Cards > 0) {
-            draw2CardsChecker(cp1Hand);
-        } else if (suitChoice) {
-            suitChoiceChecker(cp1Hand);
-        } else {
-            eligibilityChecker(cp1Hand);
-        }
-        if (cpPlayablePile.length == 0) {
-            drawCard(cp1Hand);
-        } else {
-            pushCardToPile(cp1Hand, "Computer Player 1");
-        };
-        displayComputerPlayer1Hand();
-        if (cp1Hand.length == 0) {
-            cp1Score += 1;
-            $("#end-of-game-text").text("Computer Player 1 Wins! Play Again?");
-            $(".play-again-section").css("display", "block");
-        } else if (clockwise == false) {
-            displayHand(playerHand);
-        } else {
-            setTimeout(() => {
-                cp2Turn();
-            }, 1000)
-        }
+        eligibilityChecker(cp1Hand);
     }
-
-};
+    if (cpPlayablePile.length == 0) {
+        drawCard(cp1Hand);
+    } else {
+        pushCardToPile(cp1Hand, "Computer Player 1");
+    };
+    displayComputerPlayer1Hand();
+    if (cp1Hand.length == 0) {
+        cp1Score += 1;
+        $("#end-of-game-text").text("Computer Player 1 Wins! Play Again?");
+        $(".play-again-section").css("display", "block");
+    } else if (clockwise == true || clockwise == false && skip) {
+        setTimeout(() => {
+            cp2Turn();
+        }, 1000)
+    } else {
+        displayHand(playerHand);
+    }
+}
 
 /**
  * This functions calls Computer Player 2's Turn
  */
 const cp2Turn = () => {
-    if (skip) {
-        skip = false;
-        if (clockwise == false) {
-            cp1Turn();
-        } else {
-            displayHand(playerHand);
-        }
+    skip = false;
+    console.log("CP2 Turn");
+    if (draw6Cards > 0) {
+        draw6CardsChecker(cp2Hand);
+    } else if (draw2Cards > 0) {
+        draw2CardsChecker(cp2Hand);
+    } else if (suitChoice) {
+        suitChoiceChecker(cp2Hand);
     } else {
-        console.log("CP2 Turn");
-        if (draw2Cards > 0) {
-            draw2CardsChecker(cp2Hand);
-        } else if (suitChoice) {
-            suitChoiceChecker(cp2Hand);
-        } else {
-            eligibilityChecker(cp2Hand);
-        };
-    
-        if (cpPlayablePile.length == 0) {
-            drawCard(cp2Hand);
-        } else {
-            pushCardToPile(cp2Hand, "Computer Player 2");
-        };
-        displayComputerPlayer2Hand();
-        if (cp2Hand.length == 0) {
-            cp2Score += 1;
-            $("#end-of-game-text").text("Computer Player 2 Wins! Play Again?");
-            $(".play-again-section").css("display", "block");
-        } else if (clockwise == false) {
-            setTimeout(() => {
-                cp1Turn();
-            }, 1000)
-        } else {
-            displayHand(playerHand);
-        }
-    } 
-};
+        eligibilityChecker(cp2Hand);
+    };
+
+    if (cpPlayablePile.length == 0) {
+        drawCard(cp2Hand);
+    } else {
+        pushCardToPile(cp2Hand, "Computer Player 2");
+    };
+    displayComputerPlayer2Hand();
+    if (cp2Hand.length == 0) {
+        cp2Score += 1;
+        $("#end-of-game-text").text("Computer Player 2 Wins! Play Again?");
+        $(".play-again-section").css("display", "block");
+    } else if (clockwise == true || clockwise == false && skip) {
+        displayHand(playerHand);
+    } else {
+        setTimeout(() => {
+            cp1Turn();
+        }, 1000)
+    }
+}
 
 /**
  * 
  * The following function takes the player's hand as a parameter and draws a card from the deck to that player's hand
  */
 const drawCard = (hand) => {
+    emptyPileChecker();
+    if (draw6Cards > 0) {
+        for (let i = 0; i < draw6Cards; i++) {
+            emptyPileChecker();
+            draw(hand);
+        };
+        draw6Cards = 0;
+    } else if (draw2Cards > 0) {
+        for (let i = 0; i < draw2Cards; i++) {
+            emptyPileChecker();
+            draw(hand);
+        };
+        draw2Cards = 0;
+    } else {
+        draw(hand);
+    };
+};
+
+const emptyPileChecker = () => {
     if (shuffledPile.length < 1) {
         for (let i = 0; i < discardPile.length; i++) {
             randomizer = Math.floor(Math.random() * discardPile.length);
@@ -431,23 +451,38 @@ const drawCard = (hand) => {
             discardPile.splice(randomizer, 1);
         };
     };
-    if (draw2Cards > 0) {
-        for (let i = 0; i < draw2Cards; i++) {
-            randomizer = Math.floor(Math.random() * shuffledPile.length)
-            hand.push(shuffledPile[randomizer]);
-            shuffledPile.splice(randomizer, 1);
-        };
-        draw2Cards = 0;
-    } else {
-        randomizer = Math.floor(Math.random() * shuffledPile.length)
-        hand.push(shuffledPile[randomizer]);
-        shuffledPile.splice(randomizer, 1);
-    };
 };
+
+const draw = (hand) => {
+    randomizer = Math.floor(Math.random() * shuffledPile.length)
+    hand.push(shuffledPile[randomizer]);
+    shuffledPile.splice(randomizer, 1);
+}
+
 
 /**
  * Helper Functions
  */
+const draw6CardsCheckerPlayer = (hand) => {
+    for (let card of hand) {
+        if (card.value == "ACE" && card.suit == "SPADES") {
+            $(".player-hand").append(`
+        <div class="col-1 card-image clickable" data-card="${card.value}-of-${card.suit}">
+        <img src="${card.image}" width="113" height="157">
+        </div>
+        `);
+            clickableCount += 1
+        } else {
+            $(".player-hand").append(`
+        <div class="col-1 card-image not-clickable" data-card="${card.value}-of-${card.suit}">
+        <img src="${card.image}" width="113" height="157">
+        </div>
+        `);
+        };
+        $("#draw-card").text(`Draw ${draw6Cards} Cards`);
+    };
+};
+
 const draw2CardsCheckerPlayer = (hand) => {
     for (let card of hand) {
         if (card.value == "2") {
@@ -516,6 +551,14 @@ const draw2CardsChecker = (hand) => {
     };
 }
 
+const draw6CardsChecker = (hand) => {
+    for (let card of hand) {
+        if (card.value == "ACE" && card.suit == "SPADES") {
+            cpPlayablePile.push(card);
+        }
+    }
+}
+
 const suitChoiceChecker = (hand) => {
     for (let card of hand) {
         if (card.value == "8" || card.suit == suitChoice) {
@@ -552,6 +595,9 @@ const removeCardFromHand = (hand, player) => {
             draw2Cards += 2;
         } else if (topCard.value == "ACE") {
             clockwise = !clockwise;
+            if (topCard.suit == "SPADES") {
+                draw6Cards += 6
+            }
         } else if (topCard.value == "JACK") {
             skip = true;
         } else if (topCard.value == "8") {
