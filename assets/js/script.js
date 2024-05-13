@@ -12,6 +12,7 @@ let deckSize;
 let draw2Cards = 0;
 
 let clockwise;
+let skip;
 
 let cardChoice;
 let topCard;
@@ -123,6 +124,7 @@ const clickEventSetter = () => {
 
 
 const startGame = async () => {
+    skip = false;
     clockwise = true;
     topCard = null;
     cardChoice = null;
@@ -193,6 +195,14 @@ const dealHand = (hand) => {
  * Displays the user's hand to the user. Checks to see what the current game state is and what cards are currently playable.
  */
 const displayHand = (hand) => {
+    if (skip) {
+        skip = false;
+        if (clockwise == false) {
+            cp2Turn();
+        } else {
+            cp1Turn();
+        }
+    }
     console.log("Player Turn");
     $(".player-hand").empty();
     if (draw2Cards > 0) {
@@ -331,63 +341,82 @@ const addToPile = async () => {
  * This functions calls Computer Player 1's Turn
  */
 const cp1Turn = () => {
-    console.log("CP1 Turn");
-    if (draw2Cards > 0) {
-        draw2CardsChecker(cp1Hand);
-    } else if (suitChoice) {
-        suitChoiceChecker(cp1Hand);
-    } else {
-        eligibilityChecker(cp1Hand);
-    }
-    if (cpPlayablePile.length == 0) {
-        drawCard(cp1Hand);
-    } else {
-        pushCardToPile(cp1Hand, "Computer Player 1");
-    };
-    displayComputerPlayer1Hand();
-    if (cp1Hand.length == 0) {
-        cp1Score += 1;
-        $("#end-of-game-text").text("Computer Player 1 Wins! Play Again?");
-        $(".play-again-section").css("display", "block");
-    } else if (clockwise == false) {
-        displayHand(playerHand);
-    } else {
-        setTimeout(() => {
+    if (skip) {
+        skip = false;
+        if (clockwise == false) {
+            displayHand(playerHand)
+        } else {
             cp2Turn();
-        }, 1000)
+        }
+    } else {
+        console.log("CP1 Turn");
+        if (draw2Cards > 0) {
+            draw2CardsChecker(cp1Hand);
+        } else if (suitChoice) {
+            suitChoiceChecker(cp1Hand);
+        } else {
+            eligibilityChecker(cp1Hand);
+        }
+        if (cpPlayablePile.length == 0) {
+            drawCard(cp1Hand);
+        } else {
+            pushCardToPile(cp1Hand, "Computer Player 1");
+        };
+        displayComputerPlayer1Hand();
+        if (cp1Hand.length == 0) {
+            cp1Score += 1;
+            $("#end-of-game-text").text("Computer Player 1 Wins! Play Again?");
+            $(".play-again-section").css("display", "block");
+        } else if (clockwise == false) {
+            displayHand(playerHand);
+        } else {
+            setTimeout(() => {
+                cp2Turn();
+            }, 1000)
+        }
     }
+
 };
 
 /**
  * This functions calls Computer Player 2's Turn
  */
 const cp2Turn = () => {
-    console.log("CP2 Turn");
-    if (draw2Cards > 0) {
-        draw2CardsChecker(cp2Hand);
-    } else if (suitChoice) {
-        suitChoiceChecker(cp2Hand);
-    } else {
-        eligibilityChecker(cp2Hand);
-    };
-
-    if (cpPlayablePile.length == 0) {
-        drawCard(cp2Hand);
-    } else {
-        pushCardToPile(cp2Hand, "Computer Player 2");
-    };
-    displayComputerPlayer2Hand();
-    if (cp2Hand.length == 0) {
-        cp2Score += 1;
-        $("#end-of-game-text").text("Computer Player 2 Wins! Play Again?");
-        $(".play-again-section").css("display", "block");
-    } else if (clockwise == false) {
-        setTimeout(() => {
+    if (skip) {
+        skip = false;
+        if (clockwise == false) {
             cp1Turn();
-        }, 1000)
+        } else {
+            displayHand(playerHand);
+        }
     } else {
-        displayHand(playerHand);
-    }
+        console.log("CP2 Turn");
+        if (draw2Cards > 0) {
+            draw2CardsChecker(cp2Hand);
+        } else if (suitChoice) {
+            suitChoiceChecker(cp2Hand);
+        } else {
+            eligibilityChecker(cp2Hand);
+        };
+    
+        if (cpPlayablePile.length == 0) {
+            drawCard(cp2Hand);
+        } else {
+            pushCardToPile(cp2Hand, "Computer Player 2");
+        };
+        displayComputerPlayer2Hand();
+        if (cp2Hand.length == 0) {
+            cp2Score += 1;
+            $("#end-of-game-text").text("Computer Player 2 Wins! Play Again?");
+            $(".play-again-section").css("display", "block");
+        } else if (clockwise == false) {
+            setTimeout(() => {
+                cp1Turn();
+            }, 1000)
+        } else {
+            displayHand(playerHand);
+        }
+    } 
 };
 
 /**
@@ -523,6 +552,8 @@ const removeCardFromHand = (hand, player) => {
             draw2Cards += 2;
         } else if (topCard.value == "ACE") {
             clockwise = !clockwise;
+        } else if (topCard.value == "JACK") {
+            skip = true;
         } else if (topCard.value == "8") {
             if (hand != playerHand) {
                 suitChoice = suits[Math.floor(Math.random() * suits.length)]
