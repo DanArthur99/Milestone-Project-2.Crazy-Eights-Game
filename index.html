@@ -12,6 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/title-page-style.css" rel="stylesheet" type="text/css">
     <title>Document</title>
 </head>
 
@@ -20,6 +21,11 @@
         <div class="start-page-header">
             <h1 class="centralize" id="main-title">Welcome to Crazy Eights</h1>
             <button type="button" id="start-game" class="btn btn-primary">Start New Game</button>
+            <br>
+            <button type="button" id="rules" class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#rulesModal">
+                Rules
+            </button>
         </div>
     </header>
 
@@ -31,7 +37,46 @@
         </form>
     </section>
 
-
+    <!-- Modal -->
+    <div class="modal fade" id="rulesModal" tabindex="-1" aria-labelledby="rulesModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="rulesModalLabel">Rules of the Game</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-text">The aim of the game is to be the first to empty your hand!
+                        <br><br>
+                        The card you lay must be the same suit or the same number as the top card of the Pile
+                        <br><br>
+                        If you cannot lay a card, you must draw one from the pile.
+                        <br><br><br>
+                        <strong>Special Cards:</strong>
+                        <br><br>
+                        2: If a player lays down a 2, the next player must either draw 2 cards from the pile, or lay
+                        down a
+                        2 themselves. This would accumulate the number the cards the next player has to lay down to 4,
+                        and so on.
+                        <br><br>
+                        Ace: An Ace changes the direction of play. If this is also an Ace of Spades, then the next
+                        player after the change of direction must pick up 6 cards, unless they have an Ace of Spades
+                        themselves
+                        <br><br>
+                        Jack: If a player lays down a Jack, the next player's turn is skipped.
+                        <br><br>
+                        8: An 8 is the only card that can be layed at anytime regardless of suit or number (unless the
+                        previous player has layed a 2, or an Ace of Spades). Upon laying an 8, the player can choose the
+                        suit that the next player must lay (this can however be overruled if the next player has an 8
+                        themselves)
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <footer>
         <p></p>
     </footer>
