@@ -9,8 +9,8 @@ const suits = ["HEARTS", "DIAMONDS", "SPADES", "CLUBS"];
 
 let deckSize;
 
-let draw2Cards = 0;
-let draw6Cards = 0;
+let draw2Cards;
+let draw6Cards;
 
 let clockwise;
 let skip;
@@ -35,77 +35,81 @@ let userName;
 /**
  * This code below sets all the event listeners in the document once ready. jQuery is predominantly used to achieve this
  */
-$(document).ready(function () {
-
-    $("#start-game").on("click", function () {
-        $("#enter-username").css("display", "block");
-        $(".title-container").css("display", "none");
-    });
-
-    $("#username-form").one("submit", function (event) {
-        event.preventDefault();
-        userName = $("#user-name").val();
-        sessionStorage.setItem("username", userName);
-        $(this).submit();
-    });
-
-    $(document).on("click", ".clickable", function () {
-        cardChoiceBuffer($(this).attr("data-card"));
-        $(this).addClass("card-choice");
-        clickEventSetter();
-    });
-
-    $(".no").on("click", function () {
-        $(".card-image").removeClass("card-choice");
-        $(".text-container, .button-container, .suit-container").css("display", "none");
-        $(document).on("click", ".clickable", function () {
-            cardChoiceBuffer($(this).attr("data-card"));
-            $(this).addClass("card-choice");
-            clickEventSetter();
-        });
-    });
-
-    $("#yes").on("click", function () {
-        $(".card-image").removeClass("clickable");
-        $(".card-image").addClass("not-clickable");
-        addToPile();
-        cardChoice = null;
-        $(document).on("click", ".clickable", function () {
-            cardChoiceBuffer($(this).attr("data-card"));
-            $(this).addClass("card-choice");
-            clickEventSetter();
-        });
-    });
-
-    $(".suit-button").on("click", function () {
-        suitChoice = $(this).attr("id");
-        $(".card-image").removeClass("clickable");
-        $(".card-image").addClass("not-clickable");
-        addToPile();
-        cardChoice = null;
-        $(document).on("click", ".clickable", function () {
-            cardChoiceBuffer($(this).attr("data-card"));
-            $(this).addClass("card-choice");
-            clickEventSetter();
-        });
-    });
-
-    $("#draw-card").on("click", function () {
-        $(".draw-card-section").css("display", "none");
-        drawCardPlayerClick();
-        $(document).on("click", ".clickable", function () {
-            cardChoiceBuffer($(this).attr("data-card"));
-            $(this).addClass("card-choice");
-            clickEventSetter();
-        })
-    });
-    $("#play-again").on("click", function () {
-        startGame();
-    });
-
-    startGame();
-
+$(() => {
+    initializeGame();
 });
+
+    const initializeGame = () => {
+        $("#start-game").on("click", function () {
+            $("#enter-username").css("display", "block");
+            $(".title-container").css("display", "none");
+        });
+    
+        $("#username-form").one("submit", function (event) {
+            event.preventDefault();
+            userName = $("#user-name").val();
+            sessionStorage.setItem("username", userName);
+            $(this).trigger("submit");
+        });
+    
+        $(document).on("click", ".clickable", function () {
+            cardChoiceBuffer($(this).attr("data-card"));
+            $(this).addClass("card-choice");
+            clickEventSetter();
+        });
+    
+        $(".no").on("click", function () {
+            $(".card-image").removeClass("card-choice");
+            $(".text-container, .button-container, .suit-container").css("display", "none");
+            $(document).on("click", ".clickable", function () {
+                cardChoiceBuffer($(this).attr("data-card"));
+                $(this).addClass("card-choice");
+                clickEventSetter();
+            });
+        });
+    
+        $("#yes").on("click", function () {
+            $(".card-image").removeClass("clickable");
+            $(".card-image").addClass("not-clickable");
+            addToPile();
+            cardChoice = null;
+            $(document).on("click", ".clickable", function () {
+                cardChoiceBuffer($(this).attr("data-card"));
+                $(this).addClass("card-choice");
+                clickEventSetter();
+            });
+        });
+    
+        $(".suit-button").on("click", function () {
+            suitChoice = $(this).attr("id");
+            $(".card-image").removeClass("clickable");
+            $(".card-image").addClass("not-clickable");
+            addToPile();
+            cardChoice = null;
+            $(document).on("click", ".clickable", function () {
+                cardChoiceBuffer($(this).attr("data-card"));
+                $(this).addClass("card-choice");
+                clickEventSetter();
+            });
+        });
+    
+        $("#draw-card").on("click", function () {
+            $(".draw-card-section").css("display", "none");
+            drawCardPlayerClick();
+            $(document).on("click", ".clickable", function () {
+                cardChoiceBuffer($(this).attr("data-card"));
+                $(this).addClass("card-choice");
+                clickEventSetter();
+            })
+        });
+        $("#play-again").on("click", function () {
+            startGame();
+        });
+    
+        startGame();
+
+    };
+    
 
 const clickEventSetter = () => {
     $(".text-container").css("display", "block");
@@ -134,6 +138,7 @@ const startGame = async () => {
     cpPlayablePile.splice(0, cpPlayablePile.length);
     deckSize = 52;
     draw2Cards = 0;
+    draw6Cards = 0;
     // Sets all HTML elements to their default states
     $(".suit-choice").empty();
     $(".player-hand").empty();
@@ -603,4 +608,6 @@ const setNotClickable = (card) => {
         <img src="${card.image}" width="113" height="157">
         </div>
         `);
-}
+};
+
+module.exports = { playerHand };
