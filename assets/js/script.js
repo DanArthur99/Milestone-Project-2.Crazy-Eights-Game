@@ -33,7 +33,7 @@ let userName;
 
 
 /**
- * This code below sets all th event listeners in the document once ready. jQuery is predominantly used to achieve this
+ * This code below sets all the event listeners in the document once ready. jQuery is predominantly used to achieve this
  */
 $(document).ready(function () {
 
@@ -121,6 +121,7 @@ const clickEventSetter = () => {
 
 
 const startGame = async () => {
+    // Sets all array and variables to their default values
     skip = false;
     clockwise = true;
     topCard = null;
@@ -133,6 +134,7 @@ const startGame = async () => {
     cpPlayablePile.splice(0, cpPlayablePile.length);
     deckSize = 52;
     draw2Cards = 0;
+    // Sets all HTML elements to their default states
     $(".suit-choice").empty();
     $(".player-hand").empty();
     $("#draw-card").text(`Draw Card`);
@@ -196,8 +198,10 @@ const dealHand = (hand) => {
 };
 
 
+
 /**
  * Displays the user's hand to the user. Checks to see what the current game state is and what cards are currently playable.
+ * @param {Array} hand The hand that will be passed through (in this case, it is always playerHand)
  */
 const displayHand = (hand) => {
     skip = false;
@@ -257,22 +261,21 @@ const CPDisplay = (hand, DOMElement) => {
     }
     if (hand.length < 8) {
         for (let i = 0; i < hand.length - 1; i++) {
-            DOMElement.append(`
-            <div class="col-1 d-none d-md-inline-block face-down-image right">
-                <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
-            </div>`);
+            faceDownImageLargeOnly(DOMElement);
         }
     } else {
         for (let i = 0; i < 7; i++) {
-            DOMElement.append(`
-            <div class="col-1 d-none d-md-inline-block face-down-image right">
-                <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
-            </div>
-            `);
+            faceDownImageLargeOnly(DOMElement);
         };
     };
 };
 
+const faceDownImageLargeOnly = (DOMElement) => {
+    DOMElement.append(`
+    <div class="col-1 d-none d-md-inline-block face-down-image right">
+        <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
+    </div>`);
+}
 
 /**
  * Called when the player clicks the "Draw Card" button. First it draws a card to the player's hand. Then it displays the players hand on screen.
@@ -307,6 +310,10 @@ const displayHandDrawCard = (hand) => {
     };
 };
 
+/**
+ * Adds the card the player has initially clicked on to a buffer, where the player can then add to the pile, or press no and change their mind
+ * @param {String} string The name of the card as a string, taken from the data-card attribute in the html
+ */
 const cardChoiceBuffer = (string) => {
     let words = [];
     for (let word of string.split("-")) {
@@ -326,16 +333,10 @@ const addToPile = async () => {
         discardPile.push(topCard);
     }
     topCard = cardChoice;
-
-    removeCardFromHand(playerHand, `${sessionStorage.getItem("username")}`);
-
-    if (topCard == undefined) {
-        console.log("Couldnt load card");
-    } else {
-        $(".card-image-pile").html(`
+    removeCardFromHand(playerHand, `${sessionStorage.getItem("username")}`)
+    $(".card-image-pile").html(`
     <img src="${topCard.image}" width="113" height="157">
     `);
-    };
     if (playerHand.length == 0) {
         playerScore += 1;
         $("#end-of-game-text").text("You Win! Play Again?");
@@ -357,26 +358,14 @@ const addToPile = async () => {
 const cp1Turn = () => {
     skip = false;
     console.log("CP1 Turn");
-    if (draw6Cards > 0) {
-        draw6CardsChecker(cp1Hand);
-    } else if (draw2Cards > 0) {
-        draw2CardsChecker(cp1Hand);
-    } else if (suitChoice) {
-        suitChoiceChecker(cp1Hand);
-    } else {
-        eligibilityChecker(cp1Hand);
-    }
-    if (cpPlayablePile.length == 0) {
-        drawCard(cp1Hand);
-    } else {
-        pushCardToPile(cp1Hand, "Computer Player 1");
-    };
+    gameStateChecker(cp1Hand);
+    takeTurn(cp1Hand, "Computer Player 1"); 
     displayComputerPlayer1Hand();
     if (cp1Hand.length == 0) {
         cp1Score += 1;
         $("#end-of-game-text").text("Computer Player 1 Wins! Play Again?");
         $(".play-again-section").css("display", "block");
-    } else if (clockwise == true & skip == false|| clockwise == false && skip) {
+    } else if (clockwise == true & skip == false || clockwise == false && skip) {
         setTimeout(() => {
             cp2Turn();
         }, 1000)
@@ -391,21 +380,8 @@ const cp1Turn = () => {
 const cp2Turn = () => {
     skip = false;
     console.log("CP2 Turn");
-    if (draw6Cards > 0) {
-        draw6CardsChecker(cp2Hand);
-    } else if (draw2Cards > 0) {
-        draw2CardsChecker(cp2Hand);
-    } else if (suitChoice) {
-        suitChoiceChecker(cp2Hand);
-    } else {
-        eligibilityChecker(cp2Hand);
-    };
-
-    if (cpPlayablePile.length == 0) {
-        drawCard(cp2Hand);
-    } else {
-        pushCardToPile(cp2Hand, "Computer Player 2");
-    };
+    gameStateChecker(cp2Hand);
+    takeTurn(cp2Hand, "Computer Player 2");   
     displayComputerPlayer2Hand();
     if (cp2Hand.length == 0) {
         cp2Score += 1;
@@ -420,6 +396,25 @@ const cp2Turn = () => {
     }
 }
 
+const gameStateChecker = (hand) => {
+    if (draw6Cards > 0) {
+        draw6CardsChecker(hand);
+    } else if (draw2Cards > 0) {
+        draw2CardsChecker(hand);
+    } else if (suitChoice) {
+        suitChoiceChecker(hand);
+    } else {
+        eligibilityChecker(hand);
+    };
+};
+
+const takeTurn = (hand, player) => {
+    if (cpPlayablePile.length == 0) {
+        drawCard(hand);
+    } else {
+        pushCardToPile(hand, player);
+    };
+}
 /**
  * 
  * The following function takes the player's hand as a parameter and draws a card from the deck to that player's hand
@@ -461,23 +456,15 @@ const draw = (hand) => {
 
 
 /**
- * Helper Functions
+ * The following functions check the state of the game to see what cards are playable for the non-computer player.
  */
 const draw6CardsCheckerPlayer = (hand) => {
     for (let card of hand) {
         if (card.value == "ACE" && card.suit == "SPADES") {
-            $(".player-hand").append(`
-        <div class="col-1 card-image clickable" data-card="${card.value}-of-${card.suit}">
-        <img src="${card.image}" width="113" height="157">
-        </div>
-        `);
+            setClickable(card);
             clickableCount += 1
         } else {
-            $(".player-hand").append(`
-        <div class="col-1 card-image not-clickable" data-card="${card.value}-of-${card.suit}">
-        <img src="${card.image}" width="113" height="157">
-        </div>
-        `);
+            setNotClickable(card);
         };
         $("#draw-card").text(`Draw ${draw6Cards} Cards`);
     };
@@ -486,38 +473,23 @@ const draw6CardsCheckerPlayer = (hand) => {
 const draw2CardsCheckerPlayer = (hand) => {
     for (let card of hand) {
         if (card.value == "2") {
-            $(".player-hand").append(`
-        <div class="col-1 card-image clickable" data-card="${card.value}-of-${card.suit}">
-        <img src="${card.image}" width="113" height="157">
-        </div>
-        `);
+            setClickable(card);
             clickableCount += 1
         } else {
-            $(".player-hand").append(`
-        <div class="col-1 card-image not-clickable" data-card="${card.value}-of-${card.suit}">
-        <img src="${card.image}" width="113" height="157">
-        </div>
-        `);
+            setNotClickable(card);
         };
         $("#draw-card").text(`Draw ${draw2Cards} Cards`);
     };
 };
 
+
 const suitChoiceCheckerPlayer = (hand) => {
     for (let card of hand) {
         if (card.value == "8" || card.suit == suitChoice) {
-            $(".player-hand").append(`
-        <div class="col-1 card-image clickable" data-card="${card.value}-of-${card.suit}">
-        <img src="${card.image}" width="113" height="157">
-        </div>
-        `);
+            setClickable(card);
             clickableCount += 1
         } else {
-            $(".player-hand").append(`
-        <div class="col-1 card-image not-clickable" data-card="${card.value}-of-${card.suit}">
-        <img src="${card.image}" width="113" height="157">
-        </div>
-        `);
+            setNotClickable(card);
         };
         $("#draw-card").text(`Draw Card`);
     }
@@ -526,23 +498,19 @@ const suitChoiceCheckerPlayer = (hand) => {
 const eligibilityCheckerPlayer = (hand) => {
     for (let card of hand) {
         if (card.value == "8" || ((card.suit === topCard.suit) || (card.value === topCard.value))) {
-            $(".player-hand").append(`
-        <div class="col-1 card-image clickable" data-card="${card.value}-of-${card.suit}">
-        <img src="${card.image}" width="113" height="157">
-        </div>
-        `);
+            setClickable(card);
             clickableCount += 1
         } else {
-            $(".player-hand").append(`
-        <div class="col-1 card-image not-clickable" data-card="${card.value}-of-${card.suit}">
-        <img src="${card.image}" width="113" height="157">
-        </div>
-        `);
+            setNotClickable(card);
         };
         $("#draw-card").text(`Draw Card`);
     };
 };
 
+
+/**
+ * The following functions check to see what cards are playable for the computer players.
+ */
 const draw2CardsChecker = (hand) => {
     for (let card of hand) {
         if (card.value == "2") {
@@ -575,6 +543,9 @@ const eligibilityChecker = (hand) => {
     };
 };
 
+/**
+ * Pushes the a random playable card from the computer player's hand to the pile.
+ */
 const pushCardToPile = (hand, player) => {
     $(".suit-choice").empty();
     suitChoice = undefined;
@@ -587,24 +558,49 @@ const pushCardToPile = (hand, player) => {
     `);
 }
 
+
 const removeCardFromHand = (hand, player) => {
     if (hand.includes(topCard) == true) {
         let index1 = hand.indexOf(topCard);
         hand.splice(index1, 1);
-        if (topCard.value == "2") {
-            draw2Cards += 2;
-        } else if (topCard.value == "ACE") {
-            clockwise = !clockwise;
-            if (topCard.suit == "SPADES") {
-                draw6Cards += 6
-            }
-        } else if (topCard.value == "JACK") {
-            skip = true;
-        } else if (topCard.value == "8") {
-            if (hand != playerHand) {
-                suitChoice = suits[Math.floor(Math.random() * suits.length)]
-            };
-            $(".suit-choice").text(`${player} has chosen ${suitChoice}`);
-        }
+        gameStateSetter(hand, player);
     };
+}
+
+const gameStateSetter = (hand, player) => {
+    if (topCard.value == "2") {
+        draw2Cards += 2;
+    } else if (topCard.value == "ACE") {
+        clockwise = !clockwise;
+        if (topCard.suit == "SPADES") {
+            draw6Cards += 6
+        }
+    } else if (topCard.value == "JACK") {
+        skip = true;
+    } else if (topCard.value == "8") {
+        if (hand != playerHand) {
+            suitChoice = suits[Math.floor(Math.random() * suits.length)]
+        };
+        $(".suit-choice").text(`${player} has chosen ${suitChoice}`);
+    };
+};
+
+
+/**
+ * The following functions append the HTML document with a new div displaying the card passed through, either clickable or not clickable
+ */
+const setClickable = (card) => {
+    $(".player-hand").append(`
+        <div class="col-1 card-image clickable" data-card="${card.value}-of-${card.suit}">
+        <img src="${card.image}" width="113" height="157">
+        </div>
+        `);
+}
+
+const setNotClickable = (card) => {
+    $(".player-hand").append(`
+        <div class="col-1 card-image not-clickable" data-card="${card.value}-of-${card.suit}">
+        <img src="${card.image}" width="113" height="157">
+        </div>
+        `);
 }
