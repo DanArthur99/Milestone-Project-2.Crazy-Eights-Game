@@ -39,77 +39,77 @@ $(() => {
     initializeGame();
 });
 
-    const initializeGame = () => {
-        $("#start-game").on("click", function () {
-            $("#enter-username").css("display", "block");
-            $(".title-container").css("display", "none");
-        });
-    
-        $("#username-form").one("submit", function (event) {
-            event.preventDefault();
-            userName = $("#user-name").val();
-            sessionStorage.setItem("username", userName);
-            $(this).trigger("submit");
-        });
-    
+const initializeGame = () => {
+    $("#start-game").on("click", function () {
+        $("#enter-username").css("display", "block");
+        $(".title-container").css("display", "none");
+    });
+
+    $("#username-form").one("submit", function (event) {
+        event.preventDefault();
+        userName = $("#user-name").val();
+        sessionStorage.setItem("username", userName);
+        $(this).trigger("submit");
+    });
+
+    $(document).on("click", ".clickable", function () {
+        cardChoiceBuffer($(this).attr("data-card"));
+        $(this).addClass("card-choice");
+        clickEventSetter();
+    });
+
+    $(".no").on("click", function () {
+        $(".card-image").removeClass("card-choice");
+        $(".text-container, .button-container, .suit-container").css("display", "none");
         $(document).on("click", ".clickable", function () {
             cardChoiceBuffer($(this).attr("data-card"));
             $(this).addClass("card-choice");
             clickEventSetter();
         });
-    
-        $(".no").on("click", function () {
-            $(".card-image").removeClass("card-choice");
-            $(".text-container, .button-container, .suit-container").css("display", "none");
-            $(document).on("click", ".clickable", function () {
-                cardChoiceBuffer($(this).attr("data-card"));
-                $(this).addClass("card-choice");
-                clickEventSetter();
-            });
-        });
-    
-        $("#yes").on("click", function () {
-            $(".card-image").removeClass("clickable");
-            $(".card-image").addClass("not-clickable");
-            addToPile();
-            cardChoice = null;
-            $(document).on("click", ".clickable", function () {
-                cardChoiceBuffer($(this).attr("data-card"));
-                $(this).addClass("card-choice");
-                clickEventSetter();
-            });
-        });
-    
-        $(".suit-button").on("click", function () {
-            suitChoice = $(this).attr("id");
-            $(".card-image").removeClass("clickable");
-            $(".card-image").addClass("not-clickable");
-            addToPile();
-            cardChoice = null;
-            $(document).on("click", ".clickable", function () {
-                cardChoiceBuffer($(this).attr("data-card"));
-                $(this).addClass("card-choice");
-                clickEventSetter();
-            });
-        });
-    
-        $("#draw-card").on("click", function () {
-            $(".draw-card-section").css("display", "none");
-            drawCardPlayerClick();
-            $(document).on("click", ".clickable", function () {
-                cardChoiceBuffer($(this).attr("data-card"));
-                $(this).addClass("card-choice");
-                clickEventSetter();
-            })
-        });
-        $("#play-again").on("click", function () {
-            startGame();
-        });
-    
-        startGame();
+    });
 
-    };
-    
+    $("#yes").on("click", function () {
+        $(".card-image").removeClass("clickable");
+        $(".card-image").addClass("not-clickable");
+        addToPile();
+        cardChoice = null;
+        $(document).on("click", ".clickable", function () {
+            cardChoiceBuffer($(this).attr("data-card"));
+            $(this).addClass("card-choice");
+            clickEventSetter();
+        });
+    });
+
+    $(".suit-button").on("click", function () {
+        suitChoice = $(this).attr("id");
+        $(".card-image").removeClass("clickable");
+        $(".card-image").addClass("not-clickable");
+        addToPile();
+        cardChoice = null;
+        $(document).on("click", ".clickable", function () {
+            cardChoiceBuffer($(this).attr("data-card"));
+            $(this).addClass("card-choice");
+            clickEventSetter();
+        });
+    });
+
+    $("#draw-card").on("click", function () {
+        $(".draw-card-section").css("display", "none");
+        drawCardPlayerClick();
+        $(document).on("click", ".clickable", function () {
+            cardChoiceBuffer($(this).attr("data-card"));
+            $(this).addClass("card-choice");
+            clickEventSetter();
+        })
+    });
+    $("#play-again").on("click", function () {
+        startGame();
+    });
+
+    startGame();
+
+};
+
 
 const clickEventSetter = () => {
     $(".text-container").css("display", "block");
@@ -364,7 +364,7 @@ const cp1Turn = () => {
     skip = false;
     console.log("CP1 Turn");
     gameStateChecker(cp1Hand);
-    takeTurn(cp1Hand, "Computer Player 1"); 
+    takeTurn(cp1Hand, "Computer Player 1");
     displayComputerPlayer1Hand();
     if (cp1Hand.length == 0) {
         cp1Score += 1;
@@ -386,7 +386,7 @@ const cp2Turn = () => {
     skip = false;
     console.log("CP2 Turn");
     gameStateChecker(cp2Hand);
-    takeTurn(cp2Hand, "Computer Player 2");   
+    takeTurn(cp2Hand, "Computer Player 2");
     displayComputerPlayer2Hand();
     if (cp2Hand.length == 0) {
         cp2Score += 1;
