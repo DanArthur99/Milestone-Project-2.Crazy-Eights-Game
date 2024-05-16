@@ -231,4 +231,7 @@ img {
     .player-score {
         padding-top: 0;
     }
+    .draw-card-section {
+        margin-top: 20px;
+    }
 }
