@@ -227,6 +227,7 @@ img {
     }
     .suit-choice {
         padding-right: 10px;
+        text-align: center;
     }
     .player-score {
         padding-top: 0;
