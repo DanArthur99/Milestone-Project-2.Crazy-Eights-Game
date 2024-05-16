@@ -68,7 +68,7 @@ const initializeGame = () => {
         });
     });
 
-    $("#yes").on("click", function () {
+    $(".yes").on("click", function () {
         $(".card-image").removeClass("clickable");
         $(".card-image").addClass("not-clickable");
         addToPile();
@@ -81,7 +81,7 @@ const initializeGame = () => {
     });
 
     $(".suit-button").on("click", function () {
-        suitChoice = $(this).attr("id");
+        suitChoice = $(this).attr("data-suit");
         $(".card-image").removeClass("clickable");
         $(".card-image").addClass("not-clickable");
         addToPile();
@@ -182,9 +182,13 @@ const dealInitialHand = () => {
     randomizer = Math.floor(Math.random() * deckSize);
     topCard = shuffledPile[randomizer];
     shuffledPile.splice(randomizer, 1);
-    $(".card-image-pile").html(`
+    $("#card-pile").html(`
     <img src="${topCard.image}" width="113" height="157">
     `);
+    $("#card-pile-phone").html(`
+    <img src="${topCard.image}" width="70" height="98">
+    `);
+
     randomizer = undefined;
 
     displayHand(playerHand);
@@ -211,6 +215,7 @@ const dealHand = (hand) => {
 const displayHand = (hand) => {
     skip = false;
     $(".player-hand").empty();
+    $(".player-hand-phone").empty();
     if (draw6Cards > 0) {
         draw6CardsCheckerPlayer(hand);
     } else if (draw2Cards > 0) {
@@ -244,26 +249,26 @@ const displayChecker = () => {
  */
 const displayComputerPlayer1Hand = () => {
     let cp1DOM = $(".cp1");
+    let cp1DOMPhone = $(".cp1-phone");
     cp1DOM.empty();
+    cp1DOMPhone.empty();
     CPDisplay(cp1Hand, cp1DOM);
+    CPDisplayPhone(cp1Hand, cp1DOMPhone);
     $(".cp1-text").text(`Computer Player 1 - Card Total: ${cp1Hand.length}`)
 
 };
 
 const displayComputerPlayer2Hand = () => {
     let cp2DOM = $(".cp2");
+    let cp2DOMPhone = $(".cp2-phone");
     cp2DOM.empty();
+    cp2DOMPhone.empty();
     CPDisplay(cp2Hand, cp2DOM);
+    CPDisplayPhone(cp2Hand, cp2DOMPhone);
     $(".cp2-text").text(`Computer Player 2 - Card Total: ${cp2Hand.length}`)
 };
 
 const CPDisplay = (hand, DOMElement) => {
-    if (hand.length > 0) {
-        DOMElement.append(`
-        <div class="col-1 face-down-image right">
-            <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
-        </div>`);
-    }
     if (hand.length < 8) {
         for (let i = 0; i < hand.length - 1; i++) {
             faceDownImageLargeOnly(DOMElement);
@@ -273,6 +278,15 @@ const CPDisplay = (hand, DOMElement) => {
             faceDownImageLargeOnly(DOMElement);
         };
     };
+};
+
+const CPDisplayPhone = (hand, DOMElement) => {
+    if (hand.length > 0) {
+        DOMElement.append(`
+        <div class="d-md-none col-1 face-down-image right">
+            <img src="https://www.deckofcardsapi.com/static/img/back.png" width="70" height="98"
+        </div>`);
+    }
 };
 
 const faceDownImageLargeOnly = (DOMElement) => {
@@ -306,10 +320,16 @@ const drawCardPlayerClick = () => {
  */
 const displayHandDrawCard = (hand) => {
     $(".player-hand").empty();
+    $(".player-hand-phone").empty();
     for (let card of hand) {
         $(".player-hand").append(`
         <div class="col-1 card-image not-clickable" id="${card.value}-of-${card.suit}">
         <img src="${card.image}" width="113" height="157">
+        </div>
+        `);
+        $(".player-hand-phone").append(`
+        <div class="col-1 card-image not-clickable" id="${card.value}-of-${card.suit}">
+        <img src="${card.image}" width="70" height="98">
         </div>
         `);
     };
@@ -339,8 +359,11 @@ const addToPile = async () => {
     }
     topCard = cardChoice;
     removeCardFromHand(playerHand, `${sessionStorage.getItem("username")}`)
-    $(".card-image-pile").html(`
+    $("#card-pile").html(`
     <img src="${topCard.image}" width="113" height="157">
+    `);
+    $("#card-pile-phone").html(`
+    <img src="${topCard.image}" width="70" height="98">
     `);
     if (playerHand.length == 0) {
         playerScore += 1;
@@ -558,8 +581,11 @@ const pushCardToPile = (hand, player) => {
     topCard = cpPlayablePile[Math.floor(Math.random() * cpPlayablePile.length)];
     removeCardFromHand(hand, player);
     cpPlayablePile.length = 0;
-    $(".card-image-pile").html(`
+    $("#card-pile").html(`
     <img src="${topCard.image}" width="113" height="157">
+    `);
+    $("#card-pile-phone").html(`
+    <img src="${topCard.image}" width="70" height="98">
     `);
 }
 
@@ -600,6 +626,20 @@ const setClickable = (card) => {
         <img src="${card.image}" width="113" height="157">
         </div>
         `);
+
+    if (card.value == "8") {
+        $(".player-hand-phone").append(`
+        <div class="col-1 card-image clickable" data-bs-toggle="modal" data-bs-target="#confirmation-8" data-card="${card.value}-of-${card.suit}">
+        <img src="${card.image}" width="70" height="98">
+        </div>
+        `);
+    } else {
+        $(".player-hand-phone").append(`
+        <div class="col-1 card-image clickable" data-bs-toggle="modal" data-bs-target="#confirmation" data-card="${card.value}-of-${card.suit}">
+        <img src="${card.image}" width="70" height="98">
+        </div>
+        `);
+    }
 }
 
 const setNotClickable = (card) => {
@@ -608,6 +648,11 @@ const setNotClickable = (card) => {
         <img src="${card.image}" width="113" height="157">
         </div>
         `);
+    $(".player-hand-phone").append(`
+        <div class="col-1 card-image not-clickable" data-card="${card.value}-of-${card.suit}">
+        <img src="${card.image}" width="70" height="98">
+        </div>
+        `);
 };
 
-module.exports = { playerHand };
+// module.exports = { playerHand };

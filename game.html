@@ -18,75 +18,116 @@
 
 <body>
     <div class="container-fluid g-0">
-        <div class="row">
-            <!-- ============ Computer Player 1 section. Empty divs and paragraphs that will be manipulated with the JavaScript ========= -->
-            <div class="col-6 cp1-section">
-                <p class="player-text cp1-text"></p>
-                <p class="player-text cp1-score"></p>
-                <div class="cp1"></div>
+        <div class="normal-screen d-none d-md-block">
+            <div class="row">
+                <!-- ============ Computer Player 1 section. Empty divs and paragraphs that will be manipulated with the JavaScript ========= -->
+                <div class="col-6 cp1-section">
+                    <p class="player-text cp1-text"></p>
+                    <p class="player-text cp1-score"></p>
+                    <div class="cp1"></div>
+                </div>
+                <!-- ============ Computer Player 2 section. Empty divs and paragraphs that will be manipulated with the JavaScript ========= -->
+                <div class="col-6 cp2-section">
+                    <p class="player-text cp2-text"></p>
+                    <p class="player-text cp2-score"></p>
+                    <div class="cp2"></div>
+                </div>
             </div>
-            <!-- ============ Computer Player 2 section. Empty divs and paragraphs that will be manipulated with the JavaScript ========= -->
-            <div class="col-6 cp2-section">
-                <p class="player-text cp2-text"></p>
-                <p class="player-text cp2-score"></p>
-                <div class="cp2"></div>
+
+            <!-- =================== Card Pile section. Displays the current Top Card in game ============== -->
+            <div class="row">
+                <div class="col-12 pile">
+                    <div class="card-image-pile" id="card-pile"></div>
+                </div>
+            </div>
+
+            <!-- ============ Displays the player's current score tally =========== -->
+            <div class="row">
+                <div class="col-md-6 player-score">
+                    <p></p>
+                </div>
+                <div class="col-md-6 suit-choice">
+                    <p></p>
+                </div>
+            </div>
+            <!-- ======= Displays the Player's current hand. Manipulated with the JavaScript ============ -->
+            <div class="row player-hand"></div>
+            <div class="row button-text-row">
+                <div class="col-12 text-container">
+                    <p id="decision-text">Play Card?</p>
+                </div>
+            </div>
+            <div class="row button-row">
+                <div class="col-12 button-container">
+                    <button type="button" class="yes">
+                        Yes
+                    </button>
+                    <button type="button" id="no-not-eight" class="no">
+                        No
+                    </button>
+                </div>
+            </div>
+            <div class="row button-row">
+                <div class="col-12 suit-container">
+                    <button type="button" class="suit-button" data-suit="HEARTS">
+                        <span class="red">Yes - Hearts</span>
+                    </button>
+                    <button type="button" class="suit-button" data-suit="SPADES">
+                        Yes - Spades
+                    </button>
+                    <button type="button" class="suit-button" data-suit="DIAMONDS">
+                        <span class="red">Yes - Diamonds</span>
+                    </button>
+                    <button type="button" class="suit-button" data-suit="CLUBS">
+                        Yes - Clubs <i class="fa-solid fa-club"></i>
+                    </button>
+                    <button type="button" class="no">
+                        No
+                    </button>
+                </div>
             </div>
         </div>
 
-        <!-- =================== Card Pile section. Displays the current Top Card in game ============== -->
-        <div class="row">
-            <div class="col-12 pile">
-                <div class="card-image-pile" id="card-pile"></div>
+
+        <div class="phone-only d-md-none">
+            <div class="row">
+                <!-- ============ Computer Player 1 section. Empty divs and paragraphs that will be manipulated with the JavaScript ========= -->
+                <div class="col-6 cp1-section">
+                    <p class="player-text cp1-text"></p>
+                    <p class="player-text cp1-score"></p>
+                    <div class="cp1-phone"></div>
+                </div>
+                <!-- ============ Computer Player 2 section. Empty divs and paragraphs that will be manipulated with the JavaScript ========= -->
+                <div class="col-6 cp2-section">
+                    <p class="player-text cp2-text"></p>
+                    <p class="player-text cp2-score"></p>
+                    <div class="cp2-phone"></div>
+                </div>
             </div>
+
+            <!-- =================== Card Pile section. Displays the current Top Card in game ============== -->
+            <div class="row">
+                <div class="col-12 pile">
+                    <div class="card-image-pile" id="card-pile-phone"></div>
+                </div>
+            </div>
+
+            <!-- ============ Displays the player's current score tally =========== -->
+            <div class="row">
+                <div class="col-md-6 player-score">
+                    <p></p>
+                </div>
+                <div class="col-md-6 suit-choice">
+                    <p></p>
+                </div>
+            </div>
+            <!-- ======= Displays the Player's current hand. Manipulated with the JavaScript ============ -->
+            <div class="row player-hand-phone"></div>
         </div>
 
-        <!-- ============ Displays the player's current score tally =========== -->
-        <div class="row">
-            <div class="col-md-6 player-score">
-                <p></p>
-            </div>
-            <div class="col-md-6 suit-choice">
-                <p></p>
-            </div>
-        </div>
-        <!-- ======= Displays the Player's current hand. Manipulated with the JavaScript ============ -->
-        <div class="row player-hand"></div>
 
         <!-- ============== Displays the "Play Card?" text ========= -->
-        <div class="row button-text-row">
-            <div class="col-12 text-container">
-                <p id="decision-text">Play Card?</p>
-            </div>
-        </div>
-        <div class="row button-row">
-            <div class="col-12 button-container">
-                <button type="button" id="yes">
-                    Yes
-                </button>
-                <button type="button" id="no-not-eight" class="no">
-                    No
-                </button>
-            </div>
-        </div>
-        <div class="row button-row">
-            <div class="col-12 suit-container">
-                <button type="button" class="suit-button" id="HEARTS">
-                    <span class="red">Yes - Hearts</span>
-                </button>
-                <button type="button" class="suit-button" id="SPADES">
-                    Yes - Spades
-                </button>
-                <button type="button" class="suit-button" id="DIAMONDS">
-                    <span class="red">Yes - Diamonds</span>
-                </button>
-                <button type="button" class="suit-button" id="CLUBS">
-                    Yes - Clubs <i class="fa-solid fa-club"></i>
-                </button>
-                <button type="button" class="no">
-                    No
-                </button>
-            </div>  
-        </div>
+        
         <div class="row draw-card-row">
             <div class="col-12 draw-card-section">
                 <button type="button" id="draw-card">Draw Card</button>
@@ -96,7 +137,38 @@
             <p id="end-of-game-text"></p>
             <button type="button" id="play-again">Start New Game</button>
         </div>
-    </div>
+        
+        <!-- ====== Modal (for Phones) ============ -->
+        <div class="modal fade" id="confirmation" tabindex="-1" aria-labelledby="CardConfirmation" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="CardConfirmation">Play Card?</h1>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary no" data-bs-dismiss="modal">No</button>
+                  <button type="button" class="btn btn-primary yes" data-bs-dismiss="modal">Yes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id="confirmation-8" tabindex="-1" aria-labelledby="cardConfirmation8" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="cardConfirmation8">Choose Suit</h1>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary no" data-bs-dismiss="modal">No</button>
+                  <button type="button" class="btn btn-primary suit-button" data-suit="HEARTS" data-bs-dismiss="modal">Hearts</button>
+                  <button type="button" class="btn btn-primary suit-button" data-suit="SPADES" data-bs-dismiss="modal">Spades</button>
+                  <button type="button" class="btn btn-primary suit-button" data-suit="DIAMONDS" data-bs-dismiss="modal">Diamonds</button>
+                  <button type="button" class="btn btn-primary suit-button" data-suit="CLUBS" data-bs-dismiss="modal">Clubs</button>
+                </div>
+              </div>
+            </div>
+          </div>
     <!-- ============ Bootstrap CDN js link-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

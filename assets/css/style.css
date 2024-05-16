@@ -1,11 +1,9 @@
 body {
     background-color: rgb(255, 255, 159);
     font-family: "Acme", sans-serif;
-    font-size: 1.5rem;
 }
 
 /*-------- Title Page Styling ----------------*/
-
 .title-container {
     margin: 100px auto;
     background-color: orange;
@@ -30,6 +28,7 @@ body {
     margin-bottom: 70px;
     font-family: "Jersey 10", sans-serif;
 }
+
 #enter-username {
     height: 100%;
     margin-top: 50vh;
@@ -43,44 +42,68 @@ body {
     font-size: 14px;
 }
 
-.modal-dialog{
+.modal-dialog {
     overflow-y: initial !important
 }
 
-.modal-body{
+.modal-body {
     height: 50vh;
     overflow-y: auto;
 }
+
 .modal {
     top: 10%;
 }
+
 /*----------- Game Page Styling ---------------------*/
 
-.pile {
-    height: 200px;
+.cp1-section,
+.cp2-section {
+    margin-top: 20px;
 }
-.card-image, .card-image-pile {
+
+.player-text,
+.player-score,
+.suit-choice {
+    font-size: 1.2rem;
+}
+
+;
+
+.cp1-text,
+.cp2-text {
+    margin-top: 40px;
+}
+
+.pile {
+    height: 150px;
+}
+
+.card-image,
+.card-image-pile {
     top: 25%;
     transform: translateY(25%);
     width: 113px;
     height: 157px;
     margin: 0 auto;
     margin-bottom: 20px;
-    
+    padding-left: 2px;
 }
+
+
 .card-image {
-    display: inline-block;
+    display: inline;
 }
 
 .not-clickable {
     opacity: 0.5;
 }
 
-.draw-card-section, 
-.button-container, 
-.play-again-section, 
+.draw-card-section,
+.button-container,
+.play-again-section,
 .suit-container,
-#enter-username, 
+#enter-username,
 .text-container {
     display: none;
     text-align: center;
@@ -88,31 +111,41 @@ body {
 
 
 
-.button-row, .button-text-row, .darw-card-row {
+.button-row,
+.button-text-row,
+.darw-card-row {
     height: 50px;
 }
+
 .button-text-row {
     margin-top: 20px;
 }
 
-.text-container, .button-container {
+.text-container,
+.button-container {
     position: relative;
     width: 100%;
-    
+
 }
-.draw-card-section, .suit-container {
+
+.draw-card-section,
+.suit-container {
     z-index: 2;
     text-align: center;
 }
+
 .play-again-section {
     margin-top: -120px;
 }
+
 .suit-container {
     margin-top: -40px;
 }
+
 .draw-card-section {
-    margin-top: -90px;
+    margin-top: -130px;
 }
+
 .suit-buttons {
     text-align: center;
 }
@@ -123,19 +156,12 @@ body {
     text-align: center;
 }
 
-
-
-#yes, #no-not-eight  {
-    margin: 0 auto;
-    position: absolute;
+#yes {
+    margin-right: 5px;
 }
 
-#yes {
-    left: 40%;
-} 
-
 #no-not-eight {
-    right: 40%;
+    margin-left: 5px;
 }
 
 .card-choice {
@@ -145,15 +171,25 @@ body {
 .face-down-image {
     display: inline-block;
 }
-
-.cp1, .cp2 {
+img {
+    margin: 0 auto;
+}
+.cp1,
+.cp2,
+.cp1-phone,
+.cp2-phone {
     margin-top: 20px;
-    
-}.cp2 {
+
+}
+
+.cp2,
+.cp2-phone {
     text-align: right;
     padding-right: 120px;
 }
-.cp1 {
+
+.cp1,
+.cp1-phone {
     padding-left: 60px;
 }
 
@@ -168,9 +204,31 @@ body {
 
 .player-score {
     padding-left: 50px;
-    padding-top: 50px;
+    padding-top: 10px;
 }
 
 .red {
     color: red;
+}
+
+.player-hand, .player-hand-phone {
+    margin: 0 10px 0 10px;
+}
+@media (max-width: 767px) {
+
+    .player-text,
+    .player-score,
+    .suit-choice {
+        font-size: 0.9rem;
+    }
+    .card-image, .card-image-pile {
+        width: 70px;
+        height: 98px;
+    }
+    .suit-choice {
+        padding-right: 10px;
+    }
+    .player-score {
+        padding-top: 0;
+    }
 }
