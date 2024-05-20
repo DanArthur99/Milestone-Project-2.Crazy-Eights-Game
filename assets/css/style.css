@@ -75,12 +75,20 @@ body {
     overflow-y: auto;
 }
 
+.modal-body-exit {
+    height: 25vh;
+}
+
 .modal {
     top: 10%;
 }
 
 .modal-text p {
     margin-top: 10px;
+}
+
+.modal-footer {
+    text-align: center;
 }
 
 /*----------- Game Page Styling ---------------------*/
@@ -109,12 +117,16 @@ body {
     text-align: center;
 }
 
-.rules-game {
+.rules-game, .exit-game {
     margin-top: -400px;
 }
 
 .pile img {
     margin-top: -40px;
+}
+
+.rules-div, .exit-div {
+    display: inline-block;
 }
 
 .card-image,
@@ -302,5 +314,8 @@ img {
     }
     .rules-game {
         margin-top: -150px
+    }
+    .exit-game {
+        margin-top: -90px;
     }
 }

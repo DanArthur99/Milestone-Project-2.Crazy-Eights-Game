@@ -37,10 +37,14 @@
             <!-- =================== Card Pile section. Displays the current Top Card in game ============== -->
             <div class="row">
                 <div class="col-12 pile">
-                    <button type="button" class="rules-game btn btn-primary " data-bs-toggle="modal"
-                        data-bs-target="#rulesModal">Rules</button>
-                        <button type="button" class="exit-game btn btn-success" data-bs-toggle="modal"
+                    <div class="rules-div">
+                        <button type="button" class="rules-game btn btn-success " data-bs-toggle="modal"
+                            data-bs-target="#rulesModal">Rules</button>
+                    </div>
+                    <div class="exit-div">
+                        <button type="button" class="exit-game btn btn-secondary" data-bs-toggle="modal"
                         data-bs-target="#exitGameModal">Exit</button>
+                    </div>
                     <div class="card-image-pile" id="card-pile"></div>
                 </div>
             </div>
@@ -112,10 +116,14 @@
             <!-- =================== Card Pile section. Displays the current Top Card in game ============== -->
             <div class="row">
                 <div class="col-12 pile">
-                    <button type="button" class="rules-game btn btn-success" data-bs-toggle="modal"
-                        data-bs-target="#rulesModal">Rules</button>
-                    <button type="button" class="exit-game btn btn-secondary" data-bs-toggle="modal"
+                    <div class="rules-div-phone">
+                        <button type="button" class="rules-game btn btn-success " data-bs-toggle="modal"
+                            data-bs-target="#rulesModal">Rules</button>
+                    </div>
+                    <div class="exit-div-phone">
+                        <button type="button" class="exit-game btn btn-secondary" data-bs-toggle="modal"
                         data-bs-target="#exitGameModal">Exit</button>
+                    </div>
                     <div class="card-image-pile" id="card-pile-phone"></div>
                 </div>
             </div>
@@ -170,13 +178,13 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary no" data-bs-dismiss="modal">No</button>
-                        <button type="button" class="btn btn-primary suit-button" data-suit="HEARTS"
+                        <button type="button" class="btn btn-danger suit-button" data-suit="HEARTS"
                             data-bs-dismiss="modal">Hearts</button>
-                        <button type="button" class="btn btn-primary suit-button" data-suit="SPADES"
+                        <button type="button" class="btn btn-dark suit-button" data-suit="SPADES"
                             data-bs-dismiss="modal">Spades</button>
-                        <button type="button" class="btn btn-primary suit-button" data-suit="DIAMONDS"
+                        <button type="button" class="btn btn-danger suit-button" data-suit="DIAMONDS"
                             data-bs-dismiss="modal">Diamonds</button>
-                        <button type="button" class="btn btn-primary suit-button" data-suit="CLUBS"
+                        <button type="button" class="btn btn-dark suit-button" data-suit="CLUBS"
                             data-bs-dismiss="modal">Clubs</button>
                     </div>
                 </div>
@@ -235,7 +243,7 @@
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exitGameLabel">Exit Game</h1>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body modal-body-exit">
                     <div class="modal-text">
                         <p>Are You sure?</p>
                     </div>
