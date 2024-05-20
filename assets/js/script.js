@@ -1,23 +1,24 @@
-let shuffledPile = [];
-let playerHand = [];
-let cp1Hand = [];
-let cp2Hand = [];
-let discardPile = [];
-let cpPlayablePile = [];
-
 const suits = ["HEARTS", "DIAMONDS", "SPADES", "CLUBS"];
 
-let deckSize;
+let gameArrays = {
+    shuffledPile: [],
+    playerHand: [],
+    cp1Hand: [],
+    cp2Hand: [],
+    discardPile: [],
+    cpPlayablePile: []
+}
 
-let draw2Cards;
-let draw6Cards;
-
-let clockwise;
-let skip;
-
-let cardChoice;
-let topCard;
-let suitChoice;
+let gameStates = {
+    deckSize: undefined,
+    draw2Cards: undefined,
+    draw6Cards: undefined,
+    clockwise: undefined,
+    skip: undefined,
+    cardChoice: undefined,
+    topCard: undefined,
+    suitChoice: undefined
+};
 
 let randomizer;
 let newShuffledDeckKey;
@@ -35,7 +36,7 @@ let userName;
 /**
  * This code below sets all the event listeners in the document once ready. jQuery is predominantly used to achieve this
  */
-$(() => {
+document.addEventListener("DOMContentLoaded", function () {
     initializeGame();
 });
 
@@ -61,6 +62,7 @@ const initializeGame = () => {
     $(".no").on("click", function () {
         $(".card-image").removeClass("card-choice");
         $(".text-container, .button-container, .suit-container").css("display", "none");
+        gameStates.cardChoice = null;
         $(document).on("click", ".clickable", function () {
             cardChoiceBuffer($(this).attr("data-card"));
             $(this).addClass("card-choice");
@@ -72,7 +74,7 @@ const initializeGame = () => {
         $(".card-image").removeClass("clickable");
         $(".card-image").addClass("not-clickable");
         addToPile();
-        cardChoice = null;
+        gameStates.cardChoice = null;
         $(document).on("click", ".clickable", function () {
             cardChoiceBuffer($(this).attr("data-card"));
             $(this).addClass("card-choice");
@@ -81,11 +83,11 @@ const initializeGame = () => {
     });
 
     $(".suit-button").on("click", function () {
-        suitChoice = $(this).attr("data-suit");
+        gameStates.suitChoice = $(this).attr("data-suit");
         $(".card-image").removeClass("clickable");
         $(".card-image").addClass("not-clickable");
         addToPile();
-        cardChoice = null;
+        gameStates.cardChoice = null;
         $(document).on("click", ".clickable", function () {
             cardChoiceBuffer($(this).attr("data-card"));
             $(this).addClass("card-choice");
@@ -113,7 +115,7 @@ const initializeGame = () => {
 
 const clickEventSetter = () => {
     $(".text-container").css("display", "block");
-    if (cardChoice.value == "8") {
+    if (gameStates.cardChoice.value == "8") {
         $(".suit-container").css("display", "block");
     } else {
         $(".button-container").css("display", "block");
@@ -126,19 +128,28 @@ const clickEventSetter = () => {
 
 const startGame = async () => {
     // Sets all array and variables to their default values
-    skip = false;
-    clockwise = true;
-    topCard = null;
-    cardChoice = null;
-    playerHand.splice(0, playerHand.length);
-    cp1Hand.splice(0, cp1Hand.length);
-    cp2Hand.splice(0, cp2Hand.length);
-    shuffledPile.splice(0, shuffledPile.length);
-    discardPile.splice(0, discardPile.length);
-    cpPlayablePile.splice(0, cpPlayablePile.length);
-    deckSize = 52;
-    draw2Cards = 0;
-    draw6Cards = 0;
+    resetAll();
+    await shuffleDeck();
+
+    // shuffles deck once document is ready 
+
+};
+
+const resetAll = () => {
+    gameStates.skip = false;
+    gameStates.clockwise = true;
+    gameStates.topCard = null;
+    gameStates.suitChoice = null;
+    gameStates.cardChoice = null;
+    gameArrays.playerHand.splice(0, gameArrays.playerHand.length);
+    gameArrays.cp1Hand.splice(0, gameArrays.cp1Hand.length);
+    gameArrays.cp2Hand.splice(0, gameArrays.cp2Hand.length);
+    gameArrays.shuffledPile.splice(0, gameArrays.shuffledPile.length);
+    gameArrays.discardPile.splice(0, gameArrays.discardPile.length);
+    gameArrays.cpPlayablePile.splice(0, gameArrays.cpPlayablePile.length);
+    gameStates.deckSize = 104;
+    gameStates.draw2Cards = 0;
+    gameStates.draw6Cards = 0;
     // Sets all HTML elements to their default states
     $(".suit-choice").empty();
     $(".player-hand").empty();
@@ -147,11 +158,7 @@ const startGame = async () => {
     $(".player-score").text(`${sessionStorage.getItem("username")} - Your current score: ${playerScore}`);
     $(".cp1-score").text(`Current Score: ${cp1Score}`);
     $(".cp2-score").text(`Current Score: ${cp2Score}`);
-
-    await shuffleDeck(); // shuffles deck once document is ready 
-
-};
-
+}
 
 /**
  * The following functions fetch the deck data from the Deck of Cards API, then "draws" all of these cards into a ShuffledPile array. The players hand is then drawn by randomly selecting
@@ -159,39 +166,40 @@ const startGame = async () => {
  * data inside the card object, and manipulating the HTML to include an <img> with this data as it's source (src).
  */
 const shuffleDeck = async () => {
-    fetch("https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
+    await fetch("https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=2")
         .then(response => response.json())
         .then(response => {
             newShuffledDeckKey = response.deck_id;
-            fetch(`https://www.deckofcardsapi.com/api/deck/${newShuffledDeckKey}/draw/?count=52`)
+            fetch(`https://www.deckofcardsapi.com/api/deck/${newShuffledDeckKey}/draw/?count=104`)
                 .then(response => response.json())
                 .then(deck => {
-                    for (let i = 0; i < 52; i++) {
-                        shuffledPile.push({ "value": deck.cards[i].value, "suit": deck.cards[i].suit, "image": deck.cards[i].image })
+                    for (let i = 0; i < 104; i++) {
+                        gameArrays.shuffledPile.push({ "value": deck.cards[i].value, "suit": deck.cards[i].suit, "image": deck.cards[i].image })
                     };
                     dealInitialHand();
-                });
+
+                }).catch(error => alert("Could not load", error));
         });
 };
 
 // Deals the initial hand for all players
 const dealInitialHand = () => {
-    dealHand(playerHand);
-    dealHand(cp1Hand);
-    dealHand(cp2Hand);
-    randomizer = Math.floor(Math.random() * deckSize);
-    topCard = shuffledPile[randomizer];
-    shuffledPile.splice(randomizer, 1);
+    dealHand(gameArrays.playerHand);
+    dealHand(gameArrays.cp1Hand);
+    dealHand(gameArrays.cp2Hand);
+    randomizer = Math.floor(Math.random() * gameStates.deckSize);
+    gameStates.topCard = gameArrays.shuffledPile[randomizer];
+    gameArrays.shuffledPile.splice(randomizer, 1);
     $("#card-pile").html(`
-    <img src="${topCard.image}" width="113" height="157">
+    <img src="${gameStates.topCard.image}" width="113" height="157">
     `);
     $("#card-pile-phone").html(`
-    <img src="${topCard.image}" width="70" height="98">
+    <img src="${gameStates.topCard.image}" width="70" height="98">
     `);
 
     randomizer = undefined;
 
-    displayHand(playerHand);
+    displayHand(gameArrays.playerHand);
     displayComputerPlayer1Hand();
     displayComputerPlayer2Hand();
 };
@@ -199,10 +207,10 @@ const dealInitialHand = () => {
 // Deal Hand Function
 const dealHand = (hand) => {
     for (let i = 0; i < 8; i++) {
-        randomizer = Math.floor(Math.random() * deckSize);
-        hand.push(shuffledPile[randomizer]);
-        shuffledPile.splice(randomizer, 1);
-        deckSize -= 1;
+        randomizer = Math.floor(Math.random() * gameStates.deckSize);
+        hand.push(gameArrays.shuffledPile[randomizer]);
+        gameArrays.shuffledPile.splice(randomizer, 1);
+        gameStates.deckSize -= 1;
     }
 };
 
@@ -213,14 +221,14 @@ const dealHand = (hand) => {
  * @param {Array} hand The hand that will be passed through (in this case, it is always playerHand)
  */
 const displayHand = (hand) => {
-    skip = false;
+    gameStates.skip = false;
     $(".player-hand").empty();
     $(".player-hand-phone").empty();
-    if (draw6Cards > 0) {
+    if (gameStates.draw6Cards > 0) {
         draw6CardsCheckerPlayer(hand);
-    } else if (draw2Cards > 0) {
+    } else if (gameStates.draw2Cards > 0) {
         draw2CardsCheckerPlayer(hand);
-    } else if (suitChoice) {
+    } else if (gameStates.suitChoice) {
         suitChoiceCheckerPlayer(hand);
     } else {
         eligibilityCheckerPlayer(hand);
@@ -235,7 +243,6 @@ const displayChecker = () => {
     console.log("Player Turn");
     if (clickableCount > 0) {
         $(".draw-card-section").css("display", "none");
-        suitChoice = undefined;
         clickableCount = 0;
     } else {
         $(".draw-card-section").css("display", "block");
@@ -252,9 +259,9 @@ const displayComputerPlayer1Hand = () => {
     let cp1DOMPhone = $(".cp1-phone");
     cp1DOM.empty();
     cp1DOMPhone.empty();
-    CPDisplay(cp1Hand, cp1DOM);
-    CPDisplayPhone(cp1Hand, cp1DOMPhone);
-    $(".cp1-text").text(`Computer Player 1 - Card Total: ${cp1Hand.length}`)
+    CPDisplay(gameArrays.cp1Hand, cp1DOM);
+    CPDisplayPhone(gameArrays.cp1Hand, cp1DOMPhone);
+    $(".cp1-text").text(`Computer Player 1 - Card Total: ${gameArrays.cp1Hand.length}`)
 
 };
 
@@ -263,14 +270,14 @@ const displayComputerPlayer2Hand = () => {
     let cp2DOMPhone = $(".cp2-phone");
     cp2DOM.empty();
     cp2DOMPhone.empty();
-    CPDisplay(cp2Hand, cp2DOM);
-    CPDisplayPhone(cp2Hand, cp2DOMPhone);
-    $(".cp2-text").text(`Computer Player 2 - Card Total: ${cp2Hand.length}`)
+    CPDisplay(gameArrays.cp2Hand, cp2DOM);
+    CPDisplayPhone(gameArrays.cp2Hand, cp2DOMPhone);
+    $(".cp2-text").text(`Computer Player 2 - Card Total: ${gameArrays.cp2Hand.length}`)
 };
 
 const CPDisplay = (hand, DOMElement) => {
     if (hand.length < 8) {
-        for (let i = 0; i < hand.length - 1; i++) {
+        for (let i = 0; i < hand.length; i++) {
             faceDownImageLargeOnly(DOMElement);
         }
     } else {
@@ -302,9 +309,9 @@ const faceDownImageLargeOnly = (DOMElement) => {
  */
 const drawCardPlayerClick = () => {
     $(document).off("click", ".clickable");
-    drawCard(playerHand);
-    displayHandDrawCard(playerHand);
-    if (clockwise == false) {
+    drawCard(gameArrays.playerHand);
+    displayHandDrawCard(gameArrays.playerHand);
+    if (gameStates.clockwise == false) {
         setTimeout(() => {
             cp2Turn();
         }, 1000);
@@ -344,32 +351,33 @@ const cardChoiceBuffer = (string) => {
     for (let word of string.split("-")) {
         words.push(word);
     };
-    let buffer = playerHand.filter(card => {
+    let buffer = gameArrays.playerHand.filter(card => {
         return (card.value === words[0] && card.suit === words[2])
     });
-    cardChoice = buffer[0];
+    gameStates.cardChoice = buffer[0];
 };
 
 const addToPile = async () => {
     $(".suit-choice").empty();
     $(".card-choice").remove();
     $(".text-container, .suit-container, .button-container").css("display", "none");
-    if (topCard) {
-        discardPile.push(topCard);
+    gameStates.suitChoice = undefined;
+    if (gameStates.topCard) {
+        gameArrays.discardPile.push(gameStates.topCard);
     }
-    topCard = cardChoice;
-    removeCardFromHand(playerHand, `${sessionStorage.getItem("username")}`)
+    gameStates.topCard = gameStates.cardChoice;
+    removeCardFromHand(gameArrays.playerHand, `${sessionStorage.getItem("username")}`)
     $("#card-pile").html(`
-    <img src="${topCard.image}" width="113" height="157">
+    <img src="${gameStates.topCard.image}" width="113" height="157">
     `);
     $("#card-pile-phone").html(`
-    <img src="${topCard.image}" width="70" height="98">
+    <img src="${gameStates.topCard.image}" width="70" height="98">
     `);
-    if (playerHand.length == 0) {
+    if (gameArrays.playerHand.length == 0) {
         playerScore += 1;
         $("#end-of-game-text").text("You Win! Play Again?");
         $(".play-again-section").css("display", "block");
-    } else if (clockwise == true && skip == false || clockwise == false && skip) {
+    } else if (gameStates.clockwise == true && gameStates.skip == false || gameStates.clockwise == false && gameStates.skip) {
         setTimeout(() => {
             cp1Turn();
         }, 1000)
@@ -384,21 +392,21 @@ const addToPile = async () => {
  * This functions calls Computer Player 1's Turn
  */
 const cp1Turn = () => {
-    skip = false;
+    gameStates.skip = false;
     console.log("CP1 Turn");
-    gameStateChecker(cp1Hand);
-    takeTurn(cp1Hand, "Computer Player 1");
+    gameStateChecker(gameArrays.cp1Hand);
+    takeTurn(gameArrays.cp1Hand, "Computer Player 1");
     displayComputerPlayer1Hand();
-    if (cp1Hand.length == 0) {
+    if (gameArrays.cp1Hand.length == 0) {
         cp1Score += 1;
         $("#end-of-game-text").text("Computer Player 1 Wins! Play Again?");
         $(".play-again-section").css("display", "block");
-    } else if (clockwise == true & skip == false || clockwise == false && skip) {
+    } else if (gameStates.clockwise == true & gameStates.skip == false || gameStates.clockwise == false && gameStates.skip) {
         setTimeout(() => {
             cp2Turn();
         }, 1000)
     } else {
-        displayHand(playerHand);
+        displayHand(gameArrays.playerHand);
     }
 }
 
@@ -406,17 +414,17 @@ const cp1Turn = () => {
  * This functions calls Computer Player 2's Turn
  */
 const cp2Turn = () => {
-    skip = false;
+    gameStates.skip = false;
     console.log("CP2 Turn");
-    gameStateChecker(cp2Hand);
-    takeTurn(cp2Hand, "Computer Player 2");
+    gameStateChecker(gameArrays.cp2Hand);
+    takeTurn(gameArrays.cp2Hand, "Computer Player 2");
     displayComputerPlayer2Hand();
-    if (cp2Hand.length == 0) {
+    if (gameArrays.cp2Hand.length == 0) {
         cp2Score += 1;
         $("#end-of-game-text").text("Computer Player 2 Wins! Play Again?");
         $(".play-again-section").css("display", "block");
-    } else if (clockwise == true && skip == false || clockwise == false && skip) {
-        displayHand(playerHand);
+    } else if (gameStates.clockwise == true && gameStates.skip == false || gameStates.clockwise == false && gameStates.skip) {
+        displayHand(gameArrays.playerHand);
     } else {
         setTimeout(() => {
             cp1Turn();
@@ -425,11 +433,11 @@ const cp2Turn = () => {
 }
 
 const gameStateChecker = (hand) => {
-    if (draw6Cards > 0) {
+    if (gameStates.draw6Cards > 0) {
         draw6CardsChecker(hand);
-    } else if (draw2Cards > 0) {
+    } else if (gameStates.draw2Cards > 0) {
         draw2CardsChecker(hand);
-    } else if (suitChoice) {
+    } else if (gameStates.suitChoice) {
         suitChoiceChecker(hand);
     } else {
         eligibilityChecker(hand);
@@ -437,7 +445,7 @@ const gameStateChecker = (hand) => {
 };
 
 const takeTurn = (hand, player) => {
-    if (cpPlayablePile.length == 0) {
+    if (gameArrays.cpPlayablePile.length == 0) {
         drawCard(hand);
     } else {
         pushCardToPile(hand, player);
@@ -449,37 +457,37 @@ const takeTurn = (hand, player) => {
  */
 const drawCard = (hand) => {
     emptyPileChecker();
-    if (draw6Cards > 0) {
-        for (let i = 0; i < draw6Cards; i++) {
+    if (gameStates.draw6Cards > 0) {
+        for (let i = 0; i < gameStates.draw6Cards; i++) {
             emptyPileChecker();
             draw(hand);
         };
-        draw6Cards = 0;
-    } else if (draw2Cards > 0) {
-        for (let i = 0; i < draw2Cards; i++) {
+        gameStates.draw6Cards = 0;
+    } else if (gameStates.draw2Cards > 0) {
+        for (let i = 0; i < gameStates.draw2Cards; i++) {
             emptyPileChecker();
             draw(hand);
         };
-        draw2Cards = 0;
+        gameStates.draw2Cards = 0;
     } else {
         draw(hand);
     };
 };
 
 const emptyPileChecker = () => {
-    if (shuffledPile.length < 1) {
-        for (let i = 0; i < discardPile.length; i++) {
-            randomizer = Math.floor(Math.random() * discardPile.length);
-            shuffledPile.push(discardPile[randomizer]);
-            discardPile.splice(randomizer, 1);
+    if (gameArrays.shuffledPile.length < 1) {
+        for (let i = 0; i < gameArrays.discardPile.length; i++) {
+            randomizer = Math.floor(Math.random() * gameArrays.discardPile.length);
+            gameArrays.shuffledPile.push(gameArrays.discardPile[randomizer]);
+            gameArrays.discardPile.splice(randomizer, 1);
         };
     };
 };
 
 const draw = (hand) => {
-    randomizer = Math.floor(Math.random() * shuffledPile.length)
-    hand.push(shuffledPile[randomizer]);
-    shuffledPile.splice(randomizer, 1);
+    randomizer = Math.floor(Math.random() * gameArrays.shuffledPile.length)
+    hand.push(gameArrays.shuffledPile[randomizer]);
+    gameArrays.shuffledPile.splice(randomizer, 1);
 }
 
 
@@ -494,7 +502,7 @@ const draw6CardsCheckerPlayer = (hand) => {
         } else {
             setNotClickable(card);
         };
-        $("#draw-card").text(`Draw ${draw6Cards} Cards`);
+        $("#draw-card").text(`Draw ${gameStates.draw6Cards} Cards`);
     };
 };
 
@@ -506,14 +514,14 @@ const draw2CardsCheckerPlayer = (hand) => {
         } else {
             setNotClickable(card);
         };
-        $("#draw-card").text(`Draw ${draw2Cards} Cards`);
+        $("#draw-card").text(`Draw ${gameStates.draw2Cards} Cards`);
     };
 };
 
 
 const suitChoiceCheckerPlayer = (hand) => {
     for (let card of hand) {
-        if (card.value == "8" || card.suit == suitChoice) {
+        if (card.value == "8" || card.suit == gameStates.suitChoice) {
             setClickable(card);
             clickableCount += 1
         } else {
@@ -525,7 +533,7 @@ const suitChoiceCheckerPlayer = (hand) => {
 
 const eligibilityCheckerPlayer = (hand) => {
     for (let card of hand) {
-        if (card.value == "8" || ((card.suit === topCard.suit) || (card.value === topCard.value))) {
+        if (card.value == "8" || ((card.suit === gameStates.topCard.suit) || (card.value === gameStates.topCard.value))) {
             setClickable(card);
             clickableCount += 1
         } else {
@@ -542,7 +550,7 @@ const eligibilityCheckerPlayer = (hand) => {
 const draw2CardsChecker = (hand) => {
     for (let card of hand) {
         if (card.value == "2") {
-            cpPlayablePile.push(card);
+            gameArrays.cpPlayablePile.push(card);
         };
     };
 }
@@ -550,23 +558,23 @@ const draw2CardsChecker = (hand) => {
 const draw6CardsChecker = (hand) => {
     for (let card of hand) {
         if (card.value == "ACE" && card.suit == "SPADES") {
-            cpPlayablePile.push(card);
+            gameArrays.cpPlayablePile.push(card);
         }
     }
 }
 
 const suitChoiceChecker = (hand) => {
     for (let card of hand) {
-        if (card.value == "8" || card.suit == suitChoice) {
-            cpPlayablePile.push(card);
+        if (card.value == "8" || card.suit == gameStates.suitChoice) {
+            gameArrays.cpPlayablePile.push(card);
         }
     }
 };
 
 const eligibilityChecker = (hand) => {
     for (let card of hand) {
-        if (card.value == "8" || ((card.suit === topCard.suit) || (card.value === topCard.value))) {
-            cpPlayablePile.push(card);
+        if (card.value == "8" || ((card.suit === gameStates.topCard.suit) || (card.value === gameStates.topCard.value))) {
+            gameArrays.cpPlayablePile.push(card);
         };
     };
 };
@@ -576,43 +584,43 @@ const eligibilityChecker = (hand) => {
  */
 const pushCardToPile = (hand, player) => {
     $(".suit-choice").empty();
-    suitChoice = undefined;
-    discardPile.push(topCard);
-    topCard = cpPlayablePile[Math.floor(Math.random() * cpPlayablePile.length)];
+    gameStates.suitChoice = undefined;
+    gameArrays.discardPile.push(gameStates.topCard);
+    gameStates.topCard = gameArrays.cpPlayablePile[Math.floor(Math.random() * gameArrays.cpPlayablePile.length)];
     removeCardFromHand(hand, player);
-    cpPlayablePile.length = 0;
+    gameArrays.cpPlayablePile.length = 0;
     $("#card-pile").html(`
-    <img src="${topCard.image}" width="113" height="157">
+    <img src="${gameStates.topCard.image}" width="113" height="157">
     `);
     $("#card-pile-phone").html(`
-    <img src="${topCard.image}" width="70" height="98">
+    <img src="${gameStates.topCard.image}" width="70" height="98">
     `);
 }
 
 
 const removeCardFromHand = (hand, player) => {
-    if (hand.includes(topCard) == true) {
-        let index1 = hand.indexOf(topCard);
+    if (hand.includes(gameStates.topCard) == true) {
+        let index1 = hand.indexOf(gameStates.topCard);
         hand.splice(index1, 1);
         gameStateSetter(hand, player);
     };
 }
 
 const gameStateSetter = (hand, player) => {
-    if (topCard.value == "2") {
-        draw2Cards += 2;
-    } else if (topCard.value == "ACE") {
-        clockwise = !clockwise;
-        if (topCard.suit == "SPADES") {
-            draw6Cards += 6
+    if (gameStates.topCard.value == "2") {
+        gameStates.draw2Cards += 2;
+    } else if (gameStates.topCard.value == "ACE") {
+        gameStates.clockwise = !gameStates.clockwise;
+        if (gameStates.topCard.suit == "SPADES") {
+            gameStates.draw6Cards += 6
         }
-    } else if (topCard.value == "JACK") {
-        skip = true;
-    } else if (topCard.value == "8") {
-        if (hand != playerHand) {
-            suitChoice = suits[Math.floor(Math.random() * suits.length)]
+    } else if (gameStates.topCard.value == "JACK") {
+        gameStates.skip = true;
+    } else if (gameStates.topCard.value == "8") {
+        if (hand != gameArrays.playerHand) {
+            gameStates.suitChoice = suits[Math.floor(Math.random() * suits.length)]
         };
-        $(".suit-choice").text(`${player} has chosen ${suitChoice}`);
+        $(".suit-choice").text(`${player} has chosen ${gameStates.suitChoice}`);
     };
 };
 
@@ -627,7 +635,7 @@ const setClickable = (card) => {
         </div>
         `);
 
-    if (card.value == "8") {
+    if (card.value == "8") { // checks which modal to enable for mobile users. If the card is an 8, a different modal enabled.
         $(".player-hand-phone").append(`
         <div class="col-1 card-image clickable" data-bs-toggle="modal" data-bs-target="#confirmation-8" data-card="${card.value}-of-${card.suit}">
         <img src="${card.image}" width="70" height="98">
@@ -655,4 +663,14 @@ const setNotClickable = (card) => {
         `);
 };
 
-// module.exports = { playerHand };
+module.exports = {
+    gameArrays,
+    gameStates,
+    dealHand,
+    randomizer,
+    resetAll,
+    pushCardToPile,
+    removeCardFromHand,
+    gameStateSetter,
+    suits
+};
