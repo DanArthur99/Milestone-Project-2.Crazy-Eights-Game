@@ -20,15 +20,21 @@
     <header class="title-container">
         <div class="start-page-header">
             <h1 class="centralize" id="main-title">Welcome to Crazy Eights</h1>
-            <button type="button" id="start-game" class="btn btn-primary">Start New Game</button>
-            <br>
-            <button type="button" id="rules" class="btn btn-primary" data-bs-toggle="modal"
+            <button type="button" class="d-none d-md-inline btn btn-primary start-game">Start New Game</button>
+            <br class="d-none d-md-block">
+            <button type="button" class="d-none d-md-inline btn btn-primary rules" data-bs-toggle="modal"
                 data-bs-target="#rulesModal">
                 Rules
             </button>
         </div>
     </header>
-
+    <section id="start-buttons-phone-only d-block d-md-none">
+        <button type="button" class="btn d-block d-md-none btn-primary start-game start-game-phone">Start New Game</button>
+            <button type="button" class="btn d-block d-md-none btn-primary rules-phone" data-bs-toggle="modal"
+                data-bs-target="#rulesModal">
+                Rules
+            </button>
+    </section>
     <section id="enter-username">
         <form action="game.html" class="text-center" id="username-form">
             <label for="user-name">User Name:</label>

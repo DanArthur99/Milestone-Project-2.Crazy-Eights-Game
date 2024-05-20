@@ -7,12 +7,8 @@ const {
     gameArrays,
     gameStates,
     dealHand,
-    randomizer,
     resetAll,
-    pushCardToPile,
-    removeCardFromHand,
     gameStateSetter,
-    suits
 } = require("../script");
 
 describe("resetAll function works correctly", () => {

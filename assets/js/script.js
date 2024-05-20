@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 const initializeGame = () => {
-    $("#start-game").on("click", function () {
+    $(".start-game").on("click", function () {
         $("#enter-username").css("display", "block");
         $(".title-container").css("display", "none");
     });
@@ -598,14 +598,23 @@ const pushCardToPile = (hand, player) => {
 }
 
 
+/**
+ * Removes the selected card from the passed player's hand
+ * @param {Array} hand 
+ * @param {String} player 
+ */
 const removeCardFromHand = (hand, player) => {
     if (hand.includes(gameStates.topCard) == true) {
-        let index1 = hand.indexOf(gameStates.topCard);
-        hand.splice(index1, 1);
+        let index1 = hand.indexOf(gameStates.topCard); // Finds the index of the topCard within the passed player's hand
+        hand.splice(index1, 1); // Removes this array value
         gameStateSetter(hand, player);
     };
 }
-
+/**
+ * Sets the game state depending on what the top card is
+ * @param {Array} hand 
+ * @param {String} player 
+ */
 const gameStateSetter = (hand, player) => {
     if (gameStates.topCard.value == "2") {
         gameStates.draw2Cards += 2;

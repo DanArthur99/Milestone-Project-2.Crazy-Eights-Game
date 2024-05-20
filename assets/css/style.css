@@ -34,8 +34,19 @@ body {
     margin-top: 50vh;
 }
 
-#rules {
-    margin-top: 20px
+.rules, .rules-phone {
+    margin-top: 20px;
+    width: 150px;
+}
+
+.start-game {
+    width: 150px;
+}
+.start-game-phone {
+    margin: 30px auto 0 auto;
+}
+.rules-phone {
+    margin: 20px auto 0 auto;
 }
 
 .modal-text {
@@ -234,5 +245,14 @@ img {
     }
     .draw-card-section {
         margin-top: 20px;
+    }
+    .title-container {
+        margin: 0;
+        background-color: orange;
+        height: 50vh;
+        width: 100%;
+    }
+    #main-title {
+        font-size: 60px;
     }
 }
