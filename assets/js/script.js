@@ -61,7 +61,6 @@ const homePageListeners = () => {
 }
 const initializeGame = () => {
     
-
     $(document).on("click", ".clickable", function () {
         cardChoiceBuffer($(this).attr("data-card"));
         $(this).addClass("card-choice");
@@ -136,8 +135,6 @@ const startGame = async () => {
     // Sets all array and variables to their default values
     resetAll();
     await shuffleDeck(); // shuffles deck once document is ready 
-
-
 };
 
 const resetAll = () => {
@@ -219,8 +216,6 @@ const dealHand = (hand) => {
     }
 };
 
-
-
 /**
  * Displays the user's hand to the user. Checks to see what the current game state is and what cards are currently playable.
  * @param {Array} hand The hand that will be passed through (in this case, it is always playerHand)
@@ -253,7 +248,6 @@ const displayChecker = () => {
     };
 
 };
-
 
 /**
  * The following functions display the Computer Player's hand on screen
