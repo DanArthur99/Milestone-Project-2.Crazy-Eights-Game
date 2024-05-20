@@ -43,7 +43,6 @@ document.addEventListener("DOMContentLoaded", function () {
         sessionStorage.setItem("username", null);
         homePageListeners();
     }
-    
 });
 
 const homePageListeners = () => {
