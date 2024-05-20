@@ -37,10 +37,16 @@ let userName;
  * This code below sets all the event listeners in the document once ready. jQuery is predominantly used to achieve this
  */
 document.addEventListener("DOMContentLoaded", function () {
-    initializeGame();
+    if (window.location.pathname == "/Milestone-Project-2.Crazy-Eights-Game/game.html") {
+        initializeGame();
+    } else {
+        sessionStorage.setItem("username", null);
+        homePageListeners();
+    }
+    
 });
 
-const initializeGame = () => {
+const homePageListeners = () => {
     $(".start-game").on("click", function () {
         $(".start-buttons-phone-only").css("display", "none");
         $("#enter-username").css("display", "block");
@@ -53,6 +59,9 @@ const initializeGame = () => {
         sessionStorage.setItem("username", userName);
         $(this).trigger("submit");
     });
+}
+const initializeGame = () => {
+    
 
     $(document).on("click", ".clickable", function () {
         cardChoiceBuffer($(this).attr("data-card"));

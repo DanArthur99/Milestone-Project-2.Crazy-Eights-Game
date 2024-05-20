@@ -74,7 +74,6 @@ body {
 .modal {
     top: 10%;
 }
-
 /*----------- Game Page Styling ---------------------*/
 
 .cp1-section,
@@ -237,6 +236,12 @@ img {
 
 .player-hand, .player-hand-phone {
     margin: 0 10px 0 10px;
+}
+#not-found-text {
+    margin: 0 10px 0 10px;
+}
+#go-home-form {
+    margin-top: 20px;
 }
 @media (max-width: 767px) {
 
