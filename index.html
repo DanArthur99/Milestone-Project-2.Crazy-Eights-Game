@@ -28,18 +28,18 @@
             </button>
         </div>
     </header>
-    <section id="start-buttons-phone-only d-block d-md-none">
-        <button type="button" class="btn d-block d-md-none btn-primary start-game start-game-phone">Start New Game</button>
-            <button type="button" class="btn d-block d-md-none btn-primary rules-phone" data-bs-toggle="modal"
+    <section class="start-buttons-phone-only d-md-none">
+        <button type="button" class="btn btn-primary start-game start-game-phone">Start New Game</button>
+            <button type="button" class="btn btn-primary rules-phone" data-bs-toggle="modal"
                 data-bs-target="#rulesModal">
                 Rules
             </button>
     </section>
     <section id="enter-username">
         <form action="game.html" class="text-center" id="username-form">
-            <label for="user-name">User Name:</label>
+            <label for="user-name" id="username-label">User Name:</label>
             <input type="text" id="user-name" name="uname" required>
-            <button type="submit">Start Game</button>
+            <button type="submit" id="start-game-button">Start Game</button>
         </form>
     </section>
 

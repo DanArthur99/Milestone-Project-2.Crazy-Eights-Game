@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const initializeGame = () => {
     $(".start-game").on("click", function () {
+        $(".start-buttons-phone-only").css("display", "none");
         $("#enter-username").css("display", "block");
         $(".title-container").css("display", "none");
     });

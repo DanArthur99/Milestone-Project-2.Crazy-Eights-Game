@@ -48,6 +48,9 @@ body {
 .rules-phone {
     margin: 20px auto 0 auto;
 }
+.start-game-phone, .rules-phone {
+    display: block;
+}
 
 .modal-text {
     font-size: 14px;
@@ -249,10 +252,20 @@ img {
     .title-container {
         margin: 0;
         background-color: orange;
-        height: 50vh;
+        height: 40vh;
         width: 100%;
     }
     #main-title {
         font-size: 60px;
+    }
+    #username-label, #start-game-button {
+        display: block;
+        margin: 0 auto;
+    }
+    #start-game-button {
+        margin-top: 20px;
+    }
+    #username-label {
+        margin-bottom: 20px;
     }
 }
