@@ -37,12 +37,12 @@ let userName;
  * This code below sets all the event listeners in the document once ready. jQuery is predominantly used to achieve this
  */
 document.addEventListener("DOMContentLoaded", function () {
-    // if (window.location.pathname == "/Milestone-Project-2.Crazy-Eights-Game/game.html") {
+    if (window.location.pathname == "/Milestone-Project-2.Crazy-Eights-Game/game.html") {
         initializeGame();
-    //} else {
+    } else {
         //sessionStorage.setItem("username", null);
         homePageListeners();
-    // }
+    }
 });
 
 const homePageListeners = () => {
