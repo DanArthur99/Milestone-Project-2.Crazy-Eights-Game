@@ -2,6 +2,7 @@ html, body
 { 
     overflow-x: hidden; 
 }
+
 body {
     background-color: rgb(255, 255, 159);
     font-family: "Acme", sans-serif;
@@ -48,12 +49,15 @@ body {
 .start-game {
     width: 150px;
 }
+
 .start-game-phone {
     margin: 30px auto 0 auto;
 }
+
 .rules-phone {
     margin: 20px auto 0 auto;
 }
+
 .start-game-phone, .rules-phone {
     display: block;
 }
@@ -74,6 +78,11 @@ body {
 .modal {
     top: 10%;
 }
+
+.modal-text p {
+    margin-top: 10px;
+}
+
 /*----------- Game Page Styling ---------------------*/
 
 .cp1-section,
@@ -88,8 +97,6 @@ body {
     font-size: 1.2rem;
 }
 
-;
-
 .cp1-text,
 .cp2-text {
     margin-top: 40px;
@@ -99,6 +106,15 @@ body {
     height: 150px;
     padding: 0;
     width: 100%;
+    text-align: center;
+}
+
+.rules-game {
+    margin-top: -400px;
+}
+
+.pile img {
+    margin-top: -40px;
 }
 
 .card-image,
@@ -111,7 +127,6 @@ body {
     margin-bottom: 20px;
     padding-left: 2px;
 }
-
 
 .card-image {
     display: inline;
@@ -130,8 +145,6 @@ body {
     display: none;
     text-align: center;
 }
-
-
 
 .button-row,
 .button-text-row,
@@ -193,9 +206,11 @@ body {
 .face-down-image {
     display: inline-block;
 }
+
 img {
     margin: 0 auto;
 }
+
 .cp1,
 .cp2,
 .cp1-phone,
@@ -237,14 +252,16 @@ img {
 .player-hand, .player-hand-phone {
     margin: 0 10px 0 10px;
 }
+
 #not-found-text {
     margin: 0 10px 0 10px;
 }
+
 #go-home-form {
     margin-top: 20px;
 }
-@media (max-width: 767px) {
 
+@media (max-width: 767px) {
     .player-text,
     .player-score,
     .suit-choice {
@@ -282,5 +299,8 @@ img {
     }
     #username-label {
         margin-bottom: 20px;
+    }
+    .rules-game {
+        margin-top: -150px
     }
 }

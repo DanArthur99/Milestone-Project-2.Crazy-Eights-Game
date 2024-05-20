@@ -37,6 +37,8 @@
             <!-- =================== Card Pile section. Displays the current Top Card in game ============== -->
             <div class="row">
                 <div class="col-12 pile">
+                    <button type="button" class="rules-game btn btn-primary " data-bs-toggle="modal"
+                    data-bs-target="#rulesModal">Rules</button>
                     <div class="card-image-pile" id="card-pile"></div>
                 </div>
             </div>
@@ -108,6 +110,8 @@
             <!-- =================== Card Pile section. Displays the current Top Card in game ============== -->
             <div class="row">
                 <div class="col-12 pile">
+                    <button type="button" class="rules-game btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#rulesModal">Rules</button>
                     <div class="card-image-pile" id="card-pile-phone"></div>
                 </div>
             </div>
@@ -175,6 +179,51 @@
             </div>
         </div>
     </div>
+
+    <!-- =========== Rules Modal =============== -->
+    <div class="modal fade" id="rulesModal" tabindex="-1" aria-labelledby="rulesModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="rulesModalLabel">Rules of the Game</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-text">
+                        <p><em>The aim of the game is to be the first to empty your hand!</em></p>
+                        <p>The card you lay must be the same suit or the same number as the top card of the Pile</p>
+                        <p>If you cannot lay a card, you must draw one from the pile.</p>
+                        <p id="special-cards-heading"><strong>Special Cards:</strong></p>
+                        <p><strong><em>2</em></strong>: If a player lays down a 2, the next player must either draw 2
+                            cards
+                            from the pile, or lay
+                            down a
+                            2 themselves. This would accumulate the number the cards the next player has to draw to 4,
+                            and so on.</p>
+                        <p><strong><em>Ace</em></strong>: An Ace changes the direction of play. If this is also an
+                            <strong><em>Ace of Spades</em></strong>, then the next
+                            player after the change of direction must pick up <strong><em>6</em></strong> cards, unless
+                            they
+                            have an Ace of Spades themselves, which would reverse the direction again and accumulate the
+                            required draw
+                            count to <strong><em>12</em></strong>, etc.
+                        </p>
+                        <p><strong><em>Jack</em></strong>: If a player lays down a Jack, the next player's turn is
+                            skipped.</p>
+                        <p><strong><em>8</em></strong>: An 8 is the only card that can be layed at anytime regardless of
+                            suit or number (unless the
+                            previous player has layed a 2, or an Ace of Spades). Upon laying an 8, the player can choose
+                            the
+                            suit that the next player must lay (this can however be overruled if the next player has an
+                            8
+                            themselves).</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     <!-- ============ Bootstrap CDN js link-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
