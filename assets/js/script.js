@@ -124,15 +124,11 @@ const clickEventSetter = () => {
     $(document).off("click", ".clickable");
 };
 
-
-
-
 const startGame = async () => {
     // Sets all array and variables to their default values
     resetAll();
-    await shuffleDeck();
+    await shuffleDeck(); // shuffles deck once document is ready 
 
-    // shuffles deck once document is ready 
 
 };
 
@@ -362,7 +358,6 @@ const addToPile = async () => {
     $(".suit-choice").empty();
     $(".card-choice").remove();
     $(".text-container, .suit-container, .button-container").css("display", "none");
-    gameStates.suitChoice = undefined;
     if (gameStates.topCard) {
         gameArrays.discardPile.push(gameStates.topCard);
     }
@@ -617,20 +612,24 @@ const removeCardFromHand = (hand, player) => {
  * @param {String} player 
  */
 const gameStateSetter = (hand, player) => {
-    if (gameStates.topCard.value == "2") {
-        gameStates.draw2Cards += 2;
-    } else if (gameStates.topCard.value == "ACE") {
-        gameStates.clockwise = !gameStates.clockwise;
-        if (gameStates.topCard.suit == "SPADES") {
-            gameStates.draw6Cards += 6
-        }
-    } else if (gameStates.topCard.value == "JACK") {
-        gameStates.skip = true;
-    } else if (gameStates.topCard.value == "8") {
+    if (gameStates.topCard.value == "8") {
         if (hand != gameArrays.playerHand) {
             gameStates.suitChoice = suits[Math.floor(Math.random() * suits.length)]
         };
         $(".suit-choice").text(`${player} has chosen ${gameStates.suitChoice}`);
+    } else {
+        gameStates.suitChoice = undefined;
+        if (gameStates.topCard.value == "2") {
+            gameStates.draw2Cards += 2;
+        } else if (gameStates.topCard.value == "ACE") {
+            gameStates.clockwise = !gameStates.clockwise;
+            if (gameStates.topCard.suit == "SPADES") {
+                gameStates.draw6Cards += 6
+            }
+        } else if (gameStates.topCard.value == "JACK") {
+            gameStates.skip = true;
+        }
+        console.log(gameStates.suitChoice);
     };
 };
 
