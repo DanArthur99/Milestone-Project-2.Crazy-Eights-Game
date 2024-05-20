@@ -17,6 +17,7 @@
 </head>
 
 <body>
+    <!-- ========== Main Heading Container ============= -->
     <header class="title-container">
         <div class="start-page-header">
             <h1 class="centralize" id="main-title">Welcome to Crazy Eights</h1>
@@ -28,6 +29,8 @@
             </button>
         </div>
     </header>
+
+    <!-- ================== Button Container (Phone Only) =========== -->
     <section class="start-buttons-phone-only d-md-none">
         <button type="button" class="btn btn-primary start-game start-game-phone">Start New Game</button>
             <button type="button" class="btn btn-primary rules-phone" data-bs-toggle="modal"
@@ -35,6 +38,8 @@
                 Rules
             </button>
     </section>
+
+    <!-- =============== Enter Username Section (appears when the user clicks "Start New Game") ============== -->
     <section id="enter-username">
         <form action="game.html" class="text-center" id="username-form">
             <label for="user-name" id="username-label">User Name:</label>
@@ -43,7 +48,7 @@
         </form>
     </section>
 
-    <!-- Modal -->
+    <!-- =========== Modal =============== -->
     <div class="modal fade" id="rulesModal" tabindex="-1" aria-labelledby="rulesModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

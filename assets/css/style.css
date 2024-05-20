@@ -1,6 +1,12 @@
+html, body
+{ 
+    overflow-x: hidden; 
+}
 body {
     background-color: rgb(255, 255, 159);
     font-family: "Acme", sans-serif;
+    min-height: 100vh;
+    width: 100%;
 }
 
 /*-------- Title Page Styling ----------------*/
@@ -74,6 +80,7 @@ body {
 .cp1-section,
 .cp2-section {
     margin-top: 20px;
+    padding: 0;
 }
 
 .player-text,
@@ -91,6 +98,8 @@ body {
 
 .pile {
     height: 150px;
+    padding: 0;
+    width: 100%;
 }
 
 .card-image,
@@ -209,6 +218,7 @@ img {
 
 .player-text {
     text-align: center;
+    margin: 0 20px 0 20px;
 }
 
 .suit-choice {

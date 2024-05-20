@@ -486,9 +486,9 @@ const draw = (hand) => {
     gameArrays.shuffledPile.splice(randomizer, 1);
 }
 
-
 /**
  * The following functions check the state of the game to see what cards are playable for the non-computer player.
+ * @param {Array} hand 
  */
 const draw6CardsCheckerPlayer = (hand) => {
     for (let card of hand) {

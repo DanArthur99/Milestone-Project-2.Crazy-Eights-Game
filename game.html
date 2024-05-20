@@ -17,7 +17,7 @@
 </head>
 
 <body>
-    <div class="container-fluid g-0">
+    <div class="container-fluid g-0 wrapper">
         <div class="normal-screen d-none d-md-block">
             <div class="row">
                 <!-- ============ Computer Player 1 section. Empty divs and paragraphs that will be manipulated with the JavaScript ========= -->
@@ -127,7 +127,7 @@
 
 
         <!-- ============== Displays the "Play Card?" text ========= -->
-        
+
         <div class="row draw-card-row">
             <div class="col-12 draw-card-section">
                 <button type="button" id="draw-card">Draw Card</button>
@@ -137,39 +137,44 @@
             <p id="end-of-game-text"></p>
             <button type="button" id="play-again">Start New Game</button>
         </div>
-        
+
         <!-- ====== Modal (for Phones) ============ -->
         <div class="modal fade" id="confirmation" tabindex="-1" aria-labelledby="CardConfirmation" aria-hidden="true">
             <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="CardConfirmation">Play Card?</h1>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="CardConfirmation">Play Card?</h1>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary no" data-bs-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary yes" data-bs-dismiss="modal">Yes</button>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary no" data-bs-dismiss="modal">No</button>
-                  <button type="button" class="btn btn-primary yes" data-bs-dismiss="modal">Yes</button>
-                </div>
-              </div>
             </div>
-          </div>
-
-          <div class="modal fade" id="confirmation-8" tabindex="-1" aria-labelledby="cardConfirmation8" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="cardConfirmation8">Choose Suit</h1>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary no" data-bs-dismiss="modal">No</button>
-                  <button type="button" class="btn btn-primary suit-button" data-suit="HEARTS" data-bs-dismiss="modal">Hearts</button>
-                  <button type="button" class="btn btn-primary suit-button" data-suit="SPADES" data-bs-dismiss="modal">Spades</button>
-                  <button type="button" class="btn btn-primary suit-button" data-suit="DIAMONDS" data-bs-dismiss="modal">Diamonds</button>
-                  <button type="button" class="btn btn-primary suit-button" data-suit="CLUBS" data-bs-dismiss="modal">Clubs</button>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
+
+        <div class="modal fade" id="confirmation-8" tabindex="-1" aria-labelledby="cardConfirmation8"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="cardConfirmation8">Choose Suit</h1>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary no" data-bs-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary suit-button" data-suit="HEARTS"
+                            data-bs-dismiss="modal">Hearts</button>
+                        <button type="button" class="btn btn-primary suit-button" data-suit="SPADES"
+                            data-bs-dismiss="modal">Spades</button>
+                        <button type="button" class="btn btn-primary suit-button" data-suit="DIAMONDS"
+                            data-bs-dismiss="modal">Diamonds</button>
+                        <button type="button" class="btn btn-primary suit-button" data-suit="CLUBS"
+                            data-bs-dismiss="modal">Clubs</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- ============ Bootstrap CDN js link-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
