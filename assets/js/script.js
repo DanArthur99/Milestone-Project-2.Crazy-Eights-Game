@@ -246,7 +246,6 @@ const displayHand = (hand) => {
  * Checks the number if clickable (playable) cards in the player's hand. If this equals 0, the "Draw Card" button will appear.
  */
 const displayChecker = () => {
-    console.log("Player Turn");
     if (clickableCount > 0) {
         $(".draw-card-section").css("display", "none");
         clickableCount = 0;
@@ -398,7 +397,6 @@ const addToPile = async () => {
  */
 const cp1Turn = () => {
     gameStates.skip = false;
-    console.log("CP1 Turn");
     gameStateChecker(gameArrays.cp1Hand);
     takeTurn(gameArrays.cp1Hand, "Computer Player 1");
     displayComputerPlayer1Hand();
@@ -420,7 +418,6 @@ const cp1Turn = () => {
  */
 const cp2Turn = () => {
     gameStates.skip = false;
-    console.log("CP2 Turn");
     gameStateChecker(gameArrays.cp2Hand);
     takeTurn(gameArrays.cp2Hand, "Computer Player 2");
     displayComputerPlayer2Hand();
@@ -638,7 +635,6 @@ const gameStateSetter = (hand, player) => {
         } else if (gameStates.topCard.value == "JACK") {
             gameStates.skip = true;
         }
-        console.log(gameStates.suitChoice);
     };
 };
 
