@@ -1,12 +1,12 @@
-# Panic Switch Band Website
+# Crazy Eights Online Game
 
-![Panic Switch website shown on various websites](docs/readme-images/am-i-responsive-panic-switch-screenshot.jpg)
+![Panic Switch website shown on various websites](docs/readme-images/am-i-responsive-game.png)
 
 Deployed Website: [Crazy Eight's Online Game](https://danarthur99.github.io/Milestone-Project-2.Crazy-Eights-Game/)
 
-This project is a website for our band PANIC SWITCH, a thrash metal band based in Cheltenham, UK.
+Crazy Eights is a popular shedding style card, similar to UNO, where the goal is to be the first player to empty your hand.
 
-Consisting of five members, our style is a mixture of modern heavy metal along with more traditional thrash metal elements
+The with each turn, the player must lay down a card of the same number of suit as the previous, with some cards having special rules.
 
 ![Last Commit: May 2024](https://img.shields.io/badge/LAST_COMMIT-JANUARY_2024-red)
 ![Languages: 3](https://img.shields.io/badge/LANGUAGES-3-yellow)
@@ -40,25 +40,30 @@ Consisting of five members, our style is a mixture of modern heavy metal along w
     * [Cloning a Repository](#Cloning-a-Repository)
 
 * [Testing](#Testing)
-  * [W3C Validator](#W3C-Validator)
-  * [Lighthouse Testing](#Lighthouse-Testing)
-  * [Wave Accessibiliy Testing](#Wave-Accessibility-TSesting)
-  * [Bugs](#Bugs)
-    * [Solved Bugs](#Solved-Bugs)
-  * [Testing User Stories](#Testing-User-Stories)
-  * [Other Testing](#Other-Testing)
   
 * [Credits](#Credits)
   * [Code](#Code)
   * [Media](#Media)
 
-## Project Goal
+## Project Goal / Rationale
 
-Since our band does not currently have a live website, it was my idea to begin developing one.
+Crazy Eights was a game that I've played many many times and continue to play with my family. Any big family get togethers and party's would more often than not end up with us playing
+a round (or a few) of crazy eights.
 
-The end goal was to have a fully functional (front-end) and aesthetically pleasing webpage that showcases our band, music, as well as good user interaction. This would including appropriate theming and imagery that matches the theme of the band, as well as links, both external and embedded, to our our music. 
+### Rules of Crazy Eights (or the version I grew up with):
 
-I also thought it would be a good idea to add a sign up page that would sign users up to a (as of yet) fictional newsletter with their name, email and country. In turn, this would send them emails about upcoming gigs, new music, etc. (Please not that only the front end aspect of this section is functional. The sign up page at this point exists more as a proof of concept).
+* Mutiple decks of cards may be used.
+* Each player starts with 8 cards
+* The winner is the first player to empty their hand
+* With each turn, the player must lay down a card with the game suit or value as the previous.
+* If the player cannot lay down a card, they must draw a card from the deck and pass the turn to the next player
+* Laying an Ace changes direction of play. If this is also an Ace of Spades, then the next player must also draw 6 cards, unless they themselves also have an Ace of Spades,
+in which case the player can reverse the direction again and accumulate the number of cards the next player must pick up to 12, etc.
+* Laying a 2 means the the next player must lay a 2 down, or draw 2 cards from the pile. If they were to lay another 2, this accumulates the number of cards the next player music draw to 4, etc.
+* Laying a Jack skips the next player's turn.
+* An 8 may be layed at any time (unless the previous player has layed down a 2 or the Ace of Spades). Once layed, the player must choose the suit that the next player must lay. This can be overridden if the next player has an 8 themselves.
+
+It is this history and common knowledge of the game that I have which made it one of the main reasons why I decided to create an online version of this game. While some variations of the game exist online, I have yet to come across one that implements all the extra rules that we used to play (namely "Pick up 2", "Ace reverse", and the "Jack skip a go" functionalities (while the more common version of this rule is the "Queen skip" (skip card is a Queen rather than a Jack), the "Jack skip" is the version of the rule that my family and I grew up playing)). Therefore, I felt it would be a good idea to create a version of the game that implements all of these extra rules.
 
 ## User Experience (UX)
 
@@ -66,21 +71,20 @@ I also thought it would be a good idea to add a sign up page that would sign use
 
 #### Overall Client Goals
 
-1. To have a website that is viewable on different screen sizes
-2. To have a website theme that is aesthetically eye catching and matches the theme of the band
-3. To have a website that is clearly and easily navigatable
+1. To have a game that is viewable and playable on different screen sizes
+2. To have a crazy eights game that is logically functional and easy to follow
+3. To have an overall website that is clear and easy to navigate
 
 #### First Time Visit Goals
 
-1. To have access to the bands current and latest music
-2. To have access to the upcoming gig schedule
-3. To be able to access the bands social media accounts
+1. To be able to set a user name for the game
+2. To have a score incrementer that keeps track of how many rounds of the game have been won by each player
+3. To be able to see the rules at any point in the game (to help first time player get to grips with the game)
 
 #### Returning Visitor Goals
 
-1. To be able to view the latest updates regarding the band
-2. To be able to view and book tickets to the bands upcoming shows
-3. To be able to sign up to an email list keeps me up to with the latest releases, gigs, or merchandise.
+1. To make sure the game has a good and easily usable UI that makes it as easy as possible for the player to use/play
+2. To have the styling and layout visually pleasing so that players don't get visually bored
 
 ### Design
 
@@ -247,6 +251,8 @@ To clone the Panic Switch Website repository:
 
 
 ## Testing
+
+[Testing Document](README.md)
 
 ### W3C Validator
 
