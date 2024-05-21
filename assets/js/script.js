@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (window.location.pathname == "/Milestone-Project-2.Crazy-Eights-Game/game.html") {
         initializeGame();
     } else {
-        //sessionStorage.setItem("username", null);
+        sessionStorage.setItem("username", null);
         homePageListeners();
     }
 });
@@ -307,7 +307,7 @@ const faceDownImageLargeOnly = (DOMElement) => {
  */
 const drawCardPlayerClick = () => {
     $(document).off("click", ".clickable");
-    drawCard(gameArrays.playerHand);
+    drawCard(gameArrays.playerHand, `${sessionStorage.getItem("username")}`);
     displayHandDrawCard(gameArrays.playerHand);
     if (gameStates.clockwise == false) {
         setTimeout(() => {
@@ -441,7 +441,7 @@ const gameStateChecker = (hand) => {
 
 const takeTurn = (hand, player) => {
     if (gameArrays.cpPlayablePile.length == 0) {
-        drawCard(hand);
+        drawCard(hand, player);
     } else {
         pushCardToPile(hand, player);
     };
@@ -450,22 +450,25 @@ const takeTurn = (hand, player) => {
  * 
  * The following function takes the player's hand as a parameter and draws a card from the deck to that player's hand
  */
-const drawCard = (hand) => {
+const drawCard = (hand, player) => {
     emptyPileChecker();
     if (gameStates.draw6Cards > 0) {
         for (let i = 0; i < gameStates.draw6Cards; i++) {
             emptyPileChecker();
             draw(hand);
         };
+        $(".suit-choice").text(`${player} has drawn ${gameStates.draw6Cards} cards`);
         gameStates.draw6Cards = 0;
     } else if (gameStates.draw2Cards > 0) {
         for (let i = 0; i < gameStates.draw2Cards; i++) {
             emptyPileChecker();
             draw(hand);
         };
+        $(".suit-choice").text(`${player} has drawn ${gameStates.draw2Cards} cards`);
         gameStates.draw2Cards = 0;
     } else {
         draw(hand);
+        $(".suit-choice").text(`${player} has drawn a card`);
     };
 };
 
@@ -628,6 +631,7 @@ const gameStateSetter = (hand, player) => {
         } else if (gameStates.topCard.value == "JACK") {
             gameStates.skip = true;
         }
+        $(".suit-choice").text(`${player} has layed ${gameStates.topCard.value} of ${gameStates.topCard.suit}`);
     };
 };
 
@@ -670,7 +674,7 @@ const setNotClickable = (card) => {
         `);
 };
 
-module.exports = {
+//module.exports = {
     gameArrays,
     gameStates,
     dealHand,
@@ -680,4 +684,4 @@ module.exports = {
     removeCardFromHand,
     gameStateSetter,
     suits
-};
+//};
