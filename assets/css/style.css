@@ -308,11 +308,17 @@ img {
     #username-label {
         margin-bottom: 20px;
     }
-    .rules-game {
-        margin-top: -150px
+    .rules-game, .exit-game {
+        padding: 3px 0;
+        text-align: center;
+        font-size: small;
+        width: 40px;
     }
-    .exit-game {
-        margin-top: -90px;
+    .rules-game  {
+        margin-top: -180px;
+    }
+    .exit-game {     
+        margin-top: -120px;
     }
     .suit-choice {
         padding: 0;
