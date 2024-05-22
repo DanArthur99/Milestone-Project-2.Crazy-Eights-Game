@@ -154,7 +154,9 @@ const resetAll = () => {
     gameStates.draw6Cards = 0;
     // Sets all HTML elements to their default states
     $(".suit-choice").empty();
+    $(".player-hand-phone").css("display", "block");
     $(".player-hand").empty();
+    $(".player-hand-phone").empty();
     $("#draw-card").text(`Draw Card`);
     $(".play-again-section").css("display", "none");
     $(".player-score").text(`${sessionStorage.getItem("username")} - Your current score: ${playerScore}`);
@@ -396,6 +398,7 @@ const cp1Turn = () => {
     if (gameArrays.cp1Hand.length == 0) {
         cp1Score += 1;
         $("#end-of-game-text").text("Computer Player 1 Wins! Play Again?");
+        $(".player-hand-phone").css("display", "none")
         $(".play-again-section").css("display", "block");
     } else if (gameStates.clockwise == true & gameStates.skip == false || gameStates.clockwise == false && gameStates.skip) {
         setTimeout(() => {
@@ -417,6 +420,7 @@ const cp2Turn = () => {
     if (gameArrays.cp2Hand.length == 0) {
         cp2Score += 1;
         $("#end-of-game-text").text("Computer Player 2 Wins! Play Again?");
+        $(".player-hand-phone").css("display", "none")
         $(".play-again-section").css("display", "block");
     } else if (gameStates.clockwise == true && gameStates.skip == false || gameStates.clockwise == false && gameStates.skip) {
         displayHand(gameArrays.playerHand);
