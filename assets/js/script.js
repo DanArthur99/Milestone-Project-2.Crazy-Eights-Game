@@ -478,7 +478,8 @@ const drawCard = (hand, player) => {
 
 const emptyPileChecker = () => {
     if (gameArrays.shuffledPile.length < 1) {
-        for (let i = 0; i < gameArrays.discardPile.length; i++) {
+        gameStates.deckSize = gameArrays.discardPile.length;
+        for (let i = 0; i < gameStates.deckSize; i++) {
             randomizer = Math.floor(Math.random() * gameArrays.discardPile.length);
             gameArrays.shuffledPile.push(gameArrays.discardPile[randomizer]);
             gameArrays.discardPile.splice(randomizer, 1);
@@ -678,14 +679,13 @@ const setNotClickable = (card) => {
         `);
 };
 
-//module.exports = {
+module.exports = {
     gameArrays,
     gameStates,
     dealHand,
-    randomizer,
     resetAll,
-    pushCardToPile,
-    removeCardFromHand,
     gameStateSetter,
+    cardChoiceBuffer,
+    emptyPileChecker,
     suits
-//};
+};

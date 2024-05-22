@@ -9,6 +9,8 @@ const {
     dealHand,
     resetAll,
     gameStateSetter,
+    cardChoiceBuffer,
+    emptyPileChecker
 } = require("../script");
 
 describe("resetAll function works correctly", () => {
@@ -22,7 +24,7 @@ describe("resetAll function works correctly", () => {
         gameStates.deckSize = 40,
         gameStates.draw2Cards = 4,
         gameStates.draw6Cards = 6,
-        gameStates.clockwise = 6,
+        gameStates.clockwise = false,
         gameStates.skip = true,
         gameStates.cardChoice = { value: "7", suit: "HEARTS" },
         gameStates.topCard = { value: "7", suit: "HEARTS" }
@@ -30,7 +32,6 @@ describe("resetAll function works correctly", () => {
         resetAll();
     });
     test("The playerHand array should be set to empty once the startGame is called", () => {
-        ;
         expect(gameArrays.playerHand.length).toBe(0);
     });
     test("The shuffledPile Array should be set to empty", () => {
@@ -54,8 +55,23 @@ describe("resetAll function works correctly", () => {
     test("The draw6Cards variable be set to 0", () => {
         expect(gameStates.draw6Cards).toBe(0);
     })
-    test("The deck should be set to 0", () => {
+    test("The draw2Cards variable should be set to 0", () => {
         expect(gameStates.draw2Cards).toBe(0);
+    })
+    test("The clockwise variable should be set to true", () => {
+        expect(gameStates.clockwise).toBe(true);
+    })
+    test("The skip variable should be set to false", () => {
+        expect(gameStates.skip).toBe(false);
+    })
+    test("The cardChoice variable should be set to null", () => {
+        expect(gameStates.cardChoice).toBe(null);
+    })
+    test("The topCard variable should be set to null", () => {
+        expect(gameStates.topCard).toBe(null);
+    })
+    test("The suitChoice variable should be set to 0", () => {
+        expect(gameStates.suitChoice).toBe(null);
     })
 });
 
@@ -78,7 +94,7 @@ describe("Deal Hand function test", () => {
 }) 
 
 describe("gameStateSetter function tests", () => {
-    test("gameStaes will add two to the draw2Cards property if the latest top card is a 2", () => {
+    test("gameStates will add two to the draw2Cards property if the latest top card is a 2", () => {
         gameStates.draw2Cards = 0;
         gameStates.topCard = {suit: "HEARTS", value: "2"};
         gameStateSetter(gameArrays.cp1Hand, "cp1");
@@ -108,4 +124,33 @@ describe("gameStateSetter function tests", () => {
         gameStateSetter(gameArrays.cp1Hand, "cp1");
         expect(gameStates.suitChoice).toBeTruthy();
     });
+})
+
+describe("cardChoiceBuffer function test", () => {
+    beforeEach(() => {
+        gameArrays.playerHand = [{value: "4", suit: "SPADES"}, {value: "6", suit: "HEARTS"}];
+    })
+    test("should assign a value to cardChoice based on the string passed through the function", () => {
+        cardChoiceBuffer("4-of-SPADES");
+        expect(gameStates.cardChoice).toEqual({value: "4", suit: "SPADES"});
+    });
+});
+
+describe("EmptyPileChecker function test", () => {
+    beforeEach(() => {
+        gameArrays.discardPile = [1, 2, 3];
+        gameArrays.shuffledPile = [];
+    })
+    test("contents of discardPile should be transferred to the shuffledPile when called", () => {
+        emptyPileChecker();
+        expect(gameArrays.discardPile.length).toBe(0)
+        expect(gameArrays.shuffledPile.length).toBe(3);
+    })
+    test("contents nothing should happen if the shuffled Pile is not empty", () => {
+        gameArrays.discardPile = [1, 2, 3];
+        gameArrays.shuffledPile = [1];
+        emptyPileChecker();
+        expect(gameArrays.discardPile.length).toBe(3)
+        expect(gameArrays.shuffledPile.length).toBe(1);
+    })
 })
