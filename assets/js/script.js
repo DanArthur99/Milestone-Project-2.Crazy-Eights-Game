@@ -154,6 +154,7 @@ const resetAll = () => {
     gameStates.draw6Cards = 0;
     // Sets all HTML elements to their default states
     $(".suit-choice").empty();
+    $(".player-hand-phone").css("display", "flex");
     $(".player-hand").empty();
     $(".player-hand-phone").empty();
     $("#draw-card").text(`Draw Card`);
