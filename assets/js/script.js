@@ -199,7 +199,6 @@ const shuffleDeck = async () => {
                         gameArrays.shuffledPile.push({ "value": deck.cards[i].value, "suit": deck.cards[i].suit, "image": deck.cards[i].image });
                     }
                     dealInitialHand();
-
                 }).catch((error) => {
                     $(".game-body").html(`
                     <header>
@@ -210,7 +209,7 @@ const shuffleDeck = async () => {
                         <form action="index.html">
                         <button type="submit" class="btn btn-primary start-game start-game-phone">Go Back Home</button>
                     </form>
-                    </section>    
+                    </section>       
                         `), error
                 });
         });
