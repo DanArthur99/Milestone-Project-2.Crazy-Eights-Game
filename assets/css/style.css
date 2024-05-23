@@ -1,3 +1,5 @@
+/*-------- Overall styling ---------*/
+
 html, body
 { 
     overflow-x: hidden; 
@@ -10,7 +12,8 @@ body {
     width: 100%;
 }
 
-/*-------- Title Page Styling ----------------*/
+/*----------- Title Page Styling ----------------*/
+
 .title-container {
     margin: 100px auto;
     background-color: orange;
@@ -25,7 +28,6 @@ body {
     position: absolute;
     width: 100%;
     text-align: center;
-
 }
 
 #main-title {
@@ -62,6 +64,8 @@ body {
     display: block;
 }
 
+/*------------- Modal Styling -------------*/
+
 .modal-text {
     font-size: 14px;
 }
@@ -86,6 +90,7 @@ body {
 .modal-text p {
     margin-top: 10px;
 }
+
 /*----------- Game Page Styling ---------------------*/
 
 .cp1-section,
@@ -268,6 +273,8 @@ img {
 #go-home-form {
     margin-top: 20px;
 }
+
+/*--------- Media Queries ------------*/
 
 @media (max-width: 767px) {
     .player-text,

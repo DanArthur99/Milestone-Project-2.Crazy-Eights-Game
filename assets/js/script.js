@@ -31,11 +31,12 @@ let newShuffledDeckKey; // Deck key obtained from Deck of Cards API is assigned 
 
 let clickableCount = 0; // Keeps a count of the number of playable cards in a player's hand
 
-//
+// Scores for each player
 let playerScore = 0;
 let cp1Score = 0;
 let cp2Score = 0;
 
+// Username variable
 let userName;
 
 
@@ -44,7 +45,7 @@ let userName;
  * This code below sets all the event listeners in the document once ready. jQuery is predominantly used to achieve this
  */
 document.addEventListener("DOMContentLoaded", function () {
-    if (window.location.pathname == "/Milestone-Project-2.Crazy-Eights-Game/game.html") {
+    if (window.location.pathname == "/Milestone-Project-2.Crazy-Eights-Game/game.html") { // Checks if the current HTML page is the game
         initializeGame();
     } else {
         sessionStorage.setItem("username", null);
@@ -52,6 +53,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+/**
+ * Sets all of the event listeners for the Home Page
+ */
 const homePageListeners = () => {
     $(".start-game").on("click", function () {
         $(".start-buttons-phone-only").css("display", "none");
@@ -66,69 +70,76 @@ const homePageListeners = () => {
         $(this).trigger("submit");
     });
 };
+
+/**
+ * Initializes the game by setting all of the click event listeners, before calling the starGame function
+ */
 const initializeGame = () => {
 
     $(document).on("click", ".clickable", function () {
         cardChoiceBuffer($(this).attr("data-card"));
         $(this).addClass("card-choice");
-        clickEventSetter();
+        showChoiceButtons();
     });
 
     $(".no").on("click", function () {
-        $(".card-image").removeClass("card-choice");
+        $(".card-image").removeClass("card-choice"); 
         $(".text-container, .button-container, .suit-container").css("display", "none");
         gameStates.cardChoice = null;
-        $(document).on("click", ".clickable", function () {
+        $(document).on("click", ".clickable", function () { // Resets the click events to on after clicked
             cardChoiceBuffer($(this).attr("data-card"));
             $(this).addClass("card-choice");
-            clickEventSetter();
+            showChoiceButtons();
         });
     });
 
     $(".yes").on("click", function () {
         $(".card-image").removeClass("clickable");
-        $(".card-image").addClass("not-clickable");
+        $(".card-image").addClass("not-clickable"); // Makes the player's hand not clickable while it is not the player's turn
         addToPile();
         gameStates.cardChoice = null;
-        $(document).on("click", ".clickable", function () {
+        $(document).on("click", ".clickable", function () { // Resets the click events to on after clicked
             cardChoiceBuffer($(this).attr("data-card"));
             $(this).addClass("card-choice");
-            clickEventSetter();
+            showChoiceButtons();
         });
     });
 
     $(".suit-button").on("click", function () {
         gameStates.suitChoice = $(this).attr("data-suit");
         $(".card-image").removeClass("clickable");
-        $(".card-image").addClass("not-clickable");
+        $(".card-image").addClass("not-clickable"); // Makes the player's hand not clickable while it is not the player's turn
         addToPile();
         gameStates.cardChoice = null;
-        $(document).on("click", ".clickable", function () {
+        $(document).on("click", ".clickable", function () { // Resets the click events to "on" after clicked
             cardChoiceBuffer($(this).attr("data-card"));
             $(this).addClass("card-choice");
-            clickEventSetter();
+            showChoiceButtons();
         });
     });
 
     $("#draw-card").on("click", function () {
         $(".draw-card-section").css("display", "none");
         drawCardPlayerClick();
-        $(document).on("click", ".clickable", function () {
+        $(document).on("click", ".clickable", function () { // Resets the click events to "on" after clicked
             cardChoiceBuffer($(this).attr("data-card"));
             $(this).addClass("card-choice");
-            clickEventSetter();
+            showChoiceButtons();
         });
     });
-    $("#play-again").on("click", function () {
-        startGame();
+    $("#play-again").on("click", function () { 
+        startGame(); // Calls the startGame function when the play-again button is clicked
     });
 
     startGame();
 
 };
 
-
-const clickEventSetter = () => {
+/**
+ * Displays the "Play Card?" section in the HTML
+ * Called when the yes or suit-button buttons are clicked
+ */
+const showChoiceButtons = () => {
     $(".text-container").css("display", "block");
     if (gameStates.cardChoice.value == "8") {
         $(".suit-container").css("display", "block");
@@ -205,15 +216,8 @@ const dealInitialHand = () => {
     randomizer = Math.floor(Math.random() * gameStates.deckSize);
     gameStates.topCard = gameArrays.shuffledPile[randomizer];
     gameArrays.shuffledPile.splice(randomizer, 1);
-    $("#card-pile").html(`
-    <img src="${gameStates.topCard.image}" width="113" height="157">
-    `);
-    $("#card-pile-phone").html(`
-    <img src="${gameStates.topCard.image}" width="70" height="98">
-    `);
-
+    displayTopCard();
     randomizer = undefined;
-
     displayHand(gameArrays.playerHand);
     displayComputerPlayer1Hand();
     displayComputerPlayer2Hand();
@@ -264,8 +268,19 @@ const displayChecker = () => {
     } else {
         $(".draw-card-section").css("display", "block");
     }
-
 };
+
+/**
+ * Displays the current Top Card on screen
+ */
+const displayTopCard = () => {
+    $("#card-pile").html(`
+    <img src="${gameStates.topCard.image}" alt="${gameStates.topCard.value} of ${gameStates.topCard.suit}" width="113" height="157">
+    `);
+    $("#card-pile-phone").html(`
+    <img src="${gameStates.topCard.image}" alt="${gameStates.topCard.value} of ${gameStates.topCard.suit}" width="70" height="98">
+    `);
+}
 
 /**
  * Displays Computer Player 1's hand on screen.
@@ -278,7 +293,6 @@ const displayComputerPlayer1Hand = () => {
     CPDisplay(gameArrays.cp1Hand, cp1DOM);
     CPDisplayPhone(gameArrays.cp1Hand, cp1DOMPhone);
     $(".cp1-text").text(`Computer Player 1 - Card Total: ${gameArrays.cp1Hand.length}`);
-
 };
 
 /**
@@ -322,7 +336,7 @@ const CPDisplayPhone = (hand, DOMElement) => {
     if (hand.length > 0) {
         DOMElement.append(`
         <div class="d-md-none col-1 face-down-image right">
-            <img src="https://www.deckofcardsapi.com/static/img/back.png" width="70" height="98"
+            <img src="https://www.deckofcardsapi.com/static/img/back.png" alt="card face down image" width="70" height="98"
         </div>`);
     }
 };
@@ -334,7 +348,7 @@ const CPDisplayPhone = (hand, DOMElement) => {
 const faceDownImageLargeOnly = (DOMElement) => {
     DOMElement.append(`
     <div class="col-1 d-none d-md-inline-block face-down-image right">
-        <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
+        <img src="https://www.deckofcardsapi.com/static/img/back.png" alt="card face down image" width="113" height="157">
     </div>`);
 };
 
@@ -367,12 +381,12 @@ const displayHandDrawCard = (hand) => {
     for (let card of hand) {
         $(".player-hand").append(`
         <div class="col-1 card-image not-clickable" id="${card.value}-of-${card.suit}">
-        <img src="${card.image}" width="113" height="157">
+        <img src="${card.image}" alt="${card.value} of ${card.suit}" width="113" height="157">
         </div>
         `);
         $(".player-hand-phone").append(`
         <div class="col-1 card-image not-clickable" id="${card.value}-of-${card.suit}">
-        <img src="${card.image}" width="70" height="98">
+        <img src="${card.image}" alt="${card.value} of ${card.suit}" width="70" height="98">
         </div>
         `);
     }
@@ -406,12 +420,7 @@ const addToPile = async () => {
     }
     gameStates.topCard = gameStates.cardChoice; // sets the new top card
     removeCardFromHand(gameArrays.playerHand, `${sessionStorage.getItem("username")}`);
-    $("#card-pile").html(`
-    <img src="${gameStates.topCard.image}" width="113" height="157">
-    `);
-    $("#card-pile-phone").html(`
-    <img src="${gameStates.topCard.image}" width="70" height="98">
-    `);
+    displayTopCard();
     // Checks who's turn it is next, or whether the game is over
     if (gameArrays.playerHand.length == 0) {
         playerScore += 1;
@@ -666,12 +675,7 @@ const pushCardToPile = (hand, player) => {
     gameStates.topCard = gameArrays.cpPlayablePile[Math.floor(Math.random() * gameArrays.cpPlayablePile.length)];
     removeCardFromHand(hand, player);
     gameArrays.cpPlayablePile.length = 0;
-    $("#card-pile").html(`
-    <img src="${gameStates.topCard.image}" width="113" height="157">
-    `);
-    $("#card-pile-phone").html(`
-    <img src="${gameStates.topCard.image}" width="70" height="98">
-    `);
+    displayTopCard();
 };
 
 
@@ -714,41 +718,45 @@ const gameStateSetter = (hand, player) => {
     }
 };
 
-
 /**
- * The following functions append the HTML document with a new div displaying the card passed through, either clickable or not clickable
+ * The following functions append the HTML document with a new div displaying the card passed through
+ * @param {Object} card 
  */
 const setClickable = (card) => {
     $(".player-hand").append(`
         <div class="col-1 card-image clickable" data-card="${card.value}-of-${card.suit}">
-        <img src="${card.image}" width="113" height="157">
+        <img src="${card.image}" alt="${card.value} of ${card.suit}" width="113" height="157">
         </div>
         `);
-
     if (card.value == "8") { // checks which modal to enable for mobile users. If the card is an 8, a different modal enabled.
         $(".player-hand-phone").append(`
         <div class="col-1 card-image clickable" data-bs-toggle="modal" data-bs-target="#confirmation-8" data-card="${card.value}-of-${card.suit}">
-        <img src="${card.image}" width="70" height="98">
+        <img src="${card.image}" alt="${card.value} of ${card.suit}" width="70" height="98">
         </div>
         `);
     } else {
         $(".player-hand-phone").append(`
         <div class="col-1 card-image clickable" data-bs-toggle="modal" data-bs-target="#confirmation" data-card="${card.value}-of-${card.suit}">
-        <img src="${card.image}" width="70" height="98">
+        <img src="${card.image}" alt="${card.value} of ${card.suit}" width="70" height="98">
         </div>
         `);
     }
 };
 
+/**
+ * The following functions append the HTML document with a new div displaying the card passed through.
+ * dipslayed as not clickable, with css transparency set to 0.5
+ * @param {Object} card 
+ */
 const setNotClickable = (card) => {
     $(".player-hand").append(`
         <div class="col-1 card-image not-clickable" data-card="${card.value}-of-${card.suit}">
-        <img src="${card.image}" width="113" height="157">
+        <img src="${card.image}" alt="${card.value} of ${card.suit}" width="113" height="157">
         </div>
         `);
     $(".player-hand-phone").append(`
         <div class="col-1 card-image not-clickable" data-card="${card.value}-of-${card.suit}">
-        <img src="${card.image}" width="70" height="98">
+        <img src="${card.image}" alt="${card.value} of ${card.suit}" width="70" height="98">
         </div>
         `);
 };

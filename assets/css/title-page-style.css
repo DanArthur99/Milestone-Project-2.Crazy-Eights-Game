@@ -1,3 +1,5 @@
+/*--------- Title Page Styling (stops all overflow, x and y*/
+
 html, body {
     margin: 0; 
     height: 100%; 

@@ -84,7 +84,8 @@ It is this history and common knowledge of the game that I have which made it on
 #### Returning Visitor Goals
 
 1. To make sure the game has a good and easily usable UI that makes it as easy as possible for the player to use/play
-2. To have the styling and layout visually pleasing so that players don't get visually bored
+2. To have the styling and layout visually pleasing so that players don't get visually bored.
+3. 
 
 ### Design
 
@@ -96,32 +97,21 @@ The wireframes for this site were created using [Figma](https://www.figma.com/)
 
 ###### Desktop
 
-![Home Page Wireframe Desktop](docs/wireframes/home-screen-wireframe-desktop.png)
+![Home Page Wireframe Desktop](docs/readme-images/wireframes/home-page-large-screen-wireframe.png)
 
 ###### Mobile
 
-![Home Page Wireframe Mobile](docs/wireframes/home-screen-wireframe-mobile.png)
+![Home Page Wireframe Mobile](docs/readme-images/wireframes/home-page-mobile-wireframe.png)
 
-##### Shows Page Wireframes
+##### Game Page Wireframes
 
 ###### Desktop
 
-![Shows Page Wireframe Desktop](docs/wireframes/shows-page-wireframe-desktop.png)
+![Game Page Wireframe Desktop](docs/readme-images/wireframes/game-page-large-screen-wireframe.png)
 
 ###### Mobile
 
-![Shows Page Wireframe Mobile](docs/wireframes/shows-page-wireframe-mobile.png)
-
-##### Sign Up Page Wireframes
-
-###### Desktop
-
-![Sign Up Page Wireframe Desktop](docs/wireframes/sign-up-wireframe-desktop.png)
-
-###### Mobile
-
-![Sign Up Wireframe Mobile](docs/wireframes/sign-up-wireframe-mobile.png)
-
+![Game Page Wireframe Mobile](docs/readme-images/wireframes/game-page-mobile-wireframe.png)
 
 #### Typography
 
@@ -156,6 +146,8 @@ The programming languages used for this project were:
 * Git - Version Control
 * Github - To save and store changes to the project
 * [Bootstrap (v5.3.2)](https://getbootstrap.com/) - CSS and JS framework used. Used mainly for the navbar, grid structure, and button styling.
+* [jQuery (v3.7.1)](https://jquery.com/) - JavaScript Library used for DOM Manipulation.
+* [Deck of Cards API](https://www.deckofcardsapi.com/) - API used to obtain all the data for the deck(s) of cards, including images of the cards, their value, and their suit.
 * [Google Fonts](https://fonts.google.com/)- Imported selected fonts into external stylesheet, namely "Rubik Glitch" and "Exo 2."
 * [Figma](https://www.figma.com/) - Used to create the wireframes.
 * [Coolors](https://coolors.co/) - Used to create the colour palette images.
@@ -168,52 +160,27 @@ The programming languages used for this project were:
   * Lighthouse - Extension of dev tools used. Gives a score on site performance, accessibiliity, search engine optimization, and best practices in code.
 * [W3C Markup Validation Service](https://validator.w3.org/) - Used for testing HTML validation.
 * [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/) - Used for testing CSS validation.
+* [JSHint JavaScript Code Quality Tool](https://jshint.com/) - Used for testing the quality of the JavaScript Code
 * [Wave Web Accessibility Evaluation Tool](https://wave.webaim.org/extension/) - Used for testing webpage accessibility. 
 
 ### Features
 
-* All Pages:
+#### HTML / CSS
 
-  * A navigation bar, alongside the band logo, which allows the user to navigate easily accross the whole site. The navigation elements are: Home, About, Music, Shows, Social, Sign Up. These are the same for all pages (excluding the Thank You Page and 404 Page). The view of the nav elements changes to a dropdown navbar toggler when viewed on smaller screen sizes, i.e. a mobile phone.
-  * A footer that contains links to our band's social media accounts, these being Facebook, X(Twitter), and Instagram, with their respective icons used to represent each social media site. Same for all pages excluding the Thank You Page and 404 Page.
+* Home Page
+  * Welcome title text saying "Welcome to Crazy Eights", along with two buttons labelled "Start New Game" and "Rules"
+  * The "Start New Game"
 
-* Home Page:
 
-  * A band group photo is used on the top part of the screen to immediately give the users a visual of who we are. A short advertisement of our newest song overlaps the image (on mobile devices, this advertisement has its own section to keep things easily readable and streamlined). This image is also reused for the Sign Up Page, as well as the 404 and Thank You Page
-  * A "Music" section which contains links to our Spotify profile and Amazon Music store, as well the music video for our song "Lethal Intent", which has been embedded into site from YouTube.
-
-* About Page:
-
-  * Contains a short description about the band, namely where we are from and what kind of music we make and play.
-
-* Shows Page:
-
-  * Contains a list of our upcoming and past shows (we currently have no shows lined up, so the "Upcoming Shows" section is empty. However, had we had any shows booked, it is my intention to add a link button to these shows that sends to user to a page where they can buy tickets).
-
-* Sign Up Page:
-
-  * This contains a form that the user can fill out to sign up to a (as of yet) nonexistent newsletter. They can input their first name, last name, email address, and select the country where they are from.
-
-* Thank You Page:
-
-  * Appears when the user submits the form on the sign up page. Displays a message thanking the user for submitting their details, before redirecting them to the homepage after a few seconds
-  * All navigation links have been removed from this page, since the page redirects back to the Home page after 5 seconds.
-
-* 404 Page:
-
-  * Appears when the user enters an unfindable page relating the website, e.g. a typo in the page name url.
-  * Displays a message saying that the page could not be found. 
-  * Like the Thank You Page, all navigation elements have been removed. The only thing that remains is a button that takes the user back to the Home page when clicked. This is located below the main text.  
-
-  ![404 Page Image](docs/readme-images/404.png)
 
 ### Accessibility
 
-* All applicable features and element have the necessary aria-labels and alt attributes, these include the img element on the index page, the social media icons, band logo, and other textless buttons such as the spotify and amazon buttons. This is so that it is easily accessibile for people using screen readers.
+* Semantic HTML has been used, i.e. the use of header, section, and footer.
 
-* Semantic HTML has been used, i.e. the use of header, section, and footer, as well as nav elements and correctly ordered and nested heading tags
+* The correct alt tags are used for all img elements.
 
-* The color contrast is sufficient across the whole site, and text is easy to read and interpret.
+* Contrasting colours are used to make each aspect of the website easily readable and viewable
+
 
 ## Deployment & Local Development
 
