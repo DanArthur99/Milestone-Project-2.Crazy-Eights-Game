@@ -41,14 +41,13 @@ Username Not Empty Check|user is taken to the game page|Press the Start Game but
 #### Game Page Testing
 
 **Feature**|**Expected Outcome**|**Test Action**|**Result**|**Pass/Fail**
-
 :-----:|:-----:|:-----:|:-----:|:-----:
-Card Choice |"Displays the options to play the selected card| wither yes or no"|Click a clickable card|Play card button section is displayed
+Card Choice |Displays the options to play the selected card -  yes or no|Click a clickable card|Play card button section is displayed|Pass
 Card Choice - Phone Screens|Diplays the play card options in a modal|Click a clickable card|Play card modal is displayed|Pass
-Yes Button|"Lays the card to the pile and calls the next turn| card is removed from player's hand"|Click play card? - yes|Card is layed and next turn is called. Card is also removed from hand
+Yes Button|Lays the card to the pile and calls the next turn - card is removed from player's hand|Click play card? - yes|Card is layed and next turn is called. Card is also removed from hand|Pass
 No Button|removes play card options|Click play card? - no|play card button section removed|Pass
 Rules Button Game Page|displays the rules modal when clicked|Click Rules button|Rules modal displayed|Pass
-Exit Button|"displays a modal| asking if the player is ure"|Click Exit button|Modal displayed
-Game State text field|displays text showing what action has just happened with each turn|take Player turn|"Text updates with each turn e.g. ""Player lays 4 of HEARTS"""|Pass
-Clicking an 8 Card|Displays a different set of buttons that allows the user to choose a suit as well|Clicking a card with the value of 8|"Displays a 4 yes options with each suit labelled| and a no button to cancel the choice"
-Clicking an 8 Card - Phone Screens|Displays a different modal that allows the user to choose a suit as well|Clicking a card with the value of 8|"Displays a modal with  4 yes options with each suit labelled| and a no button to cancel the choice"
+Exit Button|displays a modal asking if the player is ure|Click Exit button|Modal displayed|Pass
+Game State text field|displays text showing what action has just happened with each turn|take Player turn|Text updates with each turn e.g. Player lays 4 of HEARTS|Pass
+Clicking an 8 Card|Displays a different set of buttons that allows the user to choose a suit as well|Clicking a card with the value of 8|Displays a 4 yes options with each suit labelled and a no button to cancel the choice|Pass
+Clicking an 8 Card - Phone Screens|Displays a different modal that allows the user to choose a suit as well|Clicking a card with the value of 8|Displays a modal with  4 yes options with each suit labelled and a no button to cancel the choice|Pass
