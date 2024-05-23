@@ -137,11 +137,9 @@ describe("cardChoiceBuffer function test", () => {
 });
 
 describe("EmptyPileChecker function test", () => {
-    beforeEach(() => {
+    test("contents of discardPile should be transferred to the shuffledPile when called", () => {
         gameArrays.discardPile = [1, 2, 3];
         gameArrays.shuffledPile = [];
-    })
-    test("contents of discardPile should be transferred to the shuffledPile when called", () => {
         emptyPileChecker();
         expect(gameArrays.discardPile.length).toBe(0)
         expect(gameArrays.shuffledPile.length).toBe(3);

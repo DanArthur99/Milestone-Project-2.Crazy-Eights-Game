@@ -1,14 +1,20 @@
+/**
+ * Welcome to the script.js file
+ */
+
 const suits = ["HEARTS", "DIAMONDS", "SPADES", "CLUBS"];
 
+// All arrays used throughout the game are stored inside this object
 let gameArrays = {
-    shuffledPile: [],
-    playerHand: [],
-    cp1Hand: [],
-    cp2Hand: [],
-    discardPile: [],
-    cpPlayablePile: []
-}
+    shuffledPile: [],  // Main Pile to draw from in-game
+    playerHand: [], // The user's hand
+    cp1Hand: [], // Computer Player 1's Hand
+    cp2Hand: [], // Computer Player 2's Hand
+    discardPile: [], // Discard pile where the layed cards are stored
+    cpPlayablePile: [] // Array used to store the playable cards from Computer Player's hand array, which is then randomly drawn from
+};
 
+// All variable game states are stores inside this object
 let gameStates = {
     deckSize: undefined,
     draw2Cards: undefined,
@@ -20,11 +26,12 @@ let gameStates = {
     suitChoice: undefined
 };
 
-let randomizer;
-let newShuffledDeckKey;
+let randomizer; // Variable that stores a randomly generated number
+let newShuffledDeckKey; // Deck key obtained from Deck of Cards API is assigned to this variable
 
-let clickableCount = 0;
+let clickableCount = 0; // Keeps a count of the number of playable cards in a player's hand
 
+//
 let playerScore = 0;
 let cp1Score = 0;
 let cp2Score = 0;
@@ -58,9 +65,9 @@ const homePageListeners = () => {
         sessionStorage.setItem("username", userName);
         $(this).trigger("submit");
     });
-}
+};
 const initializeGame = () => {
-    
+
     $(document).on("click", ".clickable", function () {
         cardChoiceBuffer($(this).attr("data-card"));
         $(this).addClass("card-choice");
@@ -110,7 +117,7 @@ const initializeGame = () => {
             cardChoiceBuffer($(this).attr("data-card"));
             $(this).addClass("card-choice");
             clickEventSetter();
-        })
+        });
     });
     $("#play-again").on("click", function () {
         startGame();
@@ -162,12 +169,12 @@ const resetAll = () => {
     $(".player-score").text(`${sessionStorage.getItem("username")} - Your current score: ${playerScore}`);
     $(".cp1-score").text(`Current Score: ${cp1Score}`);
     $(".cp2-score").text(`Current Score: ${cp2Score}`);
-}
+};
 
 /**
- * The following functions fetch the deck data from the Deck of Cards API, then "draws" all of these cards into a ShuffledPile array. The players hand is then drawn by randomly selecting
- * an index of that array, pushing that item to the playerHand array, then deleting that object from the ShuffledPile array. The image of the card is then displayed to the DOM by obtaining the image
- * data inside the card object, and manipulating the HTML to include an <img> with this data as it's source (src).
+ * The following functions fetch the deck data from the Deck of Cards API, then "draws" all of these cards into a ShuffledPile array.
+ * The dealInitialHand function is then called.
+ * A .catch is added to the promise in case the API fails to load correctly, displaying an alert saying "Could not load."
  */
 const shuffleDeck = async () => {
     await fetch("https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=2")
@@ -178,15 +185,19 @@ const shuffleDeck = async () => {
                 .then(response => response.json())
                 .then(deck => {
                     for (let i = 0; i < 104; i++) {
-                        gameArrays.shuffledPile.push({ "value": deck.cards[i].value, "suit": deck.cards[i].suit, "image": deck.cards[i].image })
-                    };
+                        gameArrays.shuffledPile.push({ "value": deck.cards[i].value, "suit": deck.cards[i].suit, "image": deck.cards[i].image });
+                    }
                     dealInitialHand();
 
                 }).catch(error => alert("Could not load", error));
         });
 };
 
-// Deals the initial hand for all players
+/**
+ * Deals the initial hands for all player's in the array, then sets the top card to a random card from what is left.
+ * The HTML is also updated to show the top card. This is done using jQuery.
+ * This then calls the displayHand, displayComputerPlayer1Hand, and displayComputerPlayer2Hand functions.
+ */
 const dealInitialHand = () => {
     dealHand(gameArrays.playerHand);
     dealHand(gameArrays.cp1Hand);
@@ -208,7 +219,10 @@ const dealInitialHand = () => {
     displayComputerPlayer2Hand();
 };
 
-// Deal Hand Function
+/**
+ * Deals 8 cards into the hand passed in as parameter.
+ * @param {Array} hand 
+ */
 const dealHand = (hand) => {
     for (let i = 0; i < 8; i++) {
         randomizer = Math.floor(Math.random() * gameStates.deckSize);
@@ -219,8 +233,9 @@ const dealHand = (hand) => {
 };
 
 /**
- * Displays the user's hand to the user. Checks to see what the current game state is and what cards are currently playable.
- * @param {Array} hand The hand that will be passed through (in this case, it is always playerHand)
+ * Displays the user's hand to the user. 
+ * Checks to see what the current game state is and what cards are currently playable.
+ * @param {Array} hand The hand that will be passed through (in this case, it is always playerHand).
  */
 const displayHand = (hand) => {
     gameStates.skip = false;
@@ -234,12 +249,13 @@ const displayHand = (hand) => {
         suitChoiceCheckerPlayer(hand);
     } else {
         eligibilityCheckerPlayer(hand);
-    };
+    }
     displayChecker();
 };
 
 /**
- * Checks the number if clickable (playable) cards in the player's hand. If this equals 0, the "Draw Card" button will appear.
+ * Checks the number if clickable (playable) cards in the player's hand. 
+ * If this equals 0, the "Draw Card" button will appear.
  */
 const displayChecker = () => {
     if (clickableCount > 0) {
@@ -247,12 +263,12 @@ const displayChecker = () => {
         clickableCount = 0;
     } else {
         $(".draw-card-section").css("display", "block");
-    };
+    }
 
 };
 
 /**
- * The following functions display the Computer Player's hand on screen
+ * Displays Computer Player 1's hand on screen.
  */
 const displayComputerPlayer1Hand = () => {
     let cp1DOM = $(".cp1");
@@ -261,10 +277,13 @@ const displayComputerPlayer1Hand = () => {
     cp1DOMPhone.empty();
     CPDisplay(gameArrays.cp1Hand, cp1DOM);
     CPDisplayPhone(gameArrays.cp1Hand, cp1DOMPhone);
-    $(".cp1-text").text(`Computer Player 1 - Card Total: ${gameArrays.cp1Hand.length}`)
+    $(".cp1-text").text(`Computer Player 1 - Card Total: ${gameArrays.cp1Hand.length}`);
 
 };
 
+/**
+ * Displays Computer Player 2's hand on screen.
+ */
 const displayComputerPlayer2Hand = () => {
     let cp2DOM = $(".cp2");
     let cp2DOMPhone = $(".cp2-phone");
@@ -272,9 +291,15 @@ const displayComputerPlayer2Hand = () => {
     cp2DOMPhone.empty();
     CPDisplay(gameArrays.cp2Hand, cp2DOM);
     CPDisplayPhone(gameArrays.cp2Hand, cp2DOMPhone);
-    $(".cp2-text").text(`Computer Player 2 - Card Total: ${gameArrays.cp2Hand.length}`)
+    $(".cp2-text").text(`Computer Player 2 - Card Total: ${gameArrays.cp2Hand.length}`);
 };
 
+/**
+ * Checks how many cards are left in the Computer Player's array, and displays the number of cards on screen accordingly
+ * Will never display more than 8 per hand on larger screens.
+ * @param {Array} hand 
+ * @param {HTMLElement} DOMElement 
+ */
 const CPDisplay = (hand, DOMElement) => {
     if (hand.length < 8) {
         for (let i = 0; i < hand.length; i++) {
@@ -283,10 +308,16 @@ const CPDisplay = (hand, DOMElement) => {
     } else {
         for (let i = 0; i < 8; i++) {
             faceDownImageLargeOnly(DOMElement);
-        };
-    };
+        }
+    }
 };
 
+/**
+ * Displays the Computer Player's hands for mobile and smaller screens
+ * Will only ever show 1 card if the player has any cards in their hand
+ * @param {Array} hand 
+ * @param {HTMLElement} DOMElement 
+ */
 const CPDisplayPhone = (hand, DOMElement) => {
     if (hand.length > 0) {
         DOMElement.append(`
@@ -296,16 +327,21 @@ const CPDisplayPhone = (hand, DOMElement) => {
     }
 };
 
+/**
+ * Function that contains the jQuery for appending the HTML to show face down card image.
+ * @param {HTMLElement} DOMElement 
+ */
 const faceDownImageLargeOnly = (DOMElement) => {
     DOMElement.append(`
     <div class="col-1 d-none d-md-inline-block face-down-image right">
         <img src="https://www.deckofcardsapi.com/static/img/back.png" width="113" height="157">
     </div>`);
-}
+};
 
 /**
- * Called when the player clicks the "Draw Card" button. First it draws a card to the player's hand. Then it displays the players hand on screen.
- * It then checks to see if the current player movement is clockwise or anti-clockwise, and calls the next player's turn after the check.
+ * Called when the player clicks the "Draw Card" button.
+ * Sets the clickable card element event listeners to off.
+ * Then calls the drawCard and displyHandDrawCard synchronously
  */
 const drawCardPlayerClick = () => {
     $(document).off("click", ".clickable");
@@ -319,11 +355,11 @@ const drawCardPlayerClick = () => {
         setTimeout(() => {
             cp1Turn();
         }, 1000);
-    };
+    }
 };
 
 /**
- * The function ensures that no cards are clickable while it is not the player's turn 
+ * Ensures that no cards are clickable while it is not the player's turn 
  */
 const displayHandDrawCard = (hand) => {
     $(".player-hand").empty();
@@ -339,7 +375,7 @@ const displayHandDrawCard = (hand) => {
         <img src="${card.image}" width="70" height="98">
         </div>
         `);
-    };
+    }
 };
 
 /**
@@ -350,28 +386,33 @@ const cardChoiceBuffer = (string) => {
     let words = [];
     for (let word of string.split("-")) {
         words.push(word);
-    };
+    }
     let buffer = gameArrays.playerHand.filter(card => {
-        return (card.value === words[0] && card.suit === words[2])
+        return (card.value === words[0] && card.suit === words[2]);
     });
     gameStates.cardChoice = buffer[0];
 };
 
+/**
+ * Adds the user's chosen card to the pile
+ * Pushes the previous top card tothe discardPile array, then sets the topCard to the new top card
+ */
 const addToPile = async () => {
     $(".suit-choice").empty();
     $(".card-choice").remove();
     $(".text-container, .suit-container, .button-container").css("display", "none");
     if (gameStates.topCard) {
-        gameArrays.discardPile.push(gameStates.topCard);
+        gameArrays.discardPile.push(gameStates.topCard);  // Checks if the topCard has a value, then pushes it to the discardPile if treu
     }
-    gameStates.topCard = gameStates.cardChoice;
-    removeCardFromHand(gameArrays.playerHand, `${sessionStorage.getItem("username")}`)
+    gameStates.topCard = gameStates.cardChoice; // sets the new top card
+    removeCardFromHand(gameArrays.playerHand, `${sessionStorage.getItem("username")}`);
     $("#card-pile").html(`
     <img src="${gameStates.topCard.image}" width="113" height="157">
     `);
     $("#card-pile-phone").html(`
     <img src="${gameStates.topCard.image}" width="70" height="98">
     `);
+    // Checks who's turn it is next, or whether the game is over
     if (gameArrays.playerHand.length == 0) {
         playerScore += 1;
         $("#end-of-game-text").text("You Win! Play Again?");
@@ -379,12 +420,12 @@ const addToPile = async () => {
     } else if (gameStates.clockwise == true && gameStates.skip == false || gameStates.clockwise == false && gameStates.skip) {
         setTimeout(() => {
             cp1Turn();
-        }, 1000)
+        }, 1000);
     } else {
         setTimeout(() => {
             cp2Turn();
-        }, 1000)
-    };
+        }, 1000);
+    }
 };
 
 /**
@@ -392,45 +433,51 @@ const addToPile = async () => {
  */
 const cp1Turn = () => {
     gameStates.skip = false;
-    gameStateChecker(gameArrays.cp1Hand);
+    gameStateChecker(gameArrays.cp1Hand); // Checks what the current state of the game is
     takeTurn(gameArrays.cp1Hand, "Computer Player 1");
     displayComputerPlayer1Hand();
+    // Checks who's turn it is next, or whether the game is over
     if (gameArrays.cp1Hand.length == 0) {
         cp1Score += 1;
         $("#end-of-game-text").text("Computer Player 1 Wins! Play Again?");
-        $(".player-hand-phone").css("display", "none")
+        $(".player-hand-phone").css("display", "none");
         $(".play-again-section").css("display", "block");
-    } else if (gameStates.clockwise == true & gameStates.skip == false || gameStates.clockwise == false && gameStates.skip) {
+    } else if (gameStates.clockwise == true && gameStates.skip == false || gameStates.clockwise == false && gameStates.skip) {
         setTimeout(() => {
             cp2Turn();
-        }, 1000)
+        }, 1000);
     } else {
         displayHand(gameArrays.playerHand);
     }
-}
+};
 
 /**
  * This functions calls Computer Player 2's Turn
  */
 const cp2Turn = () => {
     gameStates.skip = false;
-    gameStateChecker(gameArrays.cp2Hand);
+    gameStateChecker(gameArrays.cp2Hand); // Checks what the current state of the game is
     takeTurn(gameArrays.cp2Hand, "Computer Player 2");
     displayComputerPlayer2Hand();
+    // Checks who's turn it is next, or whether the game is over
     if (gameArrays.cp2Hand.length == 0) {
         cp2Score += 1;
         $("#end-of-game-text").text("Computer Player 2 Wins! Play Again?");
-        $(".player-hand-phone").css("display", "none")
+        $(".player-hand-phone").css("display", "none");
         $(".play-again-section").css("display", "block");
     } else if (gameStates.clockwise == true && gameStates.skip == false || gameStates.clockwise == false && gameStates.skip) {
         displayHand(gameArrays.playerHand);
     } else {
         setTimeout(() => {
             cp1Turn();
-        }, 1000)
+        }, 1000);
     }
-}
+};
 
+/**
+ * Checks the current state of the game with each hand, and determine what cards are playable and what are not
+ * @param {Array} hand 
+ */
 const gameStateChecker = (hand) => {
     if (gameStates.draw6Cards > 0) {
         draw6CardsChecker(hand);
@@ -440,19 +487,27 @@ const gameStateChecker = (hand) => {
         suitChoiceChecker(hand);
     } else {
         eligibilityChecker(hand);
-    };
+    }
 };
 
+/**
+ * Checks whether there are any playable cards in the array, and determines whether to draw a card or push and card to the pile
+ * @param {Array} hand 
+ * @param {String} player 
+ */
 const takeTurn = (hand, player) => {
     if (gameArrays.cpPlayablePile.length == 0) {
         drawCard(hand, player);
     } else {
         pushCardToPile(hand, player);
-    };
-}
+    }
+};
+
 /**
- * 
- * The following function takes the player's hand as a parameter and draws a card from the deck to that player's hand
+ * Checks which game state the game is currently in (normal, +2, or +6)
+ * The HTML is also updated to display to the user what has happened more clearly
+ * @param {Array} hand 
+ * @param {String} player 
  */
 const drawCard = (hand, player) => {
     emptyPileChecker();
@@ -460,22 +515,26 @@ const drawCard = (hand, player) => {
         for (let i = 0; i < gameStates.draw6Cards; i++) {
             emptyPileChecker();
             draw(hand);
-        };
+        }
         $(".suit-choice").text(`${player} has drawn ${gameStates.draw6Cards} cards`);
         gameStates.draw6Cards = 0;
     } else if (gameStates.draw2Cards > 0) {
         for (let i = 0; i < gameStates.draw2Cards; i++) {
             emptyPileChecker();
             draw(hand);
-        };
+        }
         $(".suit-choice").text(`${player} has drawn ${gameStates.draw2Cards} cards`);
         gameStates.draw2Cards = 0;
     } else {
         draw(hand);
         $(".suit-choice").text(`${player} has drawn a card`);
-    };
+    }
 };
 
+/**
+ * Checks if the shuffledPile is empty
+ * Called every time a card is needed to be drawn
+ */
 const emptyPileChecker = () => {
     if (gameArrays.shuffledPile.length < 1) {
         gameStates.deckSize = gameArrays.discardPile.length;
@@ -483,67 +542,82 @@ const emptyPileChecker = () => {
             randomizer = Math.floor(Math.random() * gameArrays.discardPile.length);
             gameArrays.shuffledPile.push(gameArrays.discardPile[randomizer]);
             gameArrays.discardPile.splice(randomizer, 1);
-        };
-    };
+        }
+    }
 };
 
+/**
+ * Function for actually drawing card from the shuffledPule, and then removing it is from the pile
+ * @param {Array} hand 
+ */
 const draw = (hand) => {
-    randomizer = Math.floor(Math.random() * gameArrays.shuffledPile.length)
+    randomizer = Math.floor(Math.random() * gameArrays.shuffledPile.length);
     hand.push(gameArrays.shuffledPile[randomizer]);
     gameArrays.shuffledPile.splice(randomizer, 1);
-}
+};
 
 /**
- * The following functions check the state of the game to see what cards are playable for the non-computer player.
+ * Sets what cards are playable for the user if the current gameState is +6.
  * @param {Array} hand 
  */
 const draw6CardsCheckerPlayer = (hand) => {
     for (let card of hand) {
         if (card.value == "ACE" && card.suit == "SPADES") {
             setClickable(card);
-            clickableCount += 1
+            clickableCount += 1;
         } else {
             setNotClickable(card);
-        };
+        }
         $("#draw-card").text(`Draw ${gameStates.draw6Cards} Cards`);
-    };
+    }
 };
 
+/**
+ * Sets what cards are playable for the user if the current gameState is +2.
+ * @param {Array} hand 
+ */
 const draw2CardsCheckerPlayer = (hand) => {
     for (let card of hand) {
         if (card.value == "2") {
             setClickable(card);
-            clickableCount += 1
+            clickableCount += 1;
         } else {
             setNotClickable(card);
-        };
+        }
         $("#draw-card").text(`Draw ${gameStates.draw2Cards} Cards`);
-    };
+    }
 };
 
-
+/**
+ * Sets what cards are playable for the user if he previous player has layed down an 8 and chosen a new suit.
+ * @param {Array} hand 
+ */
 const suitChoiceCheckerPlayer = (hand) => {
     for (let card of hand) {
         if (card.value == "8" || card.suit == gameStates.suitChoice) {
             setClickable(card);
-            clickableCount += 1
+            clickableCount += 1;
         } else {
             setNotClickable(card);
-        };
+        }
         $("#draw-card").text(`Draw Card`);
     }
 };
 
+/**
+ * Checks each card in the user's hand to see if the value or suit match the top card.
+ * @param {Array} hand 
+ */
 const eligibilityCheckerPlayer = (hand) => {
     for (let card of hand) {
         if (card.value == "8" || ((card.suit === gameStates.topCard.suit) || (card.value === gameStates.topCard.value))) {
             setClickable(card);
-            clickableCount += 1
+            clickableCount += 1;
         } else {
             setNotClickable(card);
-        };
+        }
         $("#draw-card").text(`Draw Card`);
-    };
+    }
 };
 
 
@@ -554,9 +628,9 @@ const draw2CardsChecker = (hand) => {
     for (let card of hand) {
         if (card.value == "2") {
             gameArrays.cpPlayablePile.push(card);
-        };
-    };
-}
+        }
+    }
+};
 
 const draw6CardsChecker = (hand) => {
     for (let card of hand) {
@@ -564,7 +638,7 @@ const draw6CardsChecker = (hand) => {
             gameArrays.cpPlayablePile.push(card);
         }
     }
-}
+};
 
 const suitChoiceChecker = (hand) => {
     for (let card of hand) {
@@ -578,8 +652,8 @@ const eligibilityChecker = (hand) => {
     for (let card of hand) {
         if (card.value == "8" || ((card.suit === gameStates.topCard.suit) || (card.value === gameStates.topCard.value))) {
             gameArrays.cpPlayablePile.push(card);
-        };
-    };
+        }
+    }
 };
 
 /**
@@ -598,7 +672,7 @@ const pushCardToPile = (hand, player) => {
     $("#card-pile-phone").html(`
     <img src="${gameStates.topCard.image}" width="70" height="98">
     `);
-}
+};
 
 
 /**
@@ -611,8 +685,8 @@ const removeCardFromHand = (hand, player) => {
         let index1 = hand.indexOf(gameStates.topCard); // Finds the index of the topCard within the passed player's hand
         hand.splice(index1, 1); // Removes this array value
         gameStateSetter(hand, player);
-    };
-}
+    }
+};
 /**
  * Sets the game state depending on what the top card is
  * @param {Array} hand 
@@ -621,8 +695,8 @@ const removeCardFromHand = (hand, player) => {
 const gameStateSetter = (hand, player) => {
     if (gameStates.topCard.value == "8") {
         if (hand != gameArrays.playerHand) {
-            gameStates.suitChoice = suits[Math.floor(Math.random() * suits.length)]
-        };
+            gameStates.suitChoice = suits[Math.floor(Math.random() * suits.length)];
+        }
         $(".suit-choice").text(`${player} has chosen ${gameStates.suitChoice}`);
     } else {
         gameStates.suitChoice = undefined;
@@ -631,13 +705,13 @@ const gameStateSetter = (hand, player) => {
         } else if (gameStates.topCard.value == "ACE") {
             gameStates.clockwise = !gameStates.clockwise;
             if (gameStates.topCard.suit == "SPADES") {
-                gameStates.draw6Cards += 6
+                gameStates.draw6Cards += 6;
             }
         } else if (gameStates.topCard.value == "JACK") {
             gameStates.skip = true;
         }
         $(".suit-choice").text(`${player} has layed ${gameStates.topCard.value} of ${gameStates.topCard.suit}`);
-    };
+    }
 };
 
 
@@ -664,7 +738,7 @@ const setClickable = (card) => {
         </div>
         `);
     }
-}
+};
 
 const setNotClickable = (card) => {
     $(".player-hand").append(`
