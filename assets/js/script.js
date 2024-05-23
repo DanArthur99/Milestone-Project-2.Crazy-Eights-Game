@@ -83,7 +83,7 @@ const initializeGame = () => {
     });
 
     $(".no").on("click", function () {
-        $(".card-image").removeClass("card-choice"); 
+        $(".card-image").removeClass("card-choice");
         $(".text-container, .button-container, .suit-container").css("display", "none");
         gameStates.cardChoice = null;
         $(document).on("click", ".clickable", function () { // Resets the click events to on after clicked
@@ -127,7 +127,7 @@ const initializeGame = () => {
             showChoiceButtons();
         });
     });
-    $("#play-again").on("click", function () { 
+    $("#play-again").on("click", function () {
         startGame(); // Calls the startGame function when the play-again button is clicked
     });
 
@@ -200,7 +200,19 @@ const shuffleDeck = async () => {
                     }
                     dealInitialHand();
 
-                }).catch(error => alert("Could not load", error));
+                }).catch((error) => {
+                    $(".game-body").html(`
+                    <header>
+                        <h1>Apologies, we seem to have encountered a problem</h1>
+                    </header>
+                    <section class="start-buttons-phone-only d-md-none">
+                        <p>Please click to button below to return to the home page</p>
+                        <form action="index.html">
+                        <button type="submit" class="btn btn-primary start-game start-game-phone">Go Back Home</button>
+                    </form>
+                    </section>    
+                        `), error
+                });
         });
 };
 
