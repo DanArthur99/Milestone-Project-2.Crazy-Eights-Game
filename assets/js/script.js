@@ -39,10 +39,10 @@ let cp2Score = 0;
 // Username variable
 let userName;
 
-
 window.addEventListener("error", (event) => {
-   console.log(event.message);
-})
+    console.log(error);
+    errorHandler();
+});
 /**
  * This code below sets all the event listeners in the document once ready. jQuery is predominantly used to achieve this
  */
@@ -787,7 +787,7 @@ const setNotClickable = (card) => {
         `);
 };
 
-module.exports = {
+/// module.exports = {
     gameArrays,
     gameStates,
     dealHand,
@@ -797,4 +797,4 @@ module.exports = {
     emptyPileChecker,
     draw,
     suits
-};
+// };
