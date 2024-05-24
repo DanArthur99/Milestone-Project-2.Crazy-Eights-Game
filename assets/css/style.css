@@ -309,6 +309,13 @@ img {
 }
 
 /*--------- Media Queries ------------*/
+@media (min-width: 992px) {
+    #enter-username {
+        margin-left: 29vw;
+        margin-right: 29vw;
+    }   
+}
+
 
 @media (max-width: 767px) {
     .player-text,
