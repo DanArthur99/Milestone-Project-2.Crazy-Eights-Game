@@ -85,116 +85,77 @@ Home button test|Should take the user back to the Home page when click|Click Go 
 
 ![Home Page W3C Validator](docs/testing/index-page-w3c-validation.png)
 
-#### About Page
+#### Game Page
 
-![About Page W3C Validator](docs/testing/about-page-w3c-validation.png)
-
-#### Shows Page
-
-![Shows Page W3C Validator](docs/testing/shows-page-w3c-validation.png)
-
-#### Sign Up Page
-
-![Sign Up Page W3C Validator](docs/testing/sign-up-w3c-validation.png)
-
-#### Thank You Page
-
-![Thank You Page W3C Validator](docs/testing/thank-you-w3c-validation.png)
+![Game Page W3C Validator](docs/testing/game-page-w3c-validation.png)
 
 #### 404 Page
 
 ![404 Page W3C Validator](docs/testing/404-page-w3c-validation.png)
 
-#### Stylesheet
+#### Stylesheets
+
+##### Main Stylesheet
 
 ![Stylesheet W3C Validator](docs/testing/stylesheet-w3c-validation.png)
+
+##### Title Page Only Stylesheet
+
+![Title Page Stylesheet W3C Validator](docs/testing/title-page-stylesheet-w3c-validation.png)
 
 ### Lighthouse Testing
 
 #### Home Page
 
-![Home Page Lighthouse Test](docs/testing/index-page-lighthouse-test.png)
+##### Desktop
 
-* The main issue I am getting from the lighthouse test is performance issues, which is in part due to the embedded youtube video (iframe) that has to load in, as well the numerous images and animations on the page. When I originally tested the page on the lighthouse test, I was getting scores in the 30s. To fix this issue, I used code from a repository called Lite-YouTube-Embed, written by paulirish ([see Credits section](#Credits)), which allows the page to 'lazy-load' the embedded youtube video, and only loads in the iframe when the 'facade' is clicked.
-* Other issues I was getting were due to image file sizes. In the end, I ended up converting all jpg images into webp format, then further compressing them so that the file sizes were not too big.
+![Home Page Desktop Lighthouse Test](docs/testing/index-page-lighthouse-test-desktop.png)
 
-#### About Page
+##### Mobile
 
-![About Page Lighthouse Test](docs/testing/about-page-lighthouse-test.png)
+![Home Page Mobile Lighthouse Test](docs/testing/index-page-lighthouse-test-mobile.png)
 
-#### Shows Page
+#### Game Page
 
-![Shows Page Lighthouse Test](docs/testing/shows-page-lighthouse-test.png)
+##### Desktop
 
-* The performance for the shows page is scoring slightly lower. The largest contentful paint element is in part to blame, which has a 1,300 ms load delay.
+![Game Page Desktop Lighthouse Test](docs/testing/game-page-lighthouse-test-desktop.png)
 
-![Shows Page Largest Contentful Paint](docs/testing/shows-largest-content-paint.png)
+##### Mobile
 
-#### Sign Up Page
-
-![Sign Up Page Lighthouse Test](docs/testing/sign-up-lighthouse-test.png)
-
-* The performance is showing slightly below the rest of the criteria due to the largest contentful paint element, which is the band photo background at the top of the screen.
-
-![Sign Up Page Largest Contentful Paint](docs/testing/sign-up-lcp.png)
-
-#### Thank You Page
-
-![Thank You Page Lighthouse Test](docs/testing/thank-you-lighthouse-test.png)
-
-* The only reason the best accessibility section is scoring lower is because of the meta refresh redirect tag. This is intentional, as I wanted the user to be redirected to the homepage once 'signing up.'
-
-![Thank You Page Lighthouse Accessibility Score](docs/testing/thank-you-lighthouse-accessibility.png)
+![Game Page Mobile Lighthouse Test](docs/testing/game-page-lighthouse-test-mobile.png)
 
 #### 404 Page
 
-![404 Page Lighthouse Test](docs/testing/404-page-lighthouse-test.png)
+##### Desktop
+
+![404 Page Lighthouse Test](docs/testing/404-page-lighthouse-test-desktop.png)
+
+##### Mobile
+
+![404 Page Lighthouse Test](docs/testing/404-page-lighthouse-test-mobile.png)
 
 ### Wave Accessibility Testing
 
 #### Home Page
 
-![Home Page Wave Test](docs/testing/index-page-wave-accessibility.png)
+![Home Page Wave Test Summary](docs/testing/index-page-wave-accessibility-summary.png)
 
-  * While no errors occurred, there is an alert for a redundant link. This however is intentional, as it is my design choice to have the band logo double as a link back to the home page no matter what page the user is on (the only exceptions to this are the thank you page and the 404 page).
+![Home Page Wave Test Details](docs/testing/index-page-wave-accessibility-details.png)
 
-![Redundant Link](docs/testing/redundant-link-image.png)
+#### Game Page
 
-#### About Page
+![Game Page Wave Test Summary](docs/testing/game-page-wave-accessibility-summary.png)
 
-![About Page Wave Test](docs/testing/about-page-wave-accessibility.png)
+![Game Page Wave Test Details](docs/testing/game-page-wave-accessibility-details.png)
 
-  * Once again there are alerts for redundant links. However, this is part of my design choice.
-
-![Redundant Links](docs/testing/two-redundant-links-image.png)
-
-#### Shows Page
-
-![Shows Page Wave Test](docs/testing/shows-page-wave-accessibility.png)
-
-  * As before, the redundant links alerts also appear.
-
-![Redundant Links](docs/testing/two-redundant-links-image.png)
-
-#### Sign Up Page
-
-![Sign Up Page Wave Test](docs/testing/sign-up-wave-accessibility.png)
-
-  * Same redundant links alerts as previous.
-
-![Redundant Links](docs/testing/two-redundant-links-image.png)
-
-#### Thank You Page
-
-![Thank You Page Wave Test](docs/testing/thank-you-wave-accessibility.png)
-
-  * As with the lighthouse testing, the only reason an error is occuring is because of the meta refresh redirect tag, which is an intentional design choice of mine, as I wanted the user to be redirected to the home page.
-
-![Refresh Wave Error](docs/testing/refresh-wave-error.png)
+* There is 1 alert appearing here about No Page Regions. This is due to the lack of header, section, and footer elemenets. However as divs are constantly appearing and disappearing due to the game functionaility and the responsiveness, there isn't as obvious a set structure or order on this HTML page.
 
 #### 404 Page
 
-![404 Page Wave Test](docs/testing/404-page-wave-accessibility.png)
+![404 Page Wave Test](docs/testing/404-page-wave-accessibility-summary.png)
+
+![404 Page Wave Test](docs/testing/404-page-wave-accessibility-details.png)
 
 ### Bugs
 
