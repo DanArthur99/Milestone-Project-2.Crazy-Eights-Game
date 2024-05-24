@@ -38,12 +38,6 @@ body {
     margin-bottom: 70px;
     font-family: "Jersey 10", sans-serif;
 }
-#error-title {
-    padding-left: 20px;
-    padding-right: 20px;
-    font-size: 100px;
-    font-family: "Jersey 10", sans-serif;
-}
 
 #enter-username {
     margin-top: 40vh;
@@ -300,6 +294,14 @@ img {
 .pnf-error-button {
     margin-top: 65px;
 }
+
+#error-title {
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 100px;
+    font-family: "Jersey 10", sans-serif;
+}
+
 /*---------- Error Message ---------*/
 
 .error-body{

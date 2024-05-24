@@ -186,16 +186,62 @@ The programming languages used for this project were:
 
   ### Going Through The Code
 
-  #### JavaScript
+  #### JavaScript Features
 
   * Upon loading each page, and event listener on the window will listen for any errors, e.g. errors in loading images, or reading cache, etc.
   If an error is found, then the errorHandler function is called, which alters the HTML on both pages to display an error message, while also prompting the user to try and reload the page.
 
   ![Window Event Listener](docs/readme-images/window-event-listener.png)
   ![Error Handler Function](docs/readme-images/error-handler-function.png)
+  ![Home Page Error Message](docs/readme-images/home-page-error-message.png)
+  ![Game Page Error Message](docs/readme-images/game-page-error-message.png)
 
+  * Once the window has been found to have no errors, an event listener attached to the document listens to see if the DOM content has been loaded.
+  Once this has happened, it checks to see what page it is currently on, specifically if it is the actual game page.
+  This is so it knows whether to initialize the game or not. It does this by checking the window.location.pathname, and it is a URL that ends in /game.html, then the initializeGame function is called. if not, then the homePageListeners function is called, which only sets up the event listeners for the Home Page. The reason I have done this is so that when the HTML page changes, the JavaScript doesn't try to set up event listeners for elements that don't exist in that document.
 
+  ![Game Checker Event Listener](docs/readme-images/game-checker-event-listener.png)
 
+  * If it is determined it is not the game, the following function is called, which sets up the event listeners to one that change the HTML content to a username enter box, and one that stores the value of the username entered into sessionStorage, so that it can be displayed on the game.html page
+
+  ![Home Page Event Listeners](docs/readme-images/home-page-listeners.png)
+
+  * If it is the Game Page, then all of the event listeners are set up for that document. Once they're all set up, the startGame function is called.
+  * The startGame function calls a resetAll function which resets all the object properties and other variables to their default values, as well as appending the HTML document to be in a default status, using jQuery. Once this is done. The asynchronous shuffleDeck function is called.
+
+  ![startGame and resetAll functions](docs/readme-images/start-game-reset-all.png)
+
+  * The shuffleDeck function fetches the deck (or decks) from the [Deck of Cards API](https://www.deckofcardsapi.com/). It then obtains the deck ID from the response JSON, before using it to draw every card from that array. Each "card" in this respone is then pushed to my own shuffledPile array within the gameArrays object. The reason I have done it this way rather than using the built in functionality within the Deck of Cards API is because it doesn't allow you to use a discard pile with more than one deck of cards, which I wanted to be able to do for this project. Once the shuffledPile array as been fully set up, The dealInitialHand function is called. I also have also included a Promise.catch which calls the errorHandler function if the API cannot be access or loaded for whatever reason.
+
+  [Shuffle Deck Function](docs/readme-images/shuffle-deck-function.png)
+
+  * The dealInitialHand function deals each player their hand from the shuffledPile array, then sets the initial top card, before displaying the hand(s) on screen.
+
+  [Deal Initial Hand](docs/readme-images/deal-initial-hand.png)
+
+  * Within the displayHand function, there are several game state checkers which check to see what cards in the user's hand are playable depending on the current game situation. If no cards are playable, then the displayChecker function will set the "draw card" button to be visible
+
+  [Display Hand Function](docs/readme-images/display-hand.png)
+
+  * The displayComputerPlayer1Hand and displayComputerPlayer2Hand, check to see how many cards are in their hands respectively, and alter the HTML to display this to user everytime they're called
+
+  [Display Computer Hand](docs/readme-images/display-computer-hand.png)
+
+  * The cardChoiceBuffer function is called whenever the user clicks on a clickable card. It is the data-card attribute string as a parameter, and uses this to match the values within the string, with the suit and value properties of the the cards within the playerHand array, and filters the values that match into a new buffer array, before setting the first index of that array to the cardChoice property.
+
+  [Card Choice Buffer](docs/readme-images/card-choice-buffer.png)
+
+  * The addToPile function is called whenever the user confirms the card they are playing. It removes the card image in the HTML using jQuery, and also makes the "draw card" button invisible. It then pushes the current top card into the discardPile array, before setting the topCard to the value of cardChoice. The card is then removed from the user's hand and the game state variables are updated. It then checks to see if the user's hand is now empty, and if it is, it ends the game. If it isn't, it checks certain game state variable to see who's turn to call next.
+
+  [Add to Pile Function](docs/readme-images/add-to-pile.png)
+
+  * Each computer player has their own turn function. Within these, the game states are checked to see what cards each player can play, and the ones that can are pushed to a special cpPlayablePile array, where a random card from this array is chosen and layed. It once again checks if the hand is empty or not, and either ends the game or calls the next player's turn.
+
+  [Computer Player Turns](docs/readme-images/computer-turns.png)
+
+  * Whenever the drawCard function is called, it first of all checks whether the shufflePile is empty or not, then it checks the game state to see how cards need drawing. If multiple cards need drawing, then a for loop occurs which checks the state of the shuffledPile and discardPile at each iteration. If the shuffledPile is empty, it takes whatever is the discardPile array, pushes it to the shuffledPile Array, and then empties the discardPile. If both arrays end up being empty, then outOfCards variable appends to true, and which is then checked at the end of turn, to which it will end the game if true.
+
+  [Draw Card Function](docs/readme-images/draw-card.png)
 
 ### Accessibility
 

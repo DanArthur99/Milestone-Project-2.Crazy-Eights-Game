@@ -2,7 +2,7 @@
  * Welcome to the script.js file
  */
 
-const suits = ["HEARTS", "DIAMONDS", "SPADES", "CLUBS"];
+const suits = ["HEARTS", "DIAMONDS", "SPADES", "CLUBS"]; // Suit names declared as a constant variable
 
 // All arrays used throughout the game are stored inside this object
 let gameArrays = {
@@ -23,7 +23,8 @@ let gameStates = {
     skip: undefined,
     cardChoice: undefined,
     topCard: undefined,
-    suitChoice: undefined
+    suitChoice: undefined,
+    outOfCards: undefined
 };
 
 let randomizer; // Variable that stores a randomly generated number
@@ -171,6 +172,7 @@ const resetAll = () => {
     gameStates.topCard = null;
     gameStates.suitChoice = null;
     gameStates.cardChoice = null;
+    gameStates.outOfCards = false;
     gameArrays.playerHand.splice(0, gameArrays.playerHand.length);
     gameArrays.cp1Hand.splice(0, gameArrays.cp1Hand.length);
     gameArrays.cp2Hand.splice(0, gameArrays.cp2Hand.length);
@@ -210,10 +212,10 @@ const shuffleDeck = async () => {
                     }
                     try {
                         dealInitialHand();
-                    } catch(error) {
+                    } catch (error) {
                         errorHandler();
                     }
-                    
+
                 }).catch((error) => {
                     errorHandler(), error
                 });
@@ -222,7 +224,7 @@ const shuffleDeck = async () => {
 
 
 /**
- * Displays an error message on the HTML,
+ * Displays an error message on the HTML
  */
 const errorHandler = () => {
     $(".game-body").html(`
@@ -412,7 +414,11 @@ const drawCardPlayerClick = () => {
     $(document).off("click", ".clickable");
     drawCard(gameArrays.playerHand, `${sessionStorage.getItem("username")}`);
     displayHandDrawCard(gameArrays.playerHand);
-    if (gameStates.clockwise == false) {
+    if (gameStates.outOfCards == true) {
+        $("#end-of-game-text").text("Well well well, looks like we're out of cards");
+        $(".player-hand-phone").css("display", "none");
+        $(".play-again-section").css("display", "block");
+    } else if (gameStates.clockwise == false) {
         setTimeout(() => {
             cp2Turn();
         }, 1000);
@@ -467,7 +473,7 @@ const addToPile = async () => {
     $(".card-choice").remove();
     $(".text-container, .suit-container, .button-container").css("display", "none");
     if (gameStates.topCard) {
-        gameArrays.discardPile.push(gameStates.topCard);  // Checks if the topCard has a value, then pushes it to the discardPile if treu
+        gameArrays.discardPile.push(gameStates.topCard);  // Checks if the topCard has a value, then pushes it to the discardPile if true
     }
     gameStates.topCard = gameStates.cardChoice; // sets the new top card
     removeCardFromHand(gameArrays.playerHand, `${sessionStorage.getItem("username")}`);
@@ -498,7 +504,11 @@ const cp1Turn = () => {
     takeTurn(gameArrays.cp1Hand, "Computer Player 1");
     displayComputerPlayer1Hand();
     // Checks who's turn it is next, or whether the game is over
-    if (gameArrays.cp1Hand.length == 0) {
+    if (gameStates.outOfCards == true) {
+        $("#end-of-game-text").text("Well well well, looks like we're out of cards");
+        $(".player-hand-phone").css("display", "none");
+        $(".play-again-section").css("display", "block");
+    } else if (gameArrays.cp1Hand.length == 0) {
         cp1Score += 1;
         $("#end-of-game-text").text("Computer Player 1 Wins! Play Again?");
         $(".player-hand-phone").css("display", "none");
@@ -521,7 +531,11 @@ const cp2Turn = () => {
     takeTurn(gameArrays.cp2Hand, "Computer Player 2");
     displayComputerPlayer2Hand();
     // Checks who's turn it is next, or whether the game is over
-    if (gameArrays.cp2Hand.length == 0) {
+    if (gameStates.outOfCards == true) {
+        $("#end-of-game-text").text("Well well well, looks like we're out of cards");
+        $(".player-hand-phone").css("display", "none");
+        $(".play-again-section").css("display", "block");
+    } else if (gameArrays.cp2Hand.length == 0) {
         cp2Score += 1;
         $("#end-of-game-text").text("Computer Player 2 Wins! Play Again?");
         $(".player-hand-phone").css("display", "none");
@@ -575,22 +589,36 @@ const drawCard = (hand, player) => {
     if (gameStates.draw6Cards > 0) {
         for (let i = 0; i < gameStates.draw6Cards; i++) {
             emptyPileChecker();
-            draw(hand);
+            if (gameArrays.shuffledPile.length > 0) {
+                draw(hand);
+            } else {
+                gameStates.outOfCards = true;
+                break;
+            }
         }
         $(".suit-choice").text(`${player} has drawn ${gameStates.draw6Cards} cards`);
         gameStates.draw6Cards = 0;
     } else if (gameStates.draw2Cards > 0) {
         for (let i = 0; i < gameStates.draw2Cards; i++) {
             emptyPileChecker();
-            draw(hand);
+            if (gameArrays.shuffledPile.length > 0) {
+                draw(hand);
+            } else {
+                gameStates.outOfCards = true;
+                break;
+            }
         }
         $(".suit-choice").text(`${player} has drawn ${gameStates.draw2Cards} cards`);
         gameStates.draw2Cards = 0;
     } else {
-        draw(hand);
-        $(".suit-choice").text(`${player} has drawn a card`);
-    }
-};
+        if (gameArrays.shuffledPile.length > 0) {
+            draw(hand);
+            $(".suit-choice").text(`${player} has drawn a card`);
+        } else {
+            gameStates.outOfCards = true;
+        }
+    };
+}
 
 /**
  * Checks if the shuffledPile is empty
@@ -599,10 +627,12 @@ const drawCard = (hand, player) => {
 const emptyPileChecker = () => {
     if (gameArrays.shuffledPile.length < 1) {
         gameStates.deckSize = gameArrays.discardPile.length;
-        for (let i = 0; i < gameStates.deckSize; i++) {
-            randomizer = Math.floor(Math.random() * gameArrays.discardPile.length);
-            gameArrays.shuffledPile.push(gameArrays.discardPile[randomizer]);
-            gameArrays.discardPile.splice(randomizer, 1);
+        if (gameStates.deckSize > 0) {
+            for (let i = 0; i < gameStates.deckSize; i++) {
+                randomizer = Math.floor(Math.random() * gameArrays.discardPile.length);
+                gameArrays.shuffledPile.push(gameArrays.discardPile[randomizer]);
+                gameArrays.discardPile.splice(randomizer, 1);
+            }
         }
     }
 };
@@ -681,9 +711,9 @@ const eligibilityCheckerPlayer = (hand) => {
     }
 };
 
-
+// The following functions check to see what cards are playable for the computer players.
 /**
- * The following functions check to see what cards are playable for the computer players.
+ * @param {Array} hand 
  */
 const draw2CardsChecker = (hand) => {
     for (let card of hand) {
@@ -692,7 +722,9 @@ const draw2CardsChecker = (hand) => {
         }
     }
 };
-
+/**
+ * @param {Array} hand 
+ */
 const draw6CardsChecker = (hand) => {
     for (let card of hand) {
         if (card.value == "ACE" && card.suit == "SPADES") {
@@ -700,7 +732,9 @@ const draw6CardsChecker = (hand) => {
         }
     }
 };
-
+/**
+ * @param {Array} hand 
+ */
 const suitChoiceChecker = (hand) => {
     for (let card of hand) {
         if (card.value == "8" || card.suit == gameStates.suitChoice) {
@@ -708,7 +742,9 @@ const suitChoiceChecker = (hand) => {
         }
     }
 };
-
+/**
+ * @param {Array} hand 
+ */
 const eligibilityChecker = (hand) => {
     for (let card of hand) {
         if (card.value == "8" || ((card.suit === gameStates.topCard.suit) || (card.value === gameStates.topCard.value))) {
@@ -813,8 +849,8 @@ const setNotClickable = (card) => {
         `);
 };
 
-//module.exports = {
-    gameArrays,
+// module.exports = {
+gameArrays,
     gameStates,
     dealHand,
     resetAll,
@@ -823,4 +859,4 @@ const setNotClickable = (card) => {
     emptyPileChecker,
     draw,
     suits
-//};
+// };
