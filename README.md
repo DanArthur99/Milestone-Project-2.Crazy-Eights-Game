@@ -117,19 +117,18 @@ The wireframes for this site were created using [Figma](https://www.figma.com/)
 
 The Website primarily uses 2 different fonts throughout. Both of which were obtained from Google Fonts. These fonts were:
 
-* Rubik Glitch ('fantasy')
-* Exo 2 ('sans-serif')
+* Jersey 10 ('fantasy')
+* Acme ('sans-serif')
 
-"Rubik Glitch" is a much more decorative font, so this was typically used for large headings, navigation links, and other large text.
+Jersey 10 has a very pixelated design which I thought would be a good fit for this project, hence why I decided to use it for the main headings throughout the website (namely the Home Page and the 404 Page)
 
-"Exo 2" is a simpler font and is a bit easier to read, so this was generally used for larger paragraphs of text, such as the text on the 'About' page, and descriptive labels.
+"Acme" is a font I feel would be easier for users to read, while also being a slightly more interesting typeface than other sans-serif fonts, such as Arial.
 
 #### Colour Palette
 
-Keeping in line with the theme of the band, the site uses a largely "colourless" palette , consisting predominantly of blacks, greys, and whites. There are a few exceptions however, such as the navbar elements and the footer elements, which use shades of blue and green, albiet slightly washed shades.
+The colour palatte uses a mixture of brighr colours throughout the 
 
-![Colour Palette 1](docs/readme-images/color-palette.png)
-![Colour Palette 2](docs/readme-images/color-palette-2.png)
+![Colour Palette](docs/readme-images/color-palette.png)
 
 ### Technologies Used
 
@@ -189,7 +188,7 @@ The programming languages used for this project were:
 Github Pages was used to deploy the live website. The instructions to achieve this are below:
 
   1. Log in or Sign Up to Github.
-  2. Find the repository for this project, DanArthur99 / Milestone-Project-1.Panic-Switch-Website.
+  2. Find the repository for this project, DanArthur99 / Milestone-Project-2.Crazy-Eights-Game.
   3. Click on the Settings link.
   4. Click on the Pages link in the left hand side navigation bar.
   5. In the Source section, choose main from the drop down select branch menu. Select Root from the drop down select   folder menu.
@@ -202,7 +201,7 @@ Github Pages was used to deploy the live website. The instructions to achieve th
 To fork the Panic Switch Website repository:
 
   1. Log in or Sign Up to Github.
-  2. Go to the repository for this project, DanArthur99 / Milestone-Project-1.Panic-Switch-Website.
+  2. Go to the repository for this project, DanArthur99 / Milestone-Project-2.Crazy-Eights-Game.
   3. Click the Fork button in the top right corner.
 
 #### Cloning a Repository
@@ -210,7 +209,7 @@ To fork the Panic Switch Website repository:
 To clone the Panic Switch Website repository:
 
   1. Log in or Sign Up to GitHub.
-  2. Go to the repository for this project, DanArthur99 / Milestone-Project-1.Panic-Switch-Website.
+  2. Go to the repository for this project, DanArthur99 / Milestone-Project-2.Crazy-Eights-Game.
   3. Click on the code button, select whether you would like to clone with HTTPS, SSH or GitHub CLI and copy the link shown.
   4. Open the terminal in your IDE and set your working directory to the location you want to use for the cloned repository.
   5. Type 'git clone' into the terminal window, and paste the link from step 3, then press enter.
@@ -218,243 +217,13 @@ To clone the Panic Switch Website repository:
 
 
 ## Testing
+Please follow the link below to the testing file:
 
-[Testing Document](README.md)
+[Testing Document](TESTING.md)
 
-### W3C Validator
 
-#### Home Page
 
-![Home Page W3C Validator](docs/testing/index-page-w3c-validation.png)
 
-#### About Page
-
-![About Page W3C Validator](docs/testing/about-page-w3c-validation.png)
-
-#### Shows Page
-
-![Shows Page W3C Validator](docs/testing/shows-page-w3c-validation.png)
-
-#### Sign Up Page
-
-![Sign Up Page W3C Validator](docs/testing/sign-up-w3c-validation.png)
-
-#### Thank You Page
-
-![Thank You Page W3C Validator](docs/testing/thank-you-w3c-validation.png)
-
-#### 404 Page
-
-![404 Page W3C Validator](docs/testing/404-page-w3c-validation.png)
-
-#### Stylesheet
-
-![Stylesheet W3C Validator](docs/testing/stylesheet-w3c-validation.png)
-
-### Lighthouse Testing
-
-#### Home Page
-
-![Home Page Lighthouse Test](docs/testing/index-page-lighthouse-test.png)
-
-* The main issue I am getting from the lighthouse test is performance issues, which is in part due to the embedded youtube video (iframe) that has to load in, as well the numerous images and animations on the page. When I originally tested the page on the lighthouse test, I was getting scores in the 30s. To fix this issue, I used code from a repository called Lite-YouTube-Embed, written by paulirish ([see Credits section](#Credits)), which allows the page to 'lazy-load' the embedded youtube video, and only loads in the iframe when the 'facade' is clicked.
-* Other issues I was getting were due to image file sizes. In the end, I ended up converting all jpg images into webp format, then further compressing them so that the file sizes were not too big.
-
-#### About Page
-
-![About Page Lighthouse Test](docs/testing/about-page-lighthouse-test.png)
-
-#### Shows Page
-
-![Shows Page Lighthouse Test](docs/testing/shows-page-lighthouse-test.png)
-
-* The performance for the shows page is scoring slightly lower. The largest contentful paint element is in part to blame, which has a 1,300 ms load delay.
-
-![Shows Page Largest Contentful Paint](docs/testing/shows-largest-content-paint.png)
-
-#### Sign Up Page
-
-![Sign Up Page Lighthouse Test](docs/testing/sign-up-lighthouse-test.png)
-
-* The performance is showing slightly below the rest of the criteria due to the largest contentful paint element, which is the band photo background at the top of the screen.
-
-![Sign Up Page Largest Contentful Paint](docs/testing/sign-up-lcp.png)
-
-#### Thank You Page
-
-![Thank You Page Lighthouse Test](docs/testing/thank-you-lighthouse-test.png)
-
-* The only reason the best accessibility section is scoring lower is because of the meta refresh redirect tag. This is intentional, as I wanted the user to be redirected to the homepage once 'signing up.'
-
-![Thank You Page Lighthouse Accessibility Score](docs/testing/thank-you-lighthouse-accessibility.png)
-
-#### 404 Page
-
-![404 Page Lighthouse Test](docs/testing/404-page-lighthouse-test.png)
-
-### Wave Accessibility Testing
-
-#### Home Page
-
-![Home Page Wave Test](docs/testing/index-page-wave-accessibility.png)
-
-  * While no errors occurred, there is an alert for a redundant link. This however is intentional, as it is my design choice to have the band logo double as a link back to the home page no matter what page the user is on (the only exceptions to this are the thank you page and the 404 page).
-
-![Redundant Link](docs/testing/redundant-link-image.png)
-
-#### About Page
-
-![About Page Wave Test](docs/testing/about-page-wave-accessibility.png)
-
-  * Once again there are alerts for redundant links. However, this is part of my design choice.
-
-![Redundant Links](docs/testing/two-redundant-links-image.png)
-
-#### Shows Page
-
-![Shows Page Wave Test](docs/testing/shows-page-wave-accessibility.png)
-
-  * As before, the redundant links alerts also appear.
-
-![Redundant Links](docs/testing/two-redundant-links-image.png)
-
-#### Sign Up Page
-
-![Sign Up Page Wave Test](docs/testing/sign-up-wave-accessibility.png)
-
-  * Same redundant links alerts as previous.
-
-![Redundant Links](docs/testing/two-redundant-links-image.png)
-
-#### Thank You Page
-
-![Thank You Page Wave Test](docs/testing/thank-you-wave-accessibility.png)
-
-  * As with the lighthouse testing, the only reason an error is occuring is because of the meta refresh redirect tag, which is an intentional design choice of mine, as I wanted the user to be redirected to the home page.
-
-![Refresh Wave Error](docs/testing/refresh-wave-error.png)
-
-#### 404 Page
-
-![404 Page Wave Test](docs/testing/404-page-wave-accessibility.png)
-
-### Bugs
-
-#### Solved Bugs
-
-* At first, the navbar would wrap strangely when the screen was shrunk down below a certain size, but before it switched to the drop down menu. One of the big things that would happen is the logo would wrap above the screen so that it was invisible.
-
-  To get around this, I programmed the dropdown nav menu to appear at my own custom breakpoint, rather than just the bootstrap provided ones. This breakpoint was slightly larger than the tradition sm breakpoint, being 631px. This meant that the nav menu would turn into a dropdown menu before any screen wrap issue could occur
-
-  These custom breakpoints were also used for other elements, and were implemented using the "d-custom-none" and "d-custom-maxwidth-none" class names.
-
-![d-custom-none](docs/readme-images/d-custom-none.png)
-
-![d-custom-maxwidth-none](docs/readme-images/d-custom-maxwidth-none.png)
-
-![navbar d-custom-none](docs/readme-images/nav-d-custom-none.png)
-![navbar d-custom-maxwidth-none](docs/readme-images/nav-d-custom-maxwidth-none.png)
-
-* Another bug I encountered was that the text for the nav elements would go outside the lines of their containers when the screen shrunk to a certain size. 
-
-  To fix this, I created a couple of extra media queries that would cause the font-size of the text to reduce at these specific breakpoints.
-
-![Navbar Text Breakpoints](docs/readme-images/nav-text-breakpoints.png)
-
-* One bug I encountered when the site was deployed was that a 405 method not allowed error would occur when attempting to submit the form, rather than taking me to the intended thank-you.html. To counteract this, I removed the method="post" attribute from the form element, and kept the action attribute value as thank-you.html, which then allowed me to submit the form and take the user to the thank you page without any issues.
-
-* After setting the width and height attributes on the "Vanquish" cover image, the image would warp its shape when the screen shrunk down below a certain size, rather than shrinking in size and keeping the same dimensions. 
-
-  To fix this, I found a short line of CSS code from Stack Overflow that kept the img element width at 100%, while setting the height to auto. This resolved the issue. (see [credits section](#Credits))
-
-![Img CSS Fix](docs/readme-images/img-css-fix.png)
-
-### Testing User Stories
-
-#### Client Goals
-
-1. The website uses responsive design, and has been adapted for both mobile and desktop screens.
-
-Desktop:
-
-![Home Page Desktop Image](docs/readme-images/home-desktop.png)
-
-Mobile:
-
-![Home Page Mobile Image](docs/readme-images/home-mobile.png)
-
-
-2. Lots of themes and styling have been added to make the website look appealing to visitors. This includes different eye catching font styles, such as Rubik Glitch, and use of animations, i.e. fade-ins and slide-ins, as well as hover animations for buttons and other clickable icons.
-
-![Navbar Hover Item Image](docs/readme-images/nav-hover.png)
-
-3. Each page has its own navbar that allows the user to navigate to any page no matter what page they are currently on, making it a very easy website to navigate. The only places this doesn't neccessarily apply are the Thank You page and the 404 page, which uses a redirect and a designated Home button respectively.
-
-#### First Time Visit Goals
-
-1. The Website has its own "Music" section where users can see the music video for our song "Lethal Intent", and it also provides links to our Spotify page, as well as the Amazon Store.
-
-![Music Section Image](docs/readme-images/music-section.png)
-
-2. There is a designated "Shows" page intended for displaying our upcoming show schedule, as well being to see our previous shows.
-
-![Shows Page Image](docs/readme-images/shows-page.png)
-
-3. Each page provides social media links within their respective footer elements. 
-
-![Social Media Links Image](docs/readme-images/social-links.png)
-
-#### Returning Visitor Goals
-
-1. The top part of our home page is used to display the very latest big news about the band. For example, it currently displays a short "ad" about our latest upcoming song.
-2. The "Shows" page is intended to display our upcoming shows, with the intention being to have links on these shows that take the user to a page where they can purchase a ticket (or tickets). However, since we have no current shows scheduled in, I could not implement this specific part just yet.
-3. I have added a sign up page that allows the user to sign to a (as of yet) nonexistent newsletter, so that they can have the latest updates on shows, new music, merch, etc. Only the front-end aspect is currently functional, and upon submitting the form, the user is taken to a Thank You page before being redirected back to the Home Page
-
-![Sign Up Page Image](docs/readme-images/sign-up.png)
-
-![Thank You Page](docs/readme-images/thank-you.png)
-
-### Other Testing
-
-* The website has been tested on several browsers, specifically Microsoft Edge, Google Chrome, and Mozilla Firefox, and is fully functional and working as intended on all 3.
-* Each nav link has been tested on each page that they go to the intended destination page.
-* Validation testing was performed on the sign up form, below is an outline of the the different tests done:
-
-  Empty Field Testing:
-
-  * Tried to submit the form with an empty first name field:
-    * Intended result: Unable to submit form
-    * Test result: Pass
-  * Tried to submit the form with an empty last name field:
-    * Intended result: Unable to submit form
-    * Test result: Pass
-  * Tried to submit the form with an empty email field:
-    * Intended result: Unable to submit form
-    * Test result: Pass
-  * Tried to submit the form with an unselected country field:
-    * Intended result: Unable to submit form
-    * Test result: Pass
-
-  Input Type Testing:
-
-  * Tried to submit form with numbers and special characters in first name field:
-    * Intended result: Unable to submit form
-    * Test result: Fail
-    * Fix: added the attribute pattern="[a-zA-Z]*" to the input element. ([see Credits Section](#Credits))
-    * Re-test result: Pass
-  * Tried to submit form with numbers and special characters in last name field:
-    * Intended result: Unable to submit form
-    * Test result: Fail
-    * Fix: added the attribute pattern="[a-zA-Z]*" to the input element. ([see Credits Section](#Credits))
-    * Re-test result: Pass
-  * Tried to submit form with incorrect email format (without @) in email field:
-    * Intended result: Unable to submit form
-    * Test result: Pass
-  * Tried to submit form with incorrect email format (with @) in email field:
-    * Intended result: Unable to submit form
-    * Test result: Fail
-    * Fix: added the attribute pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" to the input element. ([see Credits Section](#Credits))
-    * Re-test result: Pass
 
 ## Credits
 

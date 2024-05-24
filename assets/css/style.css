@@ -6,7 +6,7 @@ html, body
 }
 
 body {
-    background-color: rgb(255, 255, 159);
+    background-color: #ffff9f;
     font-family: "Acme", sans-serif;
     min-height: 100vh;
     width: 100%;
@@ -16,10 +16,11 @@ body {
 
 .title-container {
     margin: 100px auto;
-    background-color: orange;
+    background-color: #ffa500;
     height: 70vh;
     width: 60%;
     position: relative;
+    border-radius: 20px 150px;
 }
 
 .start-page-header {
@@ -39,8 +40,14 @@ body {
 }
 
 #enter-username {
-    height: 100%;
-    margin-top: 50vh;
+    margin-top: 40vh;
+    margin-left: 20vw;
+    margin-right: 20vw;
+    padding: 70px 30px;
+    text-align: center;
+    z-index: 2;
+    background-color: orange;
+    border-radius: 20px;
 }
 
 .rules, .rules-phone {
@@ -274,6 +281,16 @@ img {
     margin-top: 20px;
 }
 
+/*---------- Error Message ---------*/
+
+.error-body{
+    height: 100vh;
+    text-align: center;
+    padding: 0 20px 0 20px;
+    top: 35%;
+    transform: translateY(35%);
+}
+
 /*--------- Media Queries ------------*/
 
 @media (max-width: 767px) {
@@ -298,9 +315,10 @@ img {
     }
     .title-container {
         margin: 0;
-        background-color: orange;
+        background-color: #ffa500;
         height: 40vh;
         width: 100%;
+        border-radius: 0;
     }
     #main-title {
         font-size: 60px;
@@ -329,5 +347,14 @@ img {
     }
     .suit-choice {
         padding: 0;
+    }
+    #enter-username {
+        margin-left: 15vw;
+        margin-right: 15vw;
+        padding: 40px 30px;
+        text-align: center;
+        padding: 70px 30px;
+        z-index: 2;
+        background-color: orange;
     }
 }

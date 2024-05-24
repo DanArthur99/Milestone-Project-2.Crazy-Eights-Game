@@ -6,6 +6,7 @@ const { default: expect } = require("expect");
 const {
     gameArrays,
     gameStates,
+    draw,
     dealHand,
     resetAll,
     gameStateSetter,
@@ -150,5 +151,23 @@ describe("EmptyPileChecker function test", () => {
         emptyPileChecker();
         expect(gameArrays.discardPile.length).toBe(3)
         expect(gameArrays.shuffledPile.length).toBe(1);
+    })
+});
+
+describe("draw function tests", () => {
+    test("draw function should add card to playerHand array", () => {
+        gameArrays.playerHand = [1, 3, 4];
+        draw(gameArrays.playerHand);
+        expect(gameArrays.playerHand.length).toBe(4);
+    })
+    test("draw function should add card to cp1Hand array", () => {
+        gameArrays.cp1Hand = [1, 3, 4, 5, 9];
+        draw(gameArrays.cp1Hand);
+        expect(gameArrays.cp1Hand.length).toBe(6);
+    })
+    test("draw function should add card to cp2Hand array", () => {
+        gameArrays.cp2Hand = [1, 11];
+        draw(gameArrays.cp2Hand);
+        expect(gameArrays.cp2Hand.length).toBe(3);
     })
 })

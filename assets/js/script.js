@@ -45,12 +45,12 @@ let userName;
  * This code below sets all the event listeners in the document once ready. jQuery is predominantly used to achieve this
  */
 document.addEventListener("DOMContentLoaded", function () {
-    if (window.location.pathname == "/Milestone-Project-2.Crazy-Eights-Game/game.html") { // Checks if the current HTML page is the game
+    // if (window.location.pathname == "/Milestone-Project-2.Crazy-Eights-Game/game.html") { // Checks if the current HTML page is the game
         initializeGame();
-    } else {
-        sessionStorage.setItem("username", null);
+    // } else {
+        //sessionStorage.setItem("username", null);
         homePageListeners();
-    }
+    //}
 });
 
 /**
@@ -200,20 +200,27 @@ const shuffleDeck = async () => {
                     }
                     dealInitialHand();
                 }).catch((error) => {
-                    $(".game-body").html(`
-                    <header>
-                        <h1>Apologies, we seem to have encountered a problem</h1>
-                    </header>
-                    <section class="start-buttons-phone-only d-md-none">
-                        <p>Please click to button below to return to the home page</p>
-                        <form action="index.html">
-                        <button type="submit" class="btn btn-primary start-game start-game-phone">Go Back Home</button>
-                    </form>
-                    </section>       
-                        `), error
+                    errorHandler(), error
                 });
         });
 };
+/**
+ * Displays an error message on the HTML,
+ */
+const errorHandler = () => {
+    $(".game-body").html(`
+    <div class="error-body">
+    <header class="error-message-header">
+        <h1>Apologies, we seem to have encountered a problem</h1>
+    </header>
+    <section class="error-message-body">
+        <p>Please click to button below to return to the home page</p>
+        <form action="index.html">
+            <button type="submit" class="btn btn-primary start-game">Go Back Home</button>
+        </form>
+    </section>
+    </div>`
+)};
 
 /**
  * Deals the initial hands for all player's in the array, then sets the top card to a random card from what is left.
@@ -780,5 +787,6 @@ module.exports = {
     gameStateSetter,
     cardChoiceBuffer,
     emptyPileChecker,
+    draw,
     suits
 };
