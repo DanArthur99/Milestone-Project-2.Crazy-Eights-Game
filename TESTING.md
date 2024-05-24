@@ -5,13 +5,14 @@
   * [Full Testing](#Full-Testing)
     * [Home Page Testing](#Home-Page-Testing)
     * [Game Page Testing](#Game-Page-Testing)
-  * [W3C Validator](#W3C-Validator)
-  * [Lighthouse Testing](#Lighthouse-Testing)
-  * [Wave Accessibiliy Testing](#Wave-Accessibility-TSesting)
-  * [Bugs](#Bugs)
-    * [Solved Bugs](#Solved-Bugs)
-  * [Testing User Stories](#Testing-User-Stories)
-  * [Other Testing](#Other-Testing)
+* [Automated-Testing](#Automated-Testing)
+* [W3C Validator](#W3C-Validator)
+* [Lighthouse Testing](#Lighthouse-Testing)
+* [Wave Accessibiliy Testing](#Wave-Accessibility-TSesting)
+* [Bugs](#Bugs)
+  * [Solved Bugs](#Solved-Bugs)
+* [Testing User Stories](#Testing-User-Stories)
+* [Other Testing](#Other-Testing)
 * [Automated-Testing](#Automated-Testing)
 
 ## Manual Testing
@@ -79,71 +80,84 @@ Draw Card empty shuffledPile AND empty discardPile test|In the rare occurrence t
 Loads correctly|If the page url is unrecognized or non existantthen the 404 page should load in its place|Typed in random characters after the base URL|404 Page loads correctly|Pass
 Home button test|Should take the user back to the Home page when click|Click Go Back Home Button|Home Page Loads|Pass
 
-### W3C Validator
+## Unit testing 
 
-#### Home Page
+* Unit testing was performed on the script.js file.
+* This was to test the functionality of specific functions within the file, specifically if they manipulate and the parameters in the correct way.
+* The functions tested included the resetAll, dealHand, several game state setters and game state checker, as well as others.
+* The results of this can be seen below:
+
+![Unit Testing Results Image 1](docs/testing/unit-testing-results.png)
+![Unit Testing Results Image 1](docs/testing/unit-testing-results-2.png)
+
+* As you can, 32 different unit test were performed, with all 32 passing. 
+
+
+## W3C Validator
+
+### Home Page
 
 ![Home Page W3C Validator](docs/testing/index-page-w3c-validation.png)
 
-#### Game Page
+### Game Page
 
 ![Game Page W3C Validator](docs/testing/game-page-w3c-validation.png)
 
-#### 404 Page
+### 404 Page
 
 ![404 Page W3C Validator](docs/testing/404-page-w3c-validation.png)
 
-#### Stylesheets
+### Stylesheets
 
-##### Main Stylesheet
+#### Main Stylesheet
 
 ![Stylesheet W3C Validator](docs/testing/stylesheet-w3c-validation.png)
 
-##### Title Page Only Stylesheet
+#### Title Page Only Stylesheet
 
 ![Title Page Stylesheet W3C Validator](docs/testing/title-page-stylesheet-w3c-validation.png)
 
-### Lighthouse Testing
+## Lighthouse Testing
 
-#### Home Page
+### Home Page
 
-##### Desktop
+#### Desktop
 
 ![Home Page Desktop Lighthouse Test](docs/testing/index-page-lighthouse-test-desktop.png)
 
-##### Mobile
+#### Mobile
 
 ![Home Page Mobile Lighthouse Test](docs/testing/index-page-lighthouse-test-mobile.png)
 
-#### Game Page
+### Game Page
 
-##### Desktop
+#### Desktop
 
 ![Game Page Desktop Lighthouse Test](docs/testing/game-page-lighthouse-test-desktop.png)
 
-##### Mobile
+#### Mobile
 
 ![Game Page Mobile Lighthouse Test](docs/testing/game-page-lighthouse-test-mobile.png)
 
-#### 404 Page
+### 404 Page
 
-##### Desktop
+#### Desktop
 
 ![404 Page Lighthouse Test](docs/testing/404-page-lighthouse-test-desktop.png)
 
-##### Mobile
+#### Mobile
 
 ![404 Page Lighthouse Test](docs/testing/404-page-lighthouse-test-mobile.png)
 
-### Wave Accessibility Testing
+## Wave Accessibility Testing
 
-#### Home Page
+### Home Page
 
 ![Home Page Wave Test Summary](docs/testing/index-page-wave-accessibility-summary.png)
 
 ![Home Page Wave Test Details](docs/testing/index-page-wave-accessibility-details.png)
 
-#### Game Page
+### Game Page
 
 ![Game Page Wave Test Summary](docs/testing/game-page-wave-accessibility-summary.png)
 
@@ -151,126 +165,88 @@ Home button test|Should take the user back to the Home page when click|Click Go 
 
 * There is 1 alert appearing here about No Page Regions. This is due to the lack of header, section, and footer elemenets. However as divs are constantly appearing and disappearing due to the game functionaility and the responsiveness, there isn't as obvious a set structure or order on this HTML page.
 
-#### 404 Page
+### 404 Page
 
 ![404 Page Wave Test](docs/testing/404-page-wave-accessibility-summary.png)
 
 ![404 Page Wave Test](docs/testing/404-page-wave-accessibility-details.png)
 
-### Bugs
+## JS Hint Report
 
-#### Solved Bugs
+![JS Hint Report](docs/testing/js-hint-report.png)
 
-* At first, the navbar would wrap strangely when the screen was shrunk down below a certain size, but before it switched to the drop down menu. One of the big things that would happen is the logo would wrap above the screen so that it was invisible.
+* The only alerts I am getting are that async funtions are only available with ES8.
 
-  To get around this, I programmed the dropdown nav menu to appear at my own custom breakpoint, rather than just the bootstrap provided ones. This breakpoint was slightly larger than the tradition sm breakpoint, being 631px. This meant that the nav menu would turn into a dropdown menu before any screen wrap issue could occur
+## Bugs
 
-  These custom breakpoints were also used for other elements, and were implemented using the "d-custom-none" and "d-custom-maxwidth-none" class names.
+### Solved Bugs
 
-![d-custom-none](docs/readme-images/d-custom-none.png)
+* One bug I initially encountered was that functions would call multiple times rather than the intented once. This was causing duplicated data and player hands to not match with the action taken by the player. The reason this was happen is because each new player function was called inside of the previous using a setTimout, cause a recursion. By only having the the computer player's turns being called within each other. Once it's the player's turn, the the displayHand function is called, which re-enable all the event listeners, and the computer player's turn is only called once the certain event is triggered, whereas before the player's turn was its own function that was called within the last computer player turn function.
 
-![d-custom-maxwidth-none](docs/readme-images/d-custom-maxwidth-none.png)
+* One bug I found was that the discard Pile was not push it's entire contents into the shuffled Pile, stopping at around halfway. The reason this was happening is before with each iteration of the for loop, the discardPile.length was actually getting smaller. So say if the length was 8, and I wanted to iterate through it 8 time, as I was decreasing the length each time, the upper limit of the loop was also decreasing. This fixed by setting the value to a fixed variable before starting to loop, then iterating through the loop that number times. This way I could decrease the discardPile.length without change the upper limit of the for loop.
 
-![navbar d-custom-none](docs/readme-images/nav-d-custom-none.png)
-![navbar d-custom-maxwidth-none](docs/readme-images/nav-d-custom-maxwidth-none.png)
+![Array Upper Limit Bug Fix](docs/testing/array-upper-limit-bug-fix.png)
 
-* Another bug I encountered was that the text for the nav elements would go outside the lines of their containers when the screen shrunk to a certain size. 
+* Another bug I came across was when a user would click a card in large screen mode, them shift the display from from large screen to mobile view, the game would still allow the user to click on the cards activating the "Play Card?" modal. This would then add add the previous card they clicked in large screen mode, causing potential confusion for players. To fix this whenever the user would click a card in large view mode, this would then remove the data-bs-toggle attribute from the clickable cards in the mobile view hand. The attributes would then be re-added on if the user were to click "no".
 
-  To fix this, I created a couple of extra media queries that would cause the font-size of the text to reduce at these specific breakpoints.
+![Mobile View Error Fix](docs/testing/mobile-view-error-fix.png)
+![Mobile View Error Fix Attribute Attachment](docs/testing/mobile-view-error-fix-attr-attachment.png)
 
-![Navbar Text Breakpoints](docs/readme-images/nav-text-breakpoints.png)
+## Testing User Stories
 
-* One bug I encountered when the site was deployed was that a 405 method not allowed error would occur when attempting to submit the form, rather than taking me to the intended thank-you.html. To counteract this, I removed the method="post" attribute from the form element, and kept the action attribute value as thank-you.html, which then allowed me to submit the form and take the user to the thank you page without any issues.
+### Client Goals
 
-* After setting the width and height attributes on the "Vanquish" cover image, the image would warp its shape when the screen shrunk down below a certain size, rather than shrinking in size and keeping the same dimensions. 
-
-  To fix this, I found a short line of CSS code from Stack Overflow that kept the img element width at 100%, while setting the height to auto. This resolved the issue. (see [credits section](#Credits))
-
-![Img CSS Fix](docs/readme-images/img-css-fix.png)
-
-### Testing User Stories
-
-#### Client Goals
-
-1. The website uses responsive design, and has been adapted for both mobile and desktop screens.
+1. To have a game that is viewable and playable on different screen sizes
 
 Desktop:
 
-![Home Page Desktop Image](docs/readme-images/home-desktop.png)
+![Game Page Desktop Image](docs/testing/game-page-large-screen.png)
 
 Mobile:
 
-![Home Page Mobile Image](docs/readme-images/home-mobile.png)
+![Game Page Mobile Image](docs/testing/game-page-small-screen.png)
+
+2. To have a crazy eights game that is logically functional and easy to follow
+
+* Please refer to the [Manual Testing](#Manual-Testing) section for this
+
+3. To have an overall website that is clear and easy to navigate
+
+![Home Page](docs/testing/home-page.png)
+![Rules Modal](docs/testing/modal.png)
+![Exit Game Modal](docs/testing/exit-game.png)
+
+* The overall website is easy to navigate and use, and the user can easily access the rules and exit the game.
+
+### First Time Visit Goals
+
+1. To be able to set a user name for the game
+
+![Enter Username](docs/testing/enter-username.png)
+
+2. To have a score incrementer that keeps track of how many rounds of the game have been won by each player
+
+![Game Complete](docs/testing/game-complete.png)
+![Score Increment](docs/testing/score-increment.png)
+
+3. To be able to see the rules at any point in the game (to help first time player get to grips with the game)
+
+![Game Page Rules](docs/testing/game-page-rules.png)
+
+### Returning Visitor Goals
+
+1. To make sure the game has a good and easily usable UI that makes it as easy as possible for the player to use/play
+
+![Home Page](docs/testing/home-page.png)
+![Game Page Desktop Image](docs/testing/game-page-large-screen.png)
+
+2. To have the styling and layout visually pleasing so that players don't get visually bored.
+
+![Home Page](docs/testing/home-page.png)
+![Game Page Desktop Image](docs/testing/game-page-large-screen.png)
+  
+3. To have the Game functionality fully working will all rules in place, and any errors as minimal as possible
+
+* Please refer to the [Manual Testing](#Manual-Testing) section for this
 
 
-2. Lots of themes and styling have been added to make the website look appealing to visitors. This includes different eye catching font styles, such as Rubik Glitch, and use of animations, i.e. fade-ins and slide-ins, as well as hover animations for buttons and other clickable icons.
-
-![Navbar Hover Item Image](docs/readme-images/nav-hover.png)
-
-3. Each page has its own navbar that allows the user to navigate to any page no matter what page they are currently on, making it a very easy website to navigate. The only places this doesn't neccessarily apply are the Thank You page and the 404 page, which uses a redirect and a designated Home button respectively.
-
-#### First Time Visit Goals
-
-1. The Website has its own "Music" section where users can see the music video for our song "Lethal Intent", and it also provides links to our Spotify page, as well as the Amazon Store.
-
-![Music Section Image](docs/readme-images/music-section.png)
-
-2. There is a designated "Shows" page intended for displaying our upcoming show schedule, as well being to see our previous shows.
-
-![Shows Page Image](docs/readme-images/shows-page.png)
-
-3. Each page provides social media links within their respective footer elements. 
-
-![Social Media Links Image](docs/readme-images/social-links.png)
-
-#### Returning Visitor Goals
-
-1. The top part of our home page is used to display the very latest big news about the band. For example, it currently displays a short "ad" about our latest upcoming song.
-2. The "Shows" page is intended to display our upcoming shows, with the intention being to have links on these shows that take the user to a page where they can purchase a ticket (or tickets). However, since we have no current shows scheduled in, I could not implement this specific part just yet.
-3. I have added a sign up page that allows the user to sign to a (as of yet) nonexistent newsletter, so that they can have the latest updates on shows, new music, merch, etc. Only the front-end aspect is currently functional, and upon submitting the form, the user is taken to a Thank You page before being redirected back to the Home Page
-
-![Sign Up Page Image](docs/readme-images/sign-up.png)
-
-![Thank You Page](docs/readme-images/thank-you.png)
-
-### Other Testing
-
-* The website has been tested on several browsers, specifically Microsoft Edge, Google Chrome, and Mozilla Firefox, and is fully functional and working as intended on all 3.
-* Each nav link has been tested on each page that they go to the intended destination page.
-* Validation testing was performed on the sign up form, below is an outline of the the different tests done:
-
-  Empty Field Testing:
-
-  * Tried to submit the form with an empty first name field:
-    * Intended result: Unable to submit form
-    * Test result: Pass
-  * Tried to submit the form with an empty last name field:
-    * Intended result: Unable to submit form
-    * Test result: Pass
-  * Tried to submit the form with an empty email field:
-    * Intended result: Unable to submit form
-    * Test result: Pass
-  * Tried to submit the form with an unselected country field:
-    * Intended result: Unable to submit form
-    * Test result: Pass
-
-  Input Type Testing:
-
-  * Tried to submit form with numbers and special characters in first name field:
-    * Intended result: Unable to submit form
-    * Test result: Fail
-    * Fix: added the attribute pattern="[a-zA-Z]*" to the input element. ([see Credits Section](#Credits))
-    * Re-test result: Pass
-  * Tried to submit form with numbers and special characters in last name field:
-    * Intended result: Unable to submit form
-    * Test result: Fail
-    * Fix: added the attribute pattern="[a-zA-Z]*" to the input element. ([see Credits Section](#Credits))
-    * Re-test result: Pass
-  * Tried to submit form with incorrect email format (without @) in email field:
-    * Intended result: Unable to submit form
-    * Test result: Pass
-  * Tried to submit form with incorrect email format (with @) in email field:
-    * Intended result: Unable to submit form
-    * Test result: Fail
-    * Fix: added the attribute pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" to the input element. ([see Credits Section](#Credits))
-    * Re-test result: Pass

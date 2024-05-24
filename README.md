@@ -153,10 +153,6 @@ The programming languages used for this project were:
 * [Favicon.io](https://favicon.io/) - To create favicon icons.
 * [Shields.io](https://shields.io/) - Used to create badges.
 * [Am I Responsive?](https://ui.dev/amiresponsive) - Used to create the multi-screen image you see at the start of this document.
-* [CloudConvert](https://cloudconvert.com/webp-converter) - To convert JPEG images into WEBP format.
-* [Compress-Or-Die](https://compress-or-die.com/webp) - Image File Compressor.
-* Chrome Developer Tools - Used for testing features and responsiveness.
-  * Lighthouse - Extension of dev tools used. Gives a score on site performance, accessibiliity, search engine optimization, and best practices in code.
 * [W3C Markup Validation Service](https://validator.w3.org/) - Used for testing HTML validation.
 * [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/) - Used for testing CSS validation.
 * [JSHint JavaScript Code Quality Tool](https://jshint.com/) - Used for testing the quality of the JavaScript Code
@@ -183,6 +179,11 @@ The programming languages used for this project were:
   * If the computer players lay down a card or draw card, their hand will visbibly change, will the max number of cards visible to the user being 8.
   This is on larger screens only, as on phone screens, only a maximum of 1 face down card will be visible to represent the computer player's hands, otherwise the layout will be alot messier on phone screens.
   * At the end of the game, a new div will appear saying who has won the game, and give the player an option to play again. If they choose to do so, then the score of whoever won will increment by 1.
+
+* 404 Page
+  * Loads if the user tries to accessing a page that doesn't exist
+  * Contains a button that redirects the user back to the home page
+  ![404 Page](docs/readme-images/404-page.png)
 
   ### Going Through The Code
 
@@ -243,6 +244,17 @@ The programming languages used for this project were:
 
   ![Draw Card Function](docs/readme-images/draw-card.png)
 
+  * SetTimout's are also used when calling the computer player's turns. This is so it makes it easier for the user to follow the game, and to know exactly what card each player has played.
+
+  #### Potential Future Feautures
+
+  * Some potential future feature I would like to add in the future include:
+
+    * Online playing ability
+    * The ability to have multiple human players
+    * The ability to create an account 
+
+
 ### Accessibility
 
 * Semantic HTML has been used, i.e. the use of header, section, and footer.
@@ -296,14 +308,7 @@ Please follow the link below to the testing file:
 
 ### Code
 
-* [Lite YouTube Embed repository](https://github.com/paulirish/lite-youtube-embed?tab=readme-ov-file) - author: paulirish
-  * (This repository was used to reduce the performance issues I had when loading in the iframe on the home. The lite-youtube-embed.css and lite-youtube-embed.js files have been copied into my github repository) 
-* [Image responsivity fix](https://stackoverflow.com/questions/25766783/how-to-make-my-image-responsive-width-and-height) - author: JasonK
-  * (This code (accepted answer) was used to fix the responsivity issue on the cover art image load in)
-* [Country list](https://gist.github.com/danrovito/977bcb97c9c2dfd3398a) - author: danrovito
-  * (This code was copied into the sign-up form, and was used to display the country dropdown list)
-* [Text and email input validation](https://stackoverflow.com/questions/29823591/html-input-do-not-allow-numbers) - author: Mior
-  * (This code was used to add additional validation to the names and email inputs of the sign up form. This was basically so that numbers and special characters would not be accepted in the name field, and also so that the email addresses would definitely be written in the correct format, and not just any string of characters that contains an @ character)
+*[Scroll Bar For Modal](#https://stackoverflow.com/questions/25874001/how-to-put-scroll-bar-only-for-modal-body) - author: Carlos Calla
 
 ### Other References 
 

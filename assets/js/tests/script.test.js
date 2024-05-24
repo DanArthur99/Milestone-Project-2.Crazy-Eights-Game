@@ -11,24 +11,28 @@ const {
     resetAll,
     gameStateSetter,
     cardChoiceBuffer,
-    emptyPileChecker
+    emptyPileChecker,
+    draw2CardsChecker,
+    draw6CardsChecker,
+    suitChoiceChecker,
+    eligibilityChecker,
 } = require("../script");
 
 describe("resetAll function works correctly", () => {
     beforeAll(() => {
         gameArrays.shuffledPile = [1, 2, 3],
-        gameArrays.playerHand = [1, 2, 3],
-        gameArrays.cp1Hand = [1, 2, 3],
-        gameArrays.cp2Hand = [1, 2, 3],
-        gameArrays.discardPile = [1, 2, 3],
-        gameArrays.cpPlayablePile = [1, 2, 3],
-        gameStates.deckSize = 40,
-        gameStates.draw2Cards = 4,
-        gameStates.draw6Cards = 6,
-        gameStates.clockwise = false,
-        gameStates.skip = true,
-        gameStates.cardChoice = { value: "7", suit: "HEARTS" },
-        gameStates.topCard = { value: "7", suit: "HEARTS" }
+            gameArrays.playerHand = [1, 2, 3],
+            gameArrays.cp1Hand = [1, 2, 3],
+            gameArrays.cp2Hand = [1, 2, 3],
+            gameArrays.discardPile = [1, 2, 3],
+            gameArrays.cpPlayablePile = [1, 2, 3],
+            gameStates.deckSize = 40,
+            gameStates.draw2Cards = 4,
+            gameStates.draw6Cards = 6,
+            gameStates.clockwise = false,
+            gameStates.skip = true,
+            gameStates.cardChoice = { value: "7", suit: "HEARTS" },
+            gameStates.topCard = { value: "7", suit: "HEARTS" }
         gameStates.suitChoice = "SPADES"
         resetAll();
     });
@@ -92,36 +96,36 @@ describe("Deal Hand function test", () => {
         dealHand(gameArrays.cp2Hand);
         expect(gameArrays.cp2Hand.length).toBe(8);
     });
-}) 
+})
 
 describe("gameStateSetter function tests", () => {
     test("gameStates will add two to the draw2Cards property if the latest top card is a 2", () => {
         gameStates.draw2Cards = 0;
-        gameStates.topCard = {suit: "HEARTS", value: "2"};
+        gameStates.topCard = { suit: "HEARTS", value: "2" };
         gameStateSetter(gameArrays.cp1Hand, "cp1");
         expect(gameStates.draw2Cards).toBe(2);
     });
     test("gameStates will add six to the draw6Cards property if the latest top card is an Ace of Spades", () => {
         gameStates.draw6Cards = 6;
-        gameStates.topCard = {suit: "SPADES", value: "ACE"};
+        gameStates.topCard = { suit: "SPADES", value: "ACE" };
         gameStateSetter(gameArrays.cp1Hand, "cp1");
         expect(gameStates.draw6Cards).toBe(12);
     });
     test("gameStates will inverse the value of clockwise if the latest top card is an Ace", () => {
         gameStates.clockwise = true;
-        gameStates.topCard = {suit: "SPADES", value: "ACE"}
+        gameStates.topCard = { suit: "SPADES", value: "ACE" }
         gameStateSetter(gameArrays.cp1Hand, "cp1");
         expect(gameStates.clockwise).toBe(false);
     })
     test("gameStates will set skip to true if the latest top card is a Jack", () => {
         gameStates.skip = false;
-        gameStates.topCard = {suit: "SPADES", value: "JACK"};
+        gameStates.topCard = { suit: "SPADES", value: "JACK" };
         gameStateSetter(gameArrays.cp1Hand, "cp1");
         expect(gameStates.skip).toBe(true);
     })
     test("gameStates will assign a value to suitChoice if the latest top card is an 8", () => {
         gameStates.suitChoice = null;
-        gameStates.topCard = {suit: "SPADES", value: "8"};
+        gameStates.topCard = { suit: "SPADES", value: "8" };
         gameStateSetter(gameArrays.cp1Hand, "cp1");
         expect(gameStates.suitChoice).toBeTruthy();
     });
@@ -129,11 +133,11 @@ describe("gameStateSetter function tests", () => {
 
 describe("cardChoiceBuffer function test", () => {
     beforeEach(() => {
-        gameArrays.playerHand = [{value: "4", suit: "SPADES"}, {value: "6", suit: "HEARTS"}];
+        gameArrays.playerHand = [{ value: "4", suit: "SPADES" }, { value: "6", suit: "HEARTS" }];
     })
     test("should assign a value to cardChoice based on the string passed through the function", () => {
         cardChoiceBuffer("4-of-SPADES");
-        expect(gameStates.cardChoice).toEqual({value: "4", suit: "SPADES"});
+        expect(gameStates.cardChoice).toEqual({ value: "4", suit: "SPADES" });
     });
 });
 
@@ -169,5 +173,37 @@ describe("draw function tests", () => {
         gameArrays.cp2Hand = [1, 11];
         draw(gameArrays.cp2Hand);
         expect(gameArrays.cp2Hand.length).toBe(3);
+    })
+})
+
+describe("game state Checkers", () => {
+    beforeEach(() => {
+        gameStates.suitChoice = "CLUBS"
+        gameStates.topCard = { value: '6', suit: 'HEARTS' }
+        gameArrays.cpPlayablePile = [];
+        gameArrays.cp1Hand = [{ value: '4', suit: 'HEARTS' },
+        { value: 'ACE', suit: 'SPADES' },
+        { value: '6', suit: 'DIAMONDS' },
+        { value: '10', suit: 'CLUBS' },
+        { value: '2', suit: 'DIAMONDS' },
+        { value: '2', suit: 'SPADES' },
+        { value: '5', suit: 'HEARTS' },
+        { value: '3', suit: 'SPADES' }]
+    })
+    test("draw2CardsChecker works correctly", () => {
+        draw2CardsChecker(gameArrays.cp1Hand);
+        expect(gameArrays.cpPlayablePile.length).toBe(2);
+    })
+    test("draw6CardsChecker works correctly", () => {
+        draw6CardsChecker(gameArrays.cp1Hand);
+        expect(gameArrays.cpPlayablePile.length).toBe(1);
+    })
+    test("suitChoiceChecker works correctly", () => {
+        suitChoiceChecker(gameArrays.cp1Hand);
+        expect(gameArrays.cpPlayablePile.length).toBe(1);
+    })
+    test("eligibilityChecker works correctly", () => {
+        eligibilityChecker(gameArrays.cp1Hand);
+        expect(gameArrays.cpPlayablePile.length).toBe(3);
     })
 })

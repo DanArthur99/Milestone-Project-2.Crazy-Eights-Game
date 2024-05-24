@@ -1,7 +1,3 @@
-/**
- * Welcome to the script.js file
- */
-
 const suits = ["HEARTS", "DIAMONDS", "SPADES", "CLUBS"]; // Suit names declared as a constant variable
 
 // All arrays used throughout the game are stored inside this object
@@ -90,7 +86,7 @@ const initializeGame = () => {
     $(".no").on("click", function () {
         $(".card-image").removeClass("card-choice");
         $(".text-container, .button-container, .suit-container").css("display", "none");
-        $(".player-hand-phone").find(".clickable").attr("data-bs-toggle", "modal")
+        $(".player-hand-phone").find(".clickable").attr("data-bs-toggle", "modal");
         gameStates.cardChoice = null;
         $(document).on("click", ".clickable", function () { // Resets the click events to on after clicked
             $(".card-image").removeClass("card-choice");
@@ -142,7 +138,6 @@ const initializeGame = () => {
     });
 
     startGame();
-
 };
 
 /**
@@ -224,7 +219,7 @@ const shuffleDeck = async () => {
                     }
 
                 }).catch((error) => {
-                    errorHandler(), error
+                    errorHandler();
                 });
         });
 };
@@ -244,7 +239,7 @@ const errorHandler = () => {
             <button type="submit" class="btn btn-primary start-game">Try Again?</button>
         </form>
     </section>
-    </div>`)
+    </div>`);
     $(".index-body").html(`
     <header class="title-container">
         <div class="start-page-header">
@@ -259,8 +254,7 @@ const errorHandler = () => {
         <form action="index.html">
             <button type="submit" class="btn btn-danger start-game pnf-error-button">Try Again?</button>
         </form>
-    </section>
-    `)
+    </section>`);
 };
 
 /**
@@ -854,14 +848,18 @@ const setNotClickable = (card) => {
         `);
 };
 
-// module.exports = {
-gameArrays,
-    gameStates,
-    dealHand,
-    resetAll,
-    gameStateSetter,
-    cardChoiceBuffer,
-    emptyPileChecker,
-    draw,
-    suits
-// };
+module.exports = {
+ gameArrays,
+ gameStates,
+ dealHand,
+ resetAll,
+ gameStateSetter,
+ cardChoiceBuffer,
+ emptyPileChecker,
+ draw2CardsChecker,
+ draw6CardsChecker,
+ suitChoiceChecker,
+ eligibilityChecker,
+ draw,
+ suits
+};
