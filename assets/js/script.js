@@ -848,7 +848,7 @@ const setNotClickable = (card) => {
         `);
 };
 
-module.exports = {
+// module.exports = {
  gameArrays,
  gameStates,
  dealHand,
@@ -862,4 +862,4 @@ module.exports = {
  eligibilityChecker,
  draw,
  suits
-};
+//};
