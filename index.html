@@ -40,14 +40,16 @@
 
     <!-- ================== Button Container (Phone Only) =========== -->
     <section class="start-buttons-phone-only d-md-none">
-        <button type="button" class="btn btn-primary start-game start-game-phone">Start New Game</button>
-        <button type="button" class="btn btn-primary rules-phone" data-bs-toggle="modal" data-bs-target="#rulesModal">
+        <button type="button" class="btn btn-danger start-game start-game-phone">Start New Game</button>
+        <button type="button" class="btn btn-dark rules-phone" data-bs-toggle="modal" data-bs-target="#rulesModal">
             Rules
         </button>
     </section>
 
     <!-- =============== Enter Username Section (appears when the user clicks "Start New Game") ============== -->
     <section id="enter-username">
+        <!-- ==== Form is used to send the user to game.html on the button click. 
+            No method attribute is used because it is causing a 405 error when deployed ==== -->
         <form action="game.html" class="text-center" id="username-form">
             <label for="user-name" id="username-label">User Name:</label>
             <input type="text" id="user-name" name="uname" required>
