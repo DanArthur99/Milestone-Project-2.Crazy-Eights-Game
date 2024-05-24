@@ -160,12 +160,19 @@ const showChoiceButtons = () => {
     $(document).off("click", ".clickable");
 };
 
+/**
+ * Starts the Game by calling the resetAll and shuffleDeck functions
+ */
 const startGame = async () => {
     // Sets all array and variables to their default values
     resetAll();
     await shuffleDeck(); // shuffles deck once document is ready 
 };
 
+/**
+ * Resets all values to their default values
+ * Resets the HTML to its default state using jQuery
+ */
 const resetAll = () => {
     gameStates.skip = false;
     gameStates.clockwise = true;
