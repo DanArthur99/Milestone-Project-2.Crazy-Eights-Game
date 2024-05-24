@@ -184,9 +184,15 @@ The programming languages used for this project were:
   This is on larger screens only, as on phone screens, only a maximum of 1 face down card will be visible to represent the computer player's hands, otherwise the layout will be alot messier on phone screens.
   * At the end of the game, a new div will appear saying who has won the game, and give the player an option to play again. If they choose to do so, then the score of whoever won will increment by 1.
 
+  ### Going Through The Code
+
   #### JavaScript
 
-  * Upon
+  * Upon loading each page, and event listener on the window will listen for any errors, e.g. errors in loading images, or reading cache, etc.
+  If an error is found, then the errorHandler function is called, which alters the HTML on both pages to display an error message, while also prompting the user to try and reload the page.
+
+  ![Window Event Listener](docs/readme-images/window-event-listener.png)
+  ![Error Handler Function](docs/readme-images/error-handler-function.png)
 
 
 

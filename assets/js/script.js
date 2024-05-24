@@ -39,9 +39,11 @@ let cp2Score = 0;
 // Username variable
 let userName;
 
+// Listens for any error while loading the window, calls the eventHandler function is found.
 window.addEventListener("error", (event) => {
     errorHandler();
 });
+
 /**
  * This code below sets all the event listeners in the document once ready. jQuery is predominantly used to achieve this
  */
@@ -196,11 +198,11 @@ const resetAll = () => {
  * A .catch is added to the promise in case the API fails to load correctly, displaying an alert saying "Could not load."
  */
 const shuffleDeck = async () => {
-    await fetch("https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_cnt=2")
+    await fetch("https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=2")
         .then(response => response.json())
         .then(response => {
             newShuffledDeckKey = response.deck_id;
-            fetch(`https://www.deckofcardsapi.com/api/deck/${newShuffledDeckKey}/draw/?cot=104`)
+            fetch(`https://www.deckofcardsapi.com/api/deck/${newShuffledDeckKey}/draw/?count=104`)
                 .then(response => response.json())
                 .then(deck => {
                     for (let i = 0; i < 104; i++) {
@@ -217,6 +219,8 @@ const shuffleDeck = async () => {
                 });
         });
 };
+
+
 /**
  * Displays an error message on the HTML,
  */
@@ -249,7 +253,6 @@ const errorHandler = () => {
         </form>
     </section>
     `)
-
 };
 
 /**
