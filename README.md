@@ -213,35 +213,35 @@ The programming languages used for this project were:
 
   * The shuffleDeck function fetches the deck (or decks) from the [Deck of Cards API](https://www.deckofcardsapi.com/). It then obtains the deck ID from the response JSON, before using it to draw every card from that array. Each "card" in this respone is then pushed to my own shuffledPile array within the gameArrays object. The reason I have done it this way rather than using the built in functionality within the Deck of Cards API is because it doesn't allow you to use a discard pile with more than one deck of cards, which I wanted to be able to do for this project. Once the shuffledPile array as been fully set up, The dealInitialHand function is called. I also have also included a Promise.catch which calls the errorHandler function if the API cannot be access or loaded for whatever reason.
 
-  [Shuffle Deck Function](docs/readme-images/shuffle-deck-function.png)
+  ![Shuffle Deck Function](docs/readme-images/shuffle-deck-function.png)
 
   * The dealInitialHand function deals each player their hand from the shuffledPile array, then sets the initial top card, before displaying the hand(s) on screen.
 
-  [Deal Initial Hand](docs/readme-images/deal-initial-hand.png)
+  ![Deal Initial Hand](docs/readme-images/deal-initial-hand.png)
 
   * Within the displayHand function, there are several game state checkers which check to see what cards in the user's hand are playable depending on the current game situation. If no cards are playable, then the displayChecker function will set the "draw card" button to be visible
 
-  [Display Hand Function](docs/readme-images/display-hand.png)
+  ![Display Hand Function](docs/readme-images/display-hand.png)
 
   * The displayComputerPlayer1Hand and displayComputerPlayer2Hand, check to see how many cards are in their hands respectively, and alter the HTML to display this to user everytime they're called
 
-  [Display Computer Hand](docs/readme-images/display-computer-hand.png)
+  ![Display Computer Hand](docs/readme-images/display-computer-hand.png)
 
   * The cardChoiceBuffer function is called whenever the user clicks on a clickable card. It is the data-card attribute string as a parameter, and uses this to match the values within the string, with the suit and value properties of the the cards within the playerHand array, and filters the values that match into a new buffer array, before setting the first index of that array to the cardChoice property.
 
-  [Card Choice Buffer](docs/readme-images/card-choice-buffer.png)
+  ![Card Choice Buffer](docs/readme-images/card-choice-buffer.png)
 
   * The addToPile function is called whenever the user confirms the card they are playing. It removes the card image in the HTML using jQuery, and also makes the "draw card" button invisible. It then pushes the current top card into the discardPile array, before setting the topCard to the value of cardChoice. The card is then removed from the user's hand and the game state variables are updated. It then checks to see if the user's hand is now empty, and if it is, it ends the game. If it isn't, it checks certain game state variable to see who's turn to call next.
 
-  [Add to Pile Function](docs/readme-images/add-to-pile.png)
+  ![Add to Pile Function](docs/readme-images/add-to-pile.png)
 
   * Each computer player has their own turn function. Within these, the game states are checked to see what cards each player can play, and the ones that can are pushed to a special cpPlayablePile array, where a random card from this array is chosen and layed. It once again checks if the hand is empty or not, and either ends the game or calls the next player's turn.
 
-  [Computer Player Turns](docs/readme-images/computer-turns.png)
+  ![Computer Player Turns](docs/readme-images/computer-turns.png)
 
   * Whenever the drawCard function is called, it first of all checks whether the shufflePile is empty or not, then it checks the game state to see how cards need drawing. If multiple cards need drawing, then a for loop occurs which checks the state of the shuffledPile and discardPile at each iteration. If the shuffledPile is empty, it takes whatever is the discardPile array, pushes it to the shuffledPile Array, and then empties the discardPile. If both arrays end up being empty, then outOfCards variable appends to true, and which is then checked at the end of turn, to which it will end the game if true.
 
-  [Draw Card Function](docs/readme-images/draw-card.png)
+  ![Draw Card Function](docs/readme-images/draw-card.png)
 
 ### Accessibility
 
