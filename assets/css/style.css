@@ -38,6 +38,12 @@ body {
     margin-bottom: 70px;
     font-family: "Jersey 10", sans-serif;
 }
+#error-title {
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 100px;
+    font-family: "Jersey 10", sans-serif;
+}
 
 #enter-username {
     margin-top: 40vh;
@@ -287,7 +293,7 @@ img {
     margin: 0 10px 0 10px;
 }
 
-#go-home-form {
+#go-home-form, #error-form {
     margin-top: 20px;
 }
 
@@ -339,7 +345,7 @@ img {
         width: 100%;
         border-radius: 0;
     }
-    #main-title {
+    #main-title, #error-title{
         font-size: 60px;
     }
     #username-label, #start-game-button {

@@ -197,11 +197,11 @@ const resetAll = () => {
  * A .catch is added to the promise in case the API fails to load correctly, displaying an alert saying "Could not load."
  */
 const shuffleDeck = async () => {
-    await fetch("https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=2")
+    await fetch("https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_cnt=2")
         .then(response => response.json())
         .then(response => {
             newShuffledDeckKey = response.deck_id;
-            fetch(`https://www.deckofcardsapi.com/api/deck/${newShuffledDeckKey}/draw/?count=104`)
+            fetch(`https://www.deckofcardsapi.com/api/deck/${newShuffledDeckKey}/draw/?cot=104`)
                 .then(response => response.json())
                 .then(deck => {
                     for (let i = 0; i < 104; i++) {
@@ -228,13 +228,30 @@ const errorHandler = () => {
         <h1>Apologies, we seem to have encountered a problem</h1>
     </header>
     <section class="error-message-body">
-        <p>Please click to button below to return to the home page</p>
+        <p>Please click to button below to try again</p>
         <form action="index.html">
-            <button type="submit" class="btn btn-primary start-game">Go Back Home</button>
+            <button type="submit" class="btn btn-primary start-game">Try Again?</button>
         </form>
     </section>
-    </div>`
-)};
+    </div>`)
+    $(".index-body").html(`
+    <header class="title-container">
+        <div class="start-page-header">
+            <h1 class="centralize" id="error-title">Apologies, Error Occured!</h1>
+            <p id="not-found-text">Oops, we seem to have encountered a problem. Click the button below to try again.</p>
+            <form action="index.html" id="error-form">
+                <button type="submit" class="d-none d-md-inline btn btn-danger start-game">Try Again?</button>
+            </form>       
+        </div>
+    </header>
+    <section class="start-buttons-phone-only d-md-none">
+        <form action="index.html">
+            <button type="submit" class="btn btn-danger start-game pnf-error-button">Try Again?</button>
+        </form>
+    </section>
+    `)
+
+};
 
 /**
  * Deals the initial hands for all player's in the array, then sets the top card to a random card from what is left.
@@ -794,7 +811,7 @@ const setNotClickable = (card) => {
         `);
 };
 
-/// module.exports = {
+//module.exports = {
     gameArrays,
     gameStates,
     dealHand,
@@ -804,4 +821,4 @@ const setNotClickable = (card) => {
     emptyPileChecker,
     draw,
     suits
-// };
+//};
