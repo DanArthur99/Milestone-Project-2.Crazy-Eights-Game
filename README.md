@@ -61,7 +61,7 @@ a round (or a few) of crazy eights.
 in which case the player can reverse the direction again and accumulate the number of cards the next player must pick up to 12, etc.
 * Laying a 2 means the the next player must lay a 2 down, or draw 2 cards from the pile. If they were to lay another 2, this accumulates the number of cards the next player music draw to 4, etc.
 * Laying a Jack skips the next player's turn.
-* An 8 may be layed at any time (unless the previous player has layed down a 2 or the Ace of Spades). Once layed, the player must choose the suit that the next player must lay. This can be overridden if the next player has an 8 themselves.
+* An 8 may be played at any time (unless the previous player has played a 2 or the Ace of Spades). Once played, the player must choose the suit that the next player must lay. This can be overridden if the next player has an 8 themselves.
 
 It is this history and common knowledge of the game that I have which made it one of the main reasons why I decided to create an online version of this game. While some variations of the game exist online, I have yet to come across one that implements all the extra rules that we used to play (namely "Pick up 2", "Ace reverse", and the "Jack skip a go" functionalities (while the more common version of this rule is the "Queen skip" (skip card is a Queen rather than a Jack), the "Jack skip" is the version of the rule that my family and I grew up playing)). Therefore, I felt it would be a good idea to create a version of the game that implements all of these extra rules.
 
@@ -235,7 +235,7 @@ The programming languages used for this project were:
 
   ![Add to Pile Function](docs/readme-images/add-to-pile.png)
 
-  * Each computer player has their own turn function. Within these, the game states are checked to see what cards each player can play, and the ones that can are pushed to a special cpPlayablePile array, where a random card from this array is chosen and layed. It once again checks if the hand is empty or not, and either ends the game or calls the next player's turn.
+  * Each computer player has their own turn function. Within these, the game states are checked to see what cards each player can play, and the ones that can are pushed to a special cpPlayablePile array, where a random card from this array is chosen and played. It once again checks if the hand is empty or not, and either ends the game or calls the next player's turn.
 
   ![Computer Player Turns](docs/readme-images/computer-turns.png)
 

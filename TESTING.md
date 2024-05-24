@@ -43,14 +43,31 @@ Username Not Empty Check|user is taken to the game page|Press the Start Game but
 **Feature**|**Expected Outcome**|**Test Action**|**Result**|**Pass/Fail**
 :-----:|:-----:|:-----:|:-----:|:-----:
 Card Choice |Displays the options to play the selected card -  yes or no|Click a clickable card|Play card button section is displayed|Pass
-Card Choice - Phone Screens|Diplays the play card options in a modal|Click a clickable card|Play card modal is displayed|Pass
-Yes Button|Lays the card to the pile and calls the next turn - card is removed from player's hand|Click play card? - yes|Card is layed and next turn is called. Card is also removed from hand|Pass
+Card Choice - Phone Screens|Displays the play card options in a modal|Click a clickable card|Play card modal is displayed|Pass
+Yes Button|Lays the card to the pile and calls the next turn - card is removed from player's hand|Click play card? - yes|Card is played and next turn is called. Card is also removed from hand|Pass
 No Button|removes play card options|Click play card? - no|play card button section removed|Pass
 Rules Button Game Page|displays the rules modal when clicked|Click Rules button|Rules modal displayed|Pass
-Exit Button|displays a modal asking if the player is ure|Click Exit button|Modal displayed|Pass
+Exit Button|displays a modal asking if the player is sure|Click Exit button|Modal displayed|Pass
 Game State text field|displays text showing what action has just happened with each turn|take Player turn|Text updates with each turn e.g. Player lays 4 of HEARTS|Pass
 Clicking an 8 Card|Displays a different set of buttons that allows the user to choose a suit as well|Clicking a card with the value of 8|Displays a 4 yes options with each suit labelled and a no button to cancel the choice|Pass
 Clicking an 8 Card - Phone Screens|Displays a different modal that allows the user to choose a suit as well|Clicking a card with the value of 8|Displays a modal with  4 yes options with each suit labelled and a no button to cancel the choice|Pass
+Clubs Button|"The next player must then lay down club| or an 8"|Clicking the clubs button|The next player lays a club
+Hearts Button|The next player must then lay down heart or an 8|Clicking the hearts button|The next player lays a heart|Pass
+Spades Button|The next player must then lay down spade or an 8|Clicking the spades button|The next player lays a spade|Pass
+Diamonds Button|The next player must then lay down diamond or an 8|Clicking the diamonds button|The next player lays a diamond|Pass
+Jack card functionality|Laying a Jack skips the next players go|Lay a Jack Card|The next players turn is skipped|Pass
+2 Card functionality|Laying a 2 should mean the next player has to lay a 2 or draw 2 cards|Lay a 2 Card|The next player draws 2 cards|Pass
+2 card accumulation functionality|If the user lays a 2 and the next player lays a 2 then cards needed to be drawn should accumulate to 4|Lay a 2 Card while the next player also has a 2|The next player after draws 4 cards. Also can add pauses to the code and console.log the gameState.draw2Cards property with each turn to see it increase by 2 each time.|Pass
+Ace card functionality|Laying an Ace changes the direction of play|Lay an Ace|The direction of play inverses|Pass
+Ace of Spades functionality|Laying an Ace of Spades changes the direction of play while also forcing the next player to either draw 6 cards. Or they lay an Ace of Spades themselves|Lay an Ace of Spades|The direction of play inverses and the next player draws 6 cards. Also can add a pause to the code and console.log the gameStates.draw6Cards property to see that a value has been added.|Pass
+Ace of Spades accumulation functionality|If the next player also lays an Ace of Spades then the direction of play changes again and the next player is forced to draw 12 cards|Lay an Ace of Spades while the next player also has an Ace of Spades|The direction of play changes with each turn and the user is forced to draw 12 cards|Pass
+Play Again button|Once the game has ended the user is prompted to start a new game. When this is clicked the game resets|Click of Start New Game at game completion|Game resets and starts again|Pass
+Score incrementation test|Once the game is over the player that has won has theyre score incremented by one. This is then displayed on their personal score on screen in the next game.|Complete Game. Click Start New Game|Winning player score increments by 1 at game completion. Winning players score is visible on Game reset.|Pass
+Draw Card test|If the user cannot go then the draw card button appears. Clicking it should add a new card to their hand and display it on screen|Click the draw card button when it appears|New card appears on screen. Can pause the code to console.log the gameArrays.playerHand array to see that a new card object has been added|Pass
+Draw 2 Cards receiving end - can go|If the previous player lays a 2 then the only legal card to lay would be a 2 also. The draw2Cards value should also increment by 2|Wait until the previous player lays a 2|All cards are blanked out apart from ones with value 2. Upon laying the draw2Cards value increments to 4. This can be seen by pausing the code and logging the value to the console.|Pass
+Draw 2 cards receiving end - cannot go|If the previous player lays a hand and the user does not have a 2 in their hand. Then they should be forced to draw 2 cards|Wait until the previous player lays a 2|All cards are blanked out as no legal cards. Draw 2 cards button appears|Pass
+Draw Card empty shuffledPile test|if the shuffledPile is empty then the contents of the discardPile should be pushed to it and then emptied|Wait until the shuffledPile.length is 0. Then call drawCardPlayerClick() from the console.|By logging the gameArrays to the console you can see that the shuffledPile now has objects inside the array. While the discardPile is empty|Pass
+Draw Card empty shuffledPile AND empty discardPile test|In the rare occurrence that both are empty the the game should end and prompt the user to start a new game|Call the drawCard function with the gameArrays.playerHand and the username string as parameters in the console until the both the discardPile and shuffledPile arrays are empty. Then call the drawCardPlayerClick function in the console.|The end of game text appears saying that we seem to be out of cards. |Pass
 
 ### W3C Validator
 
