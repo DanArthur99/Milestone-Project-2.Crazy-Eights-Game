@@ -3,6 +3,8 @@
 ## CONTENTS
 * [Manual Testing](#Manual-Testing)
   * [Full Testing](#Full-Testing)
+    * [Home Page Testing](#Home-Page-Testing)
+    * [Game Page Testing](#Game-Page-Testing)
   * [W3C Validator](#W3C-Validator)
   * [Lighthouse Testing](#Lighthouse-Testing)
   * [Wave Accessibiliy Testing](#Wave-Accessibility-TSesting)
