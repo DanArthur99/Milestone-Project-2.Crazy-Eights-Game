@@ -47,7 +47,7 @@ window.addEventListener("error", (event) => {
  * This code below sets all the event listeners in the document once ready. jQuery is predominantly used to achieve this
  */
 document.addEventListener("DOMContentLoaded", function () {
-    if (window.location.pathname == "/Milestone-Project-2.Crazy-Eights-Game/game.html") { // Checks if the current HTML page is the game
+    if (window.location.pathname == "/Milestone-Project-2.Crazy-Eights-Game/game.html") { // Checks if the current HTML page is the game itself or not
         initializeGame();
     } else {
         sessionStorage.setItem("username", null);
@@ -79,6 +79,7 @@ const homePageListeners = () => {
 const initializeGame = () => {
 
     $(document).on("click", ".clickable", function () {
+        $(".card-image").removeClass("card-choice");
         cardChoiceBuffer($(this).attr("data-card"));
         $(this).addClass("card-choice");
         showChoiceButtons();
@@ -87,8 +88,10 @@ const initializeGame = () => {
     $(".no").on("click", function () {
         $(".card-image").removeClass("card-choice");
         $(".text-container, .button-container, .suit-container").css("display", "none");
+        $(".player-hand-phone").find(".clickable").attr("data-bs-toggle", "modal")
         gameStates.cardChoice = null;
         $(document).on("click", ".clickable", function () { // Resets the click events to on after clicked
+            $(".card-image").removeClass("card-choice");
             cardChoiceBuffer($(this).attr("data-card"));
             $(this).addClass("card-choice");
             showChoiceButtons();
@@ -101,6 +104,7 @@ const initializeGame = () => {
         addToPile();
         gameStates.cardChoice = null;
         $(document).on("click", ".clickable", function () { // Resets the click events to on after clicked
+            $(".card-image").removeClass("card-choice");
             cardChoiceBuffer($(this).attr("data-card"));
             $(this).addClass("card-choice");
             showChoiceButtons();
@@ -114,6 +118,7 @@ const initializeGame = () => {
         addToPile();
         gameStates.cardChoice = null;
         $(document).on("click", ".clickable", function () { // Resets the click events to "on" after clicked
+            $(".card-image").removeClass("card-choice");
             cardChoiceBuffer($(this).attr("data-card"));
             $(this).addClass("card-choice");
             showChoiceButtons();
@@ -124,6 +129,7 @@ const initializeGame = () => {
         $(".draw-card-section").css("display", "none");
         drawCardPlayerClick();
         $(document).on("click", ".clickable", function () { // Resets the click events to "on" after clicked
+            $(".card-image").removeClass("card-choice");
             cardChoiceBuffer($(this).attr("data-card"));
             $(this).addClass("card-choice");
             showChoiceButtons();
@@ -148,6 +154,7 @@ const showChoiceButtons = () => {
     } else {
         $(".button-container").css("display", "block");
     }
+    $(".player-hand-phone").children().removeAttr("data-bs-toggle");
     $(document).off("click", ".clickable");
 };
 

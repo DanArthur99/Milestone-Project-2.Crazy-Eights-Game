@@ -76,10 +76,10 @@
             </div>
             <div class="row button-row">
                 <div class="col-12 button-container">
-                    <button type="button" class="yes">
+                    <button type="button" class="btn btn-success yes">
                         Yes
                     </button>
-                    <button type="button" id="no-not-eight" class="no">
+                    <button type="button" id="no-not-eight" class="btn btn-secondary no">
                         No
                     </button>
                 </div>
@@ -88,19 +88,19 @@
             <!-- =================== Suit Choice Section (LARGE SCREENS ONLY)============== -->
             <div class="row button-row">
                 <div class="col-12 suit-container">
-                    <button type="button" class="suit-button" data-suit="HEARTS">
-                        <span class="red">Yes - Hearts</span>
+                    <button type="button" class="suit-button btn btn-danger" data-suit="HEARTS">
+                        Yes - Hearts &#9829;
                     </button>
-                    <button type="button" class="suit-button" data-suit="SPADES">
-                        Yes - Spades
+                    <button type="button" class="suit-button btn btn-dark" data-suit="SPADES">
+                        Yes - Spades &#9824;
                     </button>
-                    <button type="button" class="suit-button" data-suit="DIAMONDS">
-                        <span class="red">Yes - Diamonds</span>
+                    <button type="button" class="suit-button btn btn-danger" data-suit="DIAMONDS">
+                        Yes - Diamonds &#9830;
                     </button>
-                    <button type="button" class="suit-button" data-suit="CLUBS">
-                        Yes - Clubs
+                    <button type="button" class="suit-button btn btn-dark" data-suit="CLUBS">
+                        Yes - Clubs &#9827;
                     </button>
-                    <button type="button" class="no">
+                    <button type="button" class="btn btn-secondary no">
                         No
                     </button>
                 </div>
@@ -157,16 +157,16 @@
 
         <div class="row draw-card-row">
             <div class="col-12 draw-card-section">
-                <button type="button" id="draw-card">Draw Card</button>
+                <button type="button" class="btn btn-secondary" id="draw-card">Draw Card</button>
             </div>
         </div>
         <div class="col-12 play-again-section">
             <p id="end-of-game-text"></p>
-            <button type="button" id="play-again">Start New Game</button>
+            <button type="button" class="btn btn-sucess" id="play-again">Start New Game</button>
         </div>
 
         <!-- ====== Modal (for Phones) ============ -->
-        <div class="modal fade" id="confirmation" tabindex="-1" aria-labelledby="CardConfirmation" aria-hidden="true">
+        <div class="modal fade" data-bs-backdrop="static" id="confirmation" tabindex="-1" aria-labelledby="CardConfirmation" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -180,7 +180,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="confirmation-8" tabindex="-1" aria-labelledby="cardConfirmation8"
+        <div class="modal fade" data-bs-backdrop="static" id="confirmation-8" tabindex="-1" aria-labelledby="cardConfirmation8"
             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -189,13 +189,13 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger suit-button" data-suit="HEARTS"
-                            data-bs-dismiss="modal">Hearts</button>
+                            data-bs-dismiss="modal">Hearts &#9829;</button>
                         <button type="button" class="btn btn-dark suit-button" data-suit="SPADES"
-                            data-bs-dismiss="modal">Spades</button>
+                            data-bs-dismiss="modal">Spades &#9824;</button>
                         <button type="button" class="btn btn-danger suit-button" data-suit="DIAMONDS"
-                            data-bs-dismiss="modal">Diamonds</button>
+                            data-bs-dismiss="modal">Diamonds &#9830;</button>
                         <button type="button" class="btn btn-dark suit-button" data-suit="CLUBS"
-                            data-bs-dismiss="modal">Clubs</button>
+                            data-bs-dismiss="modal">Clubs &#9827;</button>
                         <button type="button" class="btn btn-secondary no" data-bs-dismiss="modal">No</button>
                     </div>
                 </div>
@@ -204,7 +204,7 @@
     </div>
 
     <!-- =========== Rules Modal =============== -->
-    <div class="modal fade" id="rulesModal" tabindex="-1" aria-labelledby="rulesModalLabel" aria-hidden="true">
+    <div class="modal fade" data-bs-backdrop="static" id="rulesModal" tabindex="-1" aria-labelledby="rulesModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -248,7 +248,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="exitGameModal" tabindex="-1" aria-labelledby="exitGameLabel" aria-hidden="true">
+    <div class="modal fade" data-bs-backdrop="static" id="exitGameModal" tabindex="-1" aria-labelledby="exitGameLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

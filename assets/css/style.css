@@ -213,10 +213,6 @@ body {
     margin-top: -130px;
 }
 
-.suit-buttons {
-    text-align: center;
-}
-
 #decision-text {
     top: 50%;
     transform: translateY(50%);

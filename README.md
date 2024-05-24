@@ -85,7 +85,7 @@ It is this history and common knowledge of the game that I have which made it on
 
 1. To make sure the game has a good and easily usable UI that makes it as easy as possible for the player to use/play
 2. To have the styling and layout visually pleasing so that players don't get visually bored.
-3. 
+3. To have the Game functionality fully working will all rules in place, and any errors as minimal as possible
 
 ### Design
 
@@ -166,6 +166,9 @@ The programming languages used for this project were:
 
 #### HTML / CSS
 
+* All Pages
+  * All pages use responsive design, with different CSS and page layouts depending on the screen size.
+
 * Home Page
   * Welcome title text saying "Welcome to Crazy Eights", along with two buttons labelled "Start New Game" and "Rules"
   * The "Start New Game" button modifies the HTML to display a text box that allows the user to enter a username.
@@ -174,6 +177,17 @@ The programming languages used for this project were:
 
 * Game Page 
   * The cards are dealt and displayed on screen, with the user's cards at the bottom, and the computer player's hands at the top left and top right
+  * The top card is displayed in the middle of the screen, with the "rules" and "exit" buttons above it
+  * With each turn, text will appear to inform the user of what has happened at each turn. This is to make it easier for the user to follow the game
+  * The "draw card" button is by default set to display: none, but will be set to visible if it is determined that the user has not playable cards within their hand
+  * If the computer players lay down a card or draw card, their hand will visbibly change, will the max number of cards visible to the user being 8.
+  This is on larger screens only, as on phone screens, only a maximum of 1 face down card will be visible to represent the computer player's hands, otherwise the layout will be alot messier on phone screens.
+  * At the end of the game, a new div will appear saying who has won the game, and give the player an option to play again. If they choose to do so, then the score of whoever won will increment by 1.
+
+  #### JavaScript
+
+  * Upon
+
 
 
 
@@ -239,9 +253,10 @@ Please follow the link below to the testing file:
 * [Text and email input validation](https://stackoverflow.com/questions/29823591/html-input-do-not-allow-numbers) - author: Mior
   * (This code was used to add additional validation to the names and email inputs of the sign up form. This was basically so that numbers and special characters would not be accepted in the name field, and also so that the email addresses would definitely be written in the correct format, and not just any string of characters that contains an @ character)
 
-### Media 
+### Other References 
 
-* [Panic Switch - Lethal Intent (Official Music Video)](https://www.youtube.com/watch?v=jk0TfBpMXEI)
+* [How To Build A Simple Card Game With JavaScript](https://www.youtube.com/watch?v=NxRwIZWjLtE) - author: Web Dev Simplified
+  * (Useful video explaining how )
 
 
 
