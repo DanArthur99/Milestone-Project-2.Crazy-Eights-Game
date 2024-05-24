@@ -8,7 +8,6 @@ Crazy Eights is a popular shedding style card, similar to UNO, where the goal is
 
 The with each turn, the player must lay down a card of the same number of suit as the previous, with some cards having special rules.
 
-![Last Commit: May 2024](https://img.shields.io/badge/LAST_COMMIT-JANUARY_2024-red)
 ![Languages: 3](https://img.shields.io/badge/LANGUAGES-3-yellow)
 ![W3C HTML: Validated](https://img.shields.io/badge/W3C_HTML-VALIDATED-orange)
 ![W3C CSS: Validated](https://img.shields.io/badge/W3C_CSS-VALIDATED-blue)

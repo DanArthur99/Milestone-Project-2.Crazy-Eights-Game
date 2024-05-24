@@ -5,15 +5,13 @@
   * [Full Testing](#Full-Testing)
     * [Home Page Testing](#Home-Page-Testing)
     * [Game Page Testing](#Game-Page-Testing)
-* [Automated-Testing](#Automated-Testing)
+* [Unit-Testing](#Automated-Testing)
 * [W3C Validator](#W3C-Validator)
 * [Lighthouse Testing](#Lighthouse-Testing)
 * [Wave Accessibiliy Testing](#Wave-Accessibility-TSesting)
 * [Bugs](#Bugs)
   * [Solved Bugs](#Solved-Bugs)
 * [Testing User Stories](#Testing-User-Stories)
-* [Other Testing](#Other-Testing)
-* [Automated-Testing](#Automated-Testing)
 
 ## Manual Testing
 
