@@ -286,6 +286,7 @@ img {
     margin: 0 10px 0 10px;
 }
 
+/*-------- 404 Page -----------*/
 #not-found-text {
     margin: 0 10px 0 10px;
 }
@@ -294,6 +295,9 @@ img {
     margin-top: 20px;
 }
 
+.pnf-error-button {
+    margin-top: 65px;
+}
 /*---------- Error Message ---------*/
 
 .error-body{

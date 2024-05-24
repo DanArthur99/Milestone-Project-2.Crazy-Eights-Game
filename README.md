@@ -117,7 +117,7 @@ The wireframes for this site were created using [Figma](https://www.figma.com/)
 
 The Website primarily uses 2 different fonts throughout. Both of which were obtained from Google Fonts. These fonts were:
 
-* Jersey 10 ('fantasy')
+* Jersey 10 ('sans-serif')
 * Acme ('sans-serif')
 
 Jersey 10 has a very pixelated design which I thought would be a good fit for this project, hence why I decided to use it for the main headings throughout the website (namely the Home Page and the 404 Page)
@@ -126,7 +126,7 @@ Jersey 10 has a very pixelated design which I thought would be a good fit for th
 
 #### Colour Palette
 
-The colour palatte uses a mixture of brighr colours throughout the 
+The colour palatte mostly consists of bright red-orange colours, and well as white and black. This was in part to match the colours of the playing cards, i.e. the suit colours.
 
 ![Colour Palette](docs/readme-images/colour-pallette.png)
 
@@ -168,7 +168,12 @@ The programming languages used for this project were:
 
 * Home Page
   * Welcome title text saying "Welcome to Crazy Eights", along with two buttons labelled "Start New Game" and "Rules"
-  * The "Start New Game"
+  * The "Start New Game" button modifies the HTML to display a text box that allows the user to enter a username.
+  * The "Rules" button opens up a modal that explains the rules of the game to the user
+  * The background of the of the page uses an image that displays the card suit designs in a pattern
+
+* Game Page 
+  * The cards are dealt and displayed on screen, with the user's cards at the bottom, and the computer player's hands at the top left and top right
 
 
 
@@ -220,10 +225,6 @@ To clone the Panic Switch Website repository:
 Please follow the link below to the testing file:
 
 [Testing Document](TESTING.md)
-
-
-
-
 
 ## Credits
 
