@@ -411,7 +411,6 @@ const faceDownImageLargeOnly = (DOMElement) => {
  * Then calls the drawCard and displyHandDrawCard synchronously
  */
 const drawCardPlayerClick = () => {
-    $(document).off("click", ".clickable");
     drawCard(gameArrays.playerHand, `${sessionStorage.getItem("username")}`);
     displayHandDrawCard(gameArrays.playerHand);
     if (gameStates.outOfCards == true) {
