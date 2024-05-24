@@ -229,7 +229,6 @@ const shuffleDeck = async () => {
         });
 };
 
-
 /**
  * Displays an error message on the HTML
  */
@@ -340,7 +339,7 @@ const displayTopCard = () => {
     $("#card-pile-phone").html(`
     <img src="${gameStates.topCard.image}" alt="${gameStates.topCard.value} of ${gameStates.topCard.suit}" width="70" height="98">
     `);
-}
+};
 
 /**
  * Displays Computer Player 1's hand on screen.
@@ -623,8 +622,8 @@ const drawCard = (hand, player) => {
         } else {
             gameStates.outOfCards = true;
         }
-    };
-}
+    }
+};
 
 /**
  * Checks if the shuffledPile is empty
