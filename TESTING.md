@@ -72,6 +72,12 @@ Draw 2 cards receiving end - cannot go|If the previous player lays a hand and th
 Draw Card empty shuffledPile test|if the shuffledPile is empty then the contents of the discardPile should be pushed to it and then emptied|Wait until the shuffledPile.length is 0. Then call drawCardPlayerClick() from the console.|By logging the gameArrays to the console you can see that the shuffledPile now has objects inside the array. While the discardPile is empty|Pass
 Draw Card empty shuffledPile AND empty discardPile test|In the rare occurrence that both are empty the the game should end and prompt the user to start a new game|Call the drawCard function with the gameArrays.playerHand and the username string as parameters in the console, until both the discardPile and shuffledPile arrays are empty. Then call the drawCardPlayerClick function in the console.|The end of game text appears saying that we seem to be out of cards. The Start New Game button also appears|Pass
 
+#### 404 Page Testing
+
+**Test**|**Expected Outcome**|**Test Action**|**Result**|**Pass/Fail**
+:-----:|:-----:|:-----:|:-----:|:-----:
+Loads correctly|If the page url is unrecognized or non existantthen the 404 page should load in its place|Typed in random characters after the base URL|404 Page loads correctly|Pass
+Home button test|Should take the user back to the Home page when click|Click Go Back Home Button|Home Page Loads|Pass
 
 ### W3C Validator
 
