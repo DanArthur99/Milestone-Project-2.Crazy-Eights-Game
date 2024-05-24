@@ -443,6 +443,7 @@ const addToPile = async () => {
     if (gameArrays.playerHand.length == 0) {
         playerScore += 1;
         $("#end-of-game-text").text("You Win! Play Again?");
+        $(".player-hand-phone").css("display", "none");
         $(".play-again-section").css("display", "block");
     } else if (gameStates.clockwise == true && gameStates.skip == false || gameStates.clockwise == false && gameStates.skip) {
         setTimeout(() => {
