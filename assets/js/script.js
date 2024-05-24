@@ -40,7 +40,6 @@ let cp2Score = 0;
 let userName;
 
 window.addEventListener("error", (event) => {
-    console.log(event);
     errorHandler();
 });
 /**
