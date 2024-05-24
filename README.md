@@ -223,7 +223,7 @@ The programming languages used for this project were:
 
   ![Display Hand Function](docs/readme-images/display-hand.png)
 
-  * The displayComputerPlayer1Hand and displayComputerPlayer2Hand, check to see how many cards are in their hands respectively, and alter the HTML to display this to user everytime they're called
+  * The displayComputerPlayer1Hand and displayComputerPlayer2Hand functions check to see how many cards are in their hands respectively, and alter the HTML to display this to user everytime they're called
 
   ![Display Computer Hand](docs/readme-images/display-computer-hand.png)
 
@@ -239,7 +239,7 @@ The programming languages used for this project were:
 
   ![Computer Player Turns](docs/readme-images/computer-turns.png)
 
-  * Whenever the drawCard function is called, it first of all checks whether the shufflePile is empty or not, then it checks the game state to see how cards need drawing. If multiple cards need drawing, then a for loop occurs which checks the state of the shuffledPile and discardPile at each iteration. If the shuffledPile is empty, it takes whatever is the discardPile array, pushes it to the shuffledPile Array, and then empties the discardPile. If both arrays end up being empty, then outOfCards variable appends to true, and which is then checked at the end of turn, to which it will end the game if true.
+  * Whenever the drawCard function is called, it first of all checks whether the shufflePile is empty or not, then it checks the game state to see how many cards need drawing. If multiple cards need drawing, then a for loop occurs which checks the state of the shuffledPile and discardPile at each iteration. If the shuffledPile is empty, it takes whatever is the discardPile array, pushes it to the shuffledPile Array, and then empties the discardPile. If both arrays end up being empty, then outOfCards variable appends to true, and which is then checked at the end of turn, to which it will end the game if true.
 
   ![Draw Card Function](docs/readme-images/draw-card.png)
 
