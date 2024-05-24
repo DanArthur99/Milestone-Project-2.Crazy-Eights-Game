@@ -128,7 +128,7 @@ Jersey 10 has a very pixelated design which I thought would be a good fit for th
 
 The colour palatte uses a mixture of brighr colours throughout the 
 
-![Colour Palette](docs/readme-images/colour-palette.png)
+![Colour Palette](docs/readme-images/colour-pallette.png)
 
 ### Technologies Used
 
