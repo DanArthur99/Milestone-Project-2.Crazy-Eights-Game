@@ -311,8 +311,7 @@ Please follow the link below to the testing file:
 
 ### Other References 
 
-* [How To Build A Simple Card Game With JavaScript](https://www.youtube.com/watch?v=NxRwIZWjLtE) - author: Web Dev Simplified
-  * (Useful video explaining how )
+* [How To Build A Simple Card Game With JavaScript](#https://www.youtube.com/watch?v=NxRwIZWjLtE) - author: Web Dev Simplified
 
 
 
