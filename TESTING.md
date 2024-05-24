@@ -40,21 +40,21 @@ Username Not Empty Check|user is taken to the game page|Press the Start Game but
 
 #### Game Page Testing
 
-**Feature**|**Expected Outcome**|**Test Action**|**Result**|**Pass/Fail**
+**Test**|**Expected Outcome**|**Test Action**|**Result**|**Pass/Fail**
 :-----:|:-----:|:-----:|:-----:|:-----:
-Card Choice |Displays the options to play the selected card -  yes or no|Click a clickable card|Play card button section is displayed|Pass
+Card Choice test|Displays the options to play the selected card -  yes or no|Click a clickable card|Play card button section is displayed|Pass
 Card Choice - Phone Screens|Displays the play card options in a modal|Click a clickable card|Play card modal is displayed|Pass
-Yes Button|Lays the card to the pile and calls the next turn - card is removed from player's hand|Click play card? - yes|Card is played and next turn is called. Card is also removed from hand|Pass
-No Button|removes play card options|Click play card? - no|play card button section removed|Pass
+Yes Button test|Lays the card to the pile and calls the next turn - card is removed from player's hand|Click play card? - yes|Card is played and next turn is called. Card is also removed from hand|Pass
+No Button test|removes play card options|Click play card? - no|play card button section removed|Pass
 Rules Button Game Page|displays the rules modal when clicked|Click Rules button|Rules modal displayed|Pass
-Exit Button|displays a modal asking if the player is sure|Click Exit button|Modal displayed|Pass
-Game State text field|displays text showing what action has just happened with each turn|take Player turn|Text updates with each turn e.g. Player lays 4 of HEARTS|Pass
+Exit Button test|displays a modal asking if the player is sure|Click Exit button|Modal displayed|Pass
+Game State text field test|displays text showing what action has just happened with each turn|take Player turn|Text updates with each turn e.g. Player lays 4 of HEARTS|Pass
 Clicking an 8 Card|Displays a different set of buttons that allows the user to choose a suit as well|Clicking a card with the value of 8|Displays a 4 yes options with each suit labelled and a no button to cancel the choice|Pass
 Clicking an 8 Card - Phone Screens|Displays a different modal that allows the user to choose a suit as well|Clicking a card with the value of 8|Displays a modal with  4 yes options with each suit labelled and a no button to cancel the choice|Pass
-Clubs Button|"The next player must then lay down club| or an 8"|Clicking the clubs button|The next player lays a club
-Hearts Button|The next player must then lay down heart or an 8|Clicking the hearts button|The next player lays a heart|Pass
-Spades Button|The next player must then lay down spade or an 8|Clicking the spades button|The next player lays a spade|Pass
-Diamonds Button|The next player must then lay down diamond or an 8|Clicking the diamonds button|The next player lays a diamond|Pass
+Clubs Button test|"The next player must then lay down club| or an 8"|Clicking the clubs button|The next player lays a club
+Hearts Button test|The next player must then lay down heart or an 8|Clicking the hearts button|The next player lays a heart|Pass
+Spades Button test|The next player must then lay down spade or an 8|Clicking the spades button|The next player lays a spade|Pass
+Diamonds Button test|The next player must then lay down diamond or an 8|Clicking the diamonds button|The next player lays a diamond|Pass
 Jack card functionality|Laying a Jack skips the next players go|Lay a Jack Card|The next players turn is skipped|Pass
 2 Card functionality|Laying a 2 should mean the next player has to lay a 2 or draw 2 cards|Lay a 2 Card|The next player draws 2 cards|Pass
 2 card accumulation functionality|If the user lays a 2 and the next player lays a 2 then cards needed to be drawn should accumulate to 4|Lay a 2 Card while the next player also has a 2|The next player after draws 4 cards. Also can add pauses to the code and console.log the gameState.draw2Cards property with each turn to see it increase by 2 each time.|Pass
