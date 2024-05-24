@@ -40,12 +40,14 @@ let cp2Score = 0;
 let userName;
 
 
-
+window.addEventListener("error", (event) => {
+   console.log(event.message);
+})
 /**
  * This code below sets all the event listeners in the document once ready. jQuery is predominantly used to achieve this
  */
 document.addEventListener("DOMContentLoaded", function () {
-   if (window.location.pathname == "/Milestone-Project-2.Crazy-Eights-Game/game.html") { // Checks if the current HTML page is the game
+    if (window.location.pathname == "/Milestone-Project-2.Crazy-Eights-Game/game.html") { // Checks if the current HTML page is the game
         initializeGame();
     } else {
         sessionStorage.setItem("username", null);
@@ -198,7 +200,12 @@ const shuffleDeck = async () => {
                     for (let i = 0; i < 104; i++) {
                         gameArrays.shuffledPile.push({ "value": deck.cards[i].value, "suit": deck.cards[i].suit, "image": deck.cards[i].image });
                     }
-                    dealInitialHand();
+                    try {
+                        dealInitialHand();
+                    } catch(error) {
+                        errorHandler();
+                    }
+                    
                 }).catch((error) => {
                     errorHandler(), error
                 });
