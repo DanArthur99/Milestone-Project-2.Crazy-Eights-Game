@@ -307,11 +307,11 @@ Please follow the link below to the testing file:
 
 ### Code
 
-[Scroll Bar For Modal](#https://stackoverflow.com/questions/25874001/how-to-put-scroll-bar-only-for-modal-body) - author: Carlos Calla
+[Scroll Bar For Modal](https://stackoverflow.com/questions/25874001/how-to-put-scroll-bar-only-for-modal-body) - author: Carlos Calla
 
 ### Other References 
 
-* [How To Build A Simple Card Game With JavaScript](#https://www.youtube.com/watch?v=NxRwIZWjLtE) - author: Web Dev Simplified
+* [How To Build A Simple Card Game With JavaScript](https://www.youtube.com/watch?v=NxRwIZWjLtE) - author: Web Dev Simplified
 
 
 
